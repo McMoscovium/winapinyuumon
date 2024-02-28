@@ -1,15 +1,31 @@
 #include<Windows.h>
 #include<windowsx.h>
 #include"resource.h"
+#include"game.h"
 #include<iostream>
 #include<sstream>
 #include<string>
 #pragma comment(lib,"msimg32.lib")
 
-typedef struct {
-	int x;
-	int y;
-} POSITION;
+
+
+static HBITMAP
+	hTitlePicture,
+	hStartButton,
+	hStartButtonPointed,
+	hStatusButton,
+	hStatusButtonPointed,
+	hGachaButton,
+	hGachaButtonPointed,
+	hQuitButton,
+	hQuitButtonPointed,
+	hBusan,
+	hFieldPicture,
+	hHitterBusan;
+static HBITMAP
+hBitmapWindow;
+//おされているボタンの種類．phaseによって変わる
+static int PointedButton = -1;
 
 const POSITION TitleBusanPicturePos = { 32,48 };
 const POSITION TitleStartButtonPos = { 240,352 };
@@ -66,20 +82,29 @@ int WINAPI WinMain(
 		return 0;
 	}
 
-	HWND hWnd;
+	StateInfo* pState = new (std::nothrow) StateInfo;
 
-	hWnd = CreateWindowEx(
+	if (pState == NULL) {
+		return 0;
+	}
+
+	HWND hWnd = CreateWindowEx(
 		WS_EX_ACCEPTFILES | WS_EX_CONTROLPARENT,
 		CLASSNAME,
 		CLASSNAME,
+		//ウィンドウスタイルオプション
 		WS_OVERLAPPED | WS_MINIMIZEBOX | WS_SYSMENU,
+		//サイズ
 		0,
 		0,
 		1152,
 		720,
+		//親ウィンドウ
 		NULL,
+		//メニュー
 		NULL,
 		GetModuleHandle(NULL),
+		//追加データ
 		NULL
 	);
 
@@ -91,18 +116,12 @@ int WINAPI WinMain(
 	UpdateWindow(hWnd);
 
 
-
-
-
-	//メッセ―ジキュー
-	MSG msg;
-	msg.message = NULL;
-
-
 	//変数準備
 	static HDC hdc;
 	static HDC hdcMem;
-
+	//画像の読み込み，サイズの取得
+	
+	
 	
 
 	//矩形の座標を格納する構造体
@@ -113,18 +132,16 @@ int WINAPI WinMain(
 	//カーソルの大きさの初期化
 	static rect cursorSize = { 10,20 };
 
-		
+	//メッセ―ジキュー
+	MSG msg;
+	msg.message = NULL;
+
 	//メッセージループ
-	while (msg.message != WM_QUIT) {
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
-			TranslateMessage(&msg);
-			DispatchMessageW(&msg);
-		}
-		else if (phase == "title") {
-			
-		}
-		else if (phase == "game") {
-		}
+	
+	while (GetMessage(&msg, NULL, 0, 0) > 0)
+	{
+		TranslateMessage(&msg);
+		DispatchMessageW(&msg);
 	}
 
 
@@ -136,25 +153,15 @@ int WINAPI WinMain(
 	return 0;
 }
 
+
 //phaseが"title"のときのタイトルウィンドウプロシージャ
 LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
+
 	static HDC hdc, hdcMem;
 	hdc = GetDC(hWnd);
 	static PAINTSTRUCT ps;
 
-	static HBITMAP
-		hTitlePicture,
-		hStartButton,
-		hStartButtonPointed,
-		hStatusButton,
-		hStatusButtonPointed,
-		hGachaButton,
-		hGachaButtonPointed,
-		hQuitButton,
-		hQuitButtonPointed,
-		hBusan,
-		hFieldPicture,
-		hHitterBusan;
+	
 	//クライアント領域のデータ
 	RECT rc;
 	GetClientRect(hWnd, &rc);
@@ -165,7 +172,6 @@ LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 	
 	switch (msg){
 	case WM_CREATE:
-		//画像の読み込み，サイズの取得
 		hTitlePicture = static_cast<HBITMAP>(LoadImage(NULL, L"..\\resources\\タイトル画面.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
 		hStartButton = static_cast<HBITMAP>(LoadImage(NULL, L"..\\resources\\はじめる.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
 		::TitleButtonSize = GetBitmapSize(hStartButton);
@@ -181,10 +187,6 @@ LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 		hFieldPicture = static_cast<HBITMAP>(LoadImage(NULL, L"..\\resources\\フィールド.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
 		hHitterBusan = static_cast<HBITMAP>(LoadImageW(NULL, L"..\\resources\\打者.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
 		HitterBusanSize = GetBitmapSize(hHitterBusan);
-
-		
-
-		
 		break;
 	
 	case WM_MOUSEMOVE:
@@ -195,12 +197,12 @@ LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 
 	case WM_PAINT:
 		PointedButton = -1;
+		hdc = GetDC(hWnd);
 		hdcMem = CreateCompatibleDC(hdc);
 		
 		//背景の描画
 		SelectObject(hdcMem, hTitlePicture);
 		BitBlt(hdc, 0, 0, rc.right, rc.bottom, hdcMem, 0, 0, SRCCOPY);
-
 		//釜山の描画
 		SelectObject(hdcMem, hBusan);
 		TransparentBlt(hdc, TitleBusanPicturePos.x, TitleBusanPicturePos.y, TitleBusanSize.cx, TitleBusanSize.cy, hdcMem, 0, 0, TitleBusanSize.cx, TitleBusanSize.cy, RGB(0xFF, 0x00, 0xFF));
@@ -266,7 +268,9 @@ LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 			//スタートボタンが押された状態で，スタートボタンの上で左ボタンが離された
 			PointedButton = -1;
 			phase = "game";
+
 			//メモリデバイスコンテキストの取得
+			hdc = GetDC(hWnd);
 			HDC hdcMemWindow = CreateCompatibleDC(hdc);
 			//仮想ウィンドウを作成
 			HBITMAP hBitmapWindow = CreateCompatibleBitmap(hdc, rc.right, rc.bottom);
@@ -373,49 +377,37 @@ LRESULT CALLBACK GameWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 	static HDC hdc, hdcMem, hdcMemWindow;
 	hdc = GetDC(hWnd);
 	static PAINTSTRUCT ps;
-
-	static HBITMAP
-		hBitmapWindow,
-		hFieldPicture,
-		hHitterBusan;
-
-	hFieldPicture = static_cast<HBITMAP>(LoadImage(NULL, L"..\\resources\\フィールド.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
-	hHitterBusan = static_cast<HBITMAP>(LoadImageW(NULL, L"..\\resources\\打者.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
-	SIZE HitterBusanSize = GetBitmapSize(hHitterBusan);
+	
 	//クライアント領域のデータ
 	RECT rc;
 	GetClientRect(hWnd, &rc);
 
-	//おされているボタンの種類．phaseによって変わる
-	static int PointedButton = -1;
-
 	switch (msg) {
 	case WM_CREATE:
-		
 		break;
 
 	case WM_MOUSEMOVE:
 		X = LOWORD(lp);
 		Y = HIWORD(lp);
-		////メモリデバイスコンテキストの取得
-		//hdcMem = CreateCompatibleDC(hdc);
-		//hdcMemWindow = CreateCompatibleDC(hdc);
-		////仮想ウィンドウを作成
-		//hBitmapWindow = CreateCompatibleBitmap(hdc, rc.right, rc.bottom);
-		////仮想ウィンドウを選択
-		//SelectObject(hdcMemWindow, hBitmapWindow);
-		////フィールドの描画
-		//SelectObject(hdcMem, hFieldPicture);
-		//BitBlt(hdcMemWindow, 0, 0, rc.right, rc.bottom, hdcMem, 0, 0, SRCCOPY);
-		//SelectObject(hdcMem, hHitterBusan);
-		//TransparentBlt(hdcMemWindow, X - HitterBusanSize.cx, Y - HitterBusanSize.cy / 2, HitterBusanSize.cx, HitterBusanSize.cy, hdcMem, 0, 0, HitterBusanSize.cx, HitterBusanSize.cy, RGB(0xFF, 0x00, 0xFF));
+		//メモリデバイスコンテキストの取得
+		hdcMem = CreateCompatibleDC(hdc);
+		hdcMemWindow = CreateCompatibleDC(hdc);
+		//仮想ウィンドウを作成
+		hBitmapWindow = CreateCompatibleBitmap(hdc, rc.right, rc.bottom);
+		//仮想ウィンドウを選択
+		SelectObject(hdcMemWindow, hBitmapWindow);
+		//フィールドの描画
+		SelectObject(hdcMem, hFieldPicture);
+		BitBlt(hdcMemWindow, 0, 0, rc.right, rc.bottom, hdcMem, 0, 0, SRCCOPY);
+		SelectObject(hdcMem, hHitterBusan);
+		TransparentBlt(hdcMemWindow, X - HitterBusanSize.cx, Y - HitterBusanSize.cy / 2, HitterBusanSize.cx, HitterBusanSize.cy, hdcMem, 0, 0, HitterBusanSize.cx, HitterBusanSize.cy, RGB(0xFF, 0x00, 0xFF));
 
-		////一括で描画
-		//BitBlt(hdc, 0, 0, rc.right, rc.bottom, hdcMemWindow, 0, 0, SRCCOPY);
-		//DeleteObject(hBitmapWindow);
-		//DeleteDC(hdcMemWindow);
-		//DeleteDC(hdcMem);
-		//DeleteDC(hdc);
+		//一括で描画
+		BitBlt(hdc, 0, 0, rc.right, rc.bottom, hdcMemWindow, 0, 0, SRCCOPY);
+		DeleteObject(hBitmapWindow);
+		DeleteDC(hdcMemWindow);
+		DeleteDC(hdcMem);
+		DeleteDC(hdc);
 		break;
 
 	case WM_PAINT:
