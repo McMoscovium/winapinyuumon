@@ -268,28 +268,9 @@ LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 			//スタートボタンが押された状態で，スタートボタンの上で左ボタンが離された
 			PointedButton = -1;
 			phase = "game";
-
-			//メモリデバイスコンテキストの取得
-			hdc = GetDC(hWnd);
-			HDC hdcMemWindow = CreateCompatibleDC(hdc);
-			//仮想ウィンドウを作成
-			HBITMAP hBitmapWindow = CreateCompatibleBitmap(hdc, rc.right, rc.bottom);
-			//仮想ウィンドウを選択
-			SelectObject(hdcMemWindow, hBitmapWindow);
-			//フィールドの描画
-			SelectObject(hdcMem, hFieldPicture);
-			BitBlt(hdcMemWindow, 0, 0, rc.right, rc.bottom, hdcMem, 0, 0, SRCCOPY);
-			//釜山の描画
-			SelectObject(hdcMem, hHitterBusan);
-			TransparentBlt(hdcMemWindow, X, Y, HitterBusanSize.cx, HitterBusanSize.cy, hdcMem, 0, 0, HitterBusanSize.cx, HitterBusanSize.cy, RGB(0xFF, 0x00, 0xFF));
-						
-			//一括で描画
-			BitBlt(hdc, 0, 0, rc.right, rc.bottom, hdcMemWindow, 0, 0, SRCCOPY);
-			DeleteObject(hBitmapWindow);
-			DeleteDC(hdcMemWindow);
-			DeleteDC(hdcMem);
-			DeleteDC(hdc);
 			SetWindowLongPtrW(hWnd, GWLP_WNDPROC, (LONG_PTR)GameWndProc);
+			SendMessage(hWnd, WM_CREATE, 0, 0);
+			SendMessage(hWnd, WM_PAINT, 0, 0);
 		}
 		else if (PointedButton = 2 &&
 			IsCursorOnRect(TitleStatusButtonPos.x, TitleStatusButtonPos.y, TitleButtonSize.cx, TitleButtonSize.cy, X, Y)) {
@@ -384,6 +365,9 @@ LRESULT CALLBACK GameWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 
 	switch (msg) {
 	case WM_CREATE:
+		hFieldPicture = static_cast<HBITMAP>(LoadImage(NULL, L"..\\resources\\フィールド.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
+		hHitterBusan = static_cast<HBITMAP>(LoadImageW(NULL, L"..\\resources\\打者.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
+		HitterBusanSize = GetBitmapSize(hHitterBusan);
 		break;
 
 	case WM_MOUSEMOVE:
