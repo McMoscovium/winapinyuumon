@@ -52,15 +52,8 @@ int WINAPI WinMain(
 		NULL, L"..\\resources\\アイコン.ico",
 		IMAGE_ICON, NULL, NULL,
 		LR_DEFAULTSIZE | LR_LOADFROMFILE);
-	wc.hCursor = (HCURSOR)LoadImage(
-		NULL,
-		L"..\\resources\\カーソル.cur",
-		IMAGE_CURSOR,
-		NULL,
-		NULL,
-		LR_LOADFROMFILE
-	)/*(HCURSOR)LoadCursor(NULL, IDC_ARROW)*/;
-	wc.hbrBackground = NULL; //(HBRUSH)GetStockObject(WHITE_BRUSH);
+	wc.hCursor = (HCURSOR)LoadCursor(NULL, IDC_ARROW);
+	wc.hbrBackground = NULL;
 	wc.lpszMenuName = NULL;
 	wc.lpszClassName = CLASSNAME;
 	wc.hIconSm = (HICON)LoadImage(
@@ -396,18 +389,6 @@ LRESULT CALLBACK GameWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 	//おされているボタンの種類．phaseによって変わる
 	static int PointedButton = -1;
 
-	//PointedButton = -1;
-	////仮想のデバイスコンテキストハンドルを取得
-	//hdcMem = CreateCompatibleDC(hdc);
-
-	////フィールドの描画
-	//SelectObject(hdcMem, hFieldPicture);
-	//BitBlt(hdc, 0, 0, rc.right, rc.bottom, hdcMem, 0, 0, SRCCOPY);
-	//SelectObject(hdcMem, hHitterBusan);
-	//BitBlt(hdc, X, Y, HitterBusanSize.cx, HitterBusanSize.cy, hdcMem, 0, 0, SRCCOPY);
-	//DeleteDC(hdcMem);
-	//DeleteDC(hdc);
-
 	switch (msg) {
 	case WM_CREATE:
 		
@@ -416,7 +397,29 @@ LRESULT CALLBACK GameWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 	case WM_MOUSEMOVE:
 		X = LOWORD(lp);
 		Y = HIWORD(lp);
-		hdc = GetDC(hWnd);
+		////メモリデバイスコンテキストの取得
+		//hdcMem = CreateCompatibleDC(hdc);
+		//hdcMemWindow = CreateCompatibleDC(hdc);
+		////仮想ウィンドウを作成
+		//hBitmapWindow = CreateCompatibleBitmap(hdc, rc.right, rc.bottom);
+		////仮想ウィンドウを選択
+		//SelectObject(hdcMemWindow, hBitmapWindow);
+		////フィールドの描画
+		//SelectObject(hdcMem, hFieldPicture);
+		//BitBlt(hdcMemWindow, 0, 0, rc.right, rc.bottom, hdcMem, 0, 0, SRCCOPY);
+		//SelectObject(hdcMem, hHitterBusan);
+		//TransparentBlt(hdcMemWindow, X - HitterBusanSize.cx, Y - HitterBusanSize.cy / 2, HitterBusanSize.cx, HitterBusanSize.cy, hdcMem, 0, 0, HitterBusanSize.cx, HitterBusanSize.cy, RGB(0xFF, 0x00, 0xFF));
+
+		////一括で描画
+		//BitBlt(hdc, 0, 0, rc.right, rc.bottom, hdcMemWindow, 0, 0, SRCCOPY);
+		//DeleteObject(hBitmapWindow);
+		//DeleteDC(hdcMemWindow);
+		//DeleteDC(hdcMem);
+		//DeleteDC(hdc);
+		break;
+
+	case WM_PAINT:
+	{
 		//メモリデバイスコンテキストの取得
 		hdcMem = CreateCompatibleDC(hdc);
 		hdcMemWindow = CreateCompatibleDC(hdc);
@@ -436,11 +439,6 @@ LRESULT CALLBACK GameWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 		DeleteDC(hdcMemWindow);
 		DeleteDC(hdcMem);
 		DeleteDC(hdc);
-		break;
-
-	case WM_PAINT:
-	{
-		
 		break;
 	}
 	case WM_LBUTTONDOWN:
