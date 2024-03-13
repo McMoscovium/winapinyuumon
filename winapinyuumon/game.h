@@ -12,14 +12,14 @@ typedef struct {
 //ゲームに登場するビットマップ，テキストのデータをまとめる（作成途中）
 class Actor
 {
+private:
 	std::string name;
 	HBITMAP bitmap;
 	POSITION position;
+	Actor() {}
 	Actor(const std::string name, LPCTSTR filePath) :
 		name(name), bitmap((HBITMAP)LoadImage(NULL, filePath, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE))
-	{
-
-	}
+	{}
 };
 
 //ゲームの状態情報を格納する（作成途中）

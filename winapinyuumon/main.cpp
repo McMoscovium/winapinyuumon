@@ -1,11 +1,12 @@
 #include<Windows.h>
+#include<Vfw.h>
 #include<windowsx.h>
 #include"resource.h"
 #include"game.h"
 #include<iostream>
 #include<sstream>
 #include<string>
-#pragma comment(lib,"msimg32.lib")
+//#pragma comment(lib,"msimg32.lib")
 
 
 
@@ -156,7 +157,7 @@ int WINAPI WinMain(
 
 //phaseが"title"のときのタイトルウィンドウプロシージャ
 LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
-
+	static HWND hMCI;
 	static HDC hdc, hdcMem;
 	hdc = GetDC(hWnd);
 	static PAINTSTRUCT ps;
@@ -187,6 +188,15 @@ LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 		hFieldPicture = static_cast<HBITMAP>(LoadImage(NULL, L"..\\resources\\フィールド.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
 		hHitterBusan = static_cast<HBITMAP>(LoadImageW(NULL, L"..\\resources\\打者.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE));
 		HitterBusanSize = GetBitmapSize(hHitterBusan);
+
+		//音楽の再生
+		if (hMCI = MCIWndCreate(hWnd, ((LPCREATESTRUCT)lp)->hInstance, WS_CHILD, L"..\\resources\\bgm1.wav")) {
+			MCIWndPlay(hMCI);
+		}
+		else {
+			MessageBox(hWnd, L"音楽再生失敗", L"", MB_OK);//@ERROR
+		}
+		
 		break;
 	
 	case WM_MOUSEMOVE:
