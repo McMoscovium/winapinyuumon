@@ -40,7 +40,7 @@ LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
 LRESULT CALLBACK GameWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
 
 //その他関数の宣言
-bool IsCursorOnRect(int rx, int ry, int sx, int sy, int cx, int cy);
+bool IsCursorOnRect(POSITION ButtonPosition, SIZE ButtonSize, int CursorX, int CursorY);
 SIZE GetBitmapSize(HBITMAP hBitmap);
 void DrawIntWithDrawTextExW(HDC hdc, int value, int x, int y);
 
@@ -231,7 +231,7 @@ LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 	case WM_LBUTTONDOWN:
 		X = LOWORD(lp);
 		Y = HIWORD(lp);
-		if (IsCursorOnRect(TitleStartButtonPos.x, TitleStartButtonPos.y, TitleButtonSize.cx, TitleButtonSize.cy, X, Y)) {
+		if (IsCursorOnRect(TitleStartButtonPos, TitleButtonSize, X, Y)) {
 			//スタートボタンが押された
 			PointedButton = 1;
 
@@ -241,7 +241,7 @@ LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 			DeleteDC(hdcMem);
 			DeleteDC(hdc);
 		}
-		else if (IsCursorOnRect(TitleStatusButtonPos.x, TitleStatusButtonPos.y, TitleButtonSize.cx, TitleButtonSize.cy, X, Y)) {
+		else if (IsCursorOnRect(TitleStatusButtonPos, TitleButtonSize, X, Y)) {
 			//ステータスボタンが押された
 			PointedButton = 2;
 			hdcMem = CreateCompatibleDC(hdc);
@@ -250,7 +250,7 @@ LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 			DeleteDC(hdcMem);
 			DeleteDC(hdc);
 		}
-		else if (IsCursorOnRect(TitleGachaButtonPos.x, TitleGachaButtonPos.y, TitleButtonSize.cx, TitleButtonSize.cy, X, Y)) {
+		else if (IsCursorOnRect(TitleGachaButtonPos, TitleButtonSize, X, Y)) {
 			//ガチャボタンが押された
 			PointedButton = 3;
 			hdcMem = CreateCompatibleDC(hdc);
@@ -259,7 +259,7 @@ LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 			DeleteDC(hdcMem);
 			DeleteDC(hdc);
 		}
-		else if (IsCursorOnRect(TitleQuitButtonPos.x, TitleQuitButtonPos.y, TitleButtonSize.cx, TitleButtonSize.cy, X, Y)) {
+		else if (IsCursorOnRect(TitleQuitButtonPos, TitleButtonSize, X, Y)) {
 			//おわるボタンが押された
 			PointedButton = 4;
 			hdcMem = CreateCompatibleDC(hdc);
@@ -274,7 +274,7 @@ LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 		X = LOWORD(lp);
 		Y = HIWORD(lp);
 		if (PointedButton = 1 &&
-			IsCursorOnRect(TitleStartButtonPos.x, TitleStartButtonPos.y, TitleButtonSize.cx, TitleButtonSize.cy, X, Y)) {
+			IsCursorOnRect(TitleStartButtonPos, TitleButtonSize, X, Y)) {
 			//スタートボタンが押された状態で，スタートボタンの上で左ボタンが離された
 			PointedButton = -1;
 			phase = "game";
@@ -283,7 +283,7 @@ LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 			SendMessage(hWnd, WM_PAINT, 0, 0);
 		}
 		else if (PointedButton = 2 &&
-			IsCursorOnRect(TitleStatusButtonPos.x, TitleStatusButtonPos.y, TitleButtonSize.cx, TitleButtonSize.cy, X, Y)) {
+			IsCursorOnRect(TitleStatusButtonPos, TitleButtonSize, X, Y)) {
 			//ステータスボタンが押された状態で，ステータスボタンの上で左ボタンが離された
 			PointedButton = -1;
 			hdcMem = CreateCompatibleDC(hdc);
@@ -293,7 +293,7 @@ LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 			DeleteDC(hdc);
 		}
 		else if (PointedButton = 3 &&
-			IsCursorOnRect(TitleGachaButtonPos.x, TitleGachaButtonPos.y, TitleButtonSize.cx, TitleButtonSize.cy, X, Y)) {
+			IsCursorOnRect(TitleGachaButtonPos, TitleButtonSize, X, Y)) {
 			//ガチャボタンが押された状態で，ガチャボタンの上で左ボタンが離された
 			PointedButton = -1;
 			hdcMem = CreateCompatibleDC(hdc);
@@ -303,7 +303,7 @@ LRESULT CALLBACK TitleWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 			DeleteDC(hdc);
 		}
 		else if (PointedButton = 4 &&
-			IsCursorOnRect(TitleQuitButtonPos.x, TitleQuitButtonPos.y, TitleButtonSize.cx, TitleButtonSize.cy, X, Y)) {
+			IsCursorOnRect(TitleQuitButtonPos, TitleButtonSize, X, Y)) {
 			//おわるボタンが押された状態で，おわるボタンの上で左ボタンが離された
 			PointedButton = -1;
 
@@ -456,7 +456,7 @@ LRESULT CALLBACK GameWndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 
 
 
-bool IsCursorOnRect(int rx, int ry, int sx, int sy, int cx, int cy) {
+bool IsCursorOnRect(POSITION ButtonPosition, SIZE ButtonSize, int CursorX, int CursorY) {
 	/*
 	カーソルの座標が長方形に入っているか判別する関数
 	rx:長方形のx座標
@@ -466,6 +466,13 @@ bool IsCursorOnRect(int rx, int ry, int sx, int sy, int cx, int cy) {
 	cx:カーソルのx座標
 	cy:カーソルのy座標
 	*/
+    rx = ButtonPosition.x;
+    ry = ButtonPosition.y;
+    sx = ButtonSize.cx;
+    sy = ButtonSize.cy;
+    cx = CursorX;
+    cy = CursorY;
+
 	if (rx <= cx && cx <= rx + sx &&
 		ry <= cy && cy <= ry + sy) {
 		return true;
