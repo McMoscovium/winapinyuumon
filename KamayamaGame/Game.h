@@ -1,20 +1,20 @@
 #pragma once
 
-#include<Windows.h>
-#include"Window.h"
+#include <Windows.h>
+
+class GameState;
+class TitleScreenState;
 
 class Game
 {
 private:
-	Window window;
+	GameState* currentState;
 	
 public:
-	enum SeqName {
-		SEQ_TITLE
-	};
+	Game();
+	~Game();
 
-	void initializeWindow(LPCSTR name, LPCSTR iconPath, LPCSTR sysIconPath, SeqName SEQ_NAME);
-	bool terminateFlag();
-	void mainloop();
-	void terminate();
+	void update();
+
+	void changeState(GameState* newState);
 };
