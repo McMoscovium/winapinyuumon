@@ -10,9 +10,9 @@ class InputManager
 public:
 	//キーの状態を表す列挙型
 	enum class KeyState {
-		KEY_UP,
-		KEY_DOWN,
-		KEY_PRESSED
+		KEY_UP,//キーは押されていない
+		KEY_DOWN,//キーは押されたまま
+		KEY_PRESSED//キーがちょうど押された
 	};
 
 	InputManager();
@@ -27,6 +27,7 @@ public:
 	//キーの状態を取得する
 	KeyState getKeyState(int keyCode);
 
+	//マウスの座標を取得する
 	POINT getMousePosition()const;
 
 private:
@@ -36,7 +37,7 @@ private:
 	//マウスの現在位置
 	POINT mousePosition;
 
-	//監視するキーの初期化
+	//監視するキーの初期化を行う
 	void initializeKeys();
 };
 

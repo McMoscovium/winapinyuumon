@@ -1,6 +1,7 @@
 #include<Windows.h>
 #include"Window.h"
 #include"Game.h"
+#include "InputManager.h"
 
 int WINAPI WinMain(
 	HINSTANCE hInstance,
@@ -8,10 +9,12 @@ int WINAPI WinMain(
 	LPSTR lpszCmdLine,
 	int nShowCmd) {
 
-	Window window(hInstance, nShowCmd);//Windowクラスのインスタンスを作成
+	//必要なインスタンスを作成、初期化
+	Window window(hInstance, nShowCmd);
+	Game game(&window);
+	InputManager inputManager;
 
 	//メインループ
-
 	MSG msg = {};
 	while (true) {
 		//メッセージ処理
@@ -25,9 +28,12 @@ int WINAPI WinMain(
 			}
 		}
 		//終了メッセージでない場合
-		/*
-		ゲームの処理をここに追加
-		*/
+		//入力の更新
+		inputManager.update();
+		//ゲームの状態を更新
+		game.update();
+		//更新した画面を表示
+		window.show();
 	}
 	return 0;
 }

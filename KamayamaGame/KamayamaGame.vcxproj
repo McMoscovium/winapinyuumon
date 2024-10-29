@@ -150,6 +150,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlayingState.cpp" />
+    <ClCompile Include="VirtualWindow.cpp" />
     <ClCompile Include="TitleScreenState.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -160,6 +161,7 @@
     <ClInclude Include="GameState.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="PlayingState.h" />
+    <ClInclude Include="VirtualWindow.h" />
     <ClInclude Include="TitleScreenState.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

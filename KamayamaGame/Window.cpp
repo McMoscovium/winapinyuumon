@@ -1,11 +1,12 @@
 #include "Window.h"
+#include<Windows.h>
 
 
 //コンストラクタ
 Window::Window(HINSTANCE hInstance, int nCmdShow) :hInstance(hInstance) {
-	RegisterClass();
-	Create();
-	Show();
+	registerClass();
+	create();
+	show();
 }
 
 //デストラクタ
@@ -14,7 +15,7 @@ Window::~Window() {
 }
 
 //ウィンドウクラスの登録
-void Window::RegisterClass() {
+void Window::registerClass() {
 	WNDCLASS wc = {};
 	wc.lpfnWndProc = WindowProc;//ウィンドウプロシージャの設定
 	wc.hInstance = hInstance;
@@ -22,16 +23,22 @@ void Window::RegisterClass() {
 	::RegisterClass(&wc);//ウィンドウクラスの登録
 }
 
-//ウィンドウ作成
-void Window::Create() {
+//ウィンドウ作成。
+void Window::create() {
 	hwnd = CreateWindowEx(
-		0, className, L"Sample Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 800, 600, NULL, NULL, hInstance, NULL
+		0, className, L"Sample Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, width, height, NULL, NULL, hInstance, NULL
 	);
 }
 
 //ウィンドウを表示
-void Window::Show() {
+void Window::show() {
 	ShowWindow(hwnd, SW_SHOW);
+}
+
+
+HDC Window::getDC() const
+{
+	return ::GetDC(hwnd);
 }
 
 //ウィンドウプロシージャ

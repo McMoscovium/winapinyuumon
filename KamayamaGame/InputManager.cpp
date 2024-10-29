@@ -11,7 +11,7 @@ InputManager::~InputManager()
 }
 
 void InputManager::initializeKeys() {
-	//必要なキーコードを追加
+	VK_LBUTTON;
 }
 
 
@@ -39,7 +39,6 @@ void InputManager::update()
 }
 
 bool InputManager::isKeyPressed(int keyCode) {
-	//keyStatesにkeyCodeがない場合はKEY_UPをデフォルト絵返す
 	return keyStates[keyCode] == InputManager::KeyState::KEY_PRESSED;
 }
 
