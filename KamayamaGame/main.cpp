@@ -3,6 +3,8 @@
 #include"Game.h"
 #include "InputManager.h"
 
+const LPCWSTR gameName = L"クマの釜山のホームランダービー！";
+
 int WINAPI WinMain(
 	HINSTANCE hInstance,
 	HINSTANCE hPreInst,
