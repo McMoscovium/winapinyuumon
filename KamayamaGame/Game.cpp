@@ -14,9 +14,8 @@ Game::Game(Window* window) : currentState(new TitleScreenState()), virtualWindow
 Game::~Game() {
     delete currentState;
 }
-void Game::update() {
-	currentState->update(this);
-
+void Game::update(InputManager* inputManager) {
+	currentState->update(this, inputManager);
 }
 
 void Game::changeState(GameState* newState) {

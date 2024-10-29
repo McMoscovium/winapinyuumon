@@ -4,12 +4,13 @@
 
 class Game;
 class GameOverState;
+class InputManager;
 
 class PlayingState :
     public GameState
 {
 public:
     ~PlayingState()override;
-    void update(Game* game)override;
+    void update(Game* game,InputManager* inputManager)override;
 };
 

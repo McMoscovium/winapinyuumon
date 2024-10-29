@@ -9,6 +9,7 @@ PC内部でのゲームの進行を管理するクラス。
 class GameState;
 class VirtualWindow;
 class Window;
+class InputManager;
 
 class Game
 {
@@ -23,7 +24,7 @@ public:
 	Game(Window* window);//ウィンドウありきのコンストラクタ。仮想ウィンドウの設定を行う。
 	~Game();
 
-	void update();//ゲーム状態ごとに設定された更新処理を行う
+	void update(InputManager* inputManager);//ゲーム状態ごとに設定された更新処理を行う
 	void changeState(GameState* newState);//状態を変更する
 	void setBackBuffer(Window* window);//virtualWindowの初期設定
 };

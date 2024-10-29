@@ -4,7 +4,6 @@
 #include<unordered_map>
 
 
-
 class InputManager
 {
 public:
