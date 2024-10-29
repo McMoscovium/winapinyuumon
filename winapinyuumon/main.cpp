@@ -466,12 +466,12 @@ bool IsCursorOnRect(POSITION ButtonPosition, SIZE ButtonSize, int CursorX, int C
 	cx:カーソルのx座標
 	cy:カーソルのy座標
 	*/
-    rx = ButtonPosition.x;
-    ry = ButtonPosition.y;
-    sx = ButtonSize.cx;
-    sy = ButtonSize.cy;
-    cx = CursorX;
-    cy = CursorY;
+    int rx = ButtonPosition.x;
+    int ry = ButtonPosition.y;
+    int sx = ButtonSize.cx;
+    int sy = ButtonSize.cy;
+    int cx = CursorX;
+    int cy = CursorY;
 
 	if (rx <= cx && cx <= rx + sx &&
 		ry <= cy && cy <= ry + sy) {
