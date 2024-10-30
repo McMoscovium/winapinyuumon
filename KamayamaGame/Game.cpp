@@ -2,14 +2,16 @@
 #include"VirtualWindow.h"
 #include "TitleScreenState.h"
 
+Game::Game() : currentState(new TitleScreenState()) {}
+
+
 
 void Game::drawWindow()
 {
 }
 
-Game::Game() : currentState(new TitleScreenState()), virtualWindow(nullptr) {}
 
-Game::Game(Window* window) : currentState(new TitleScreenState()), virtualWindow(new VirtualWindow(window)) {}
+
 
 Game::~Game() {
     delete currentState;

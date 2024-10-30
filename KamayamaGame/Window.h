@@ -2,6 +2,7 @@
 #include<Windows.h>
 
 class Game;
+class GameState;
 
 class Window
 {
@@ -10,11 +11,15 @@ public:
 	const int height = 600;
 
 
-	//コンストラクタ。ウィンドウクラスの登録、ウィンドウの作成、ウィンドウの表示まで行う。
+	//コンストラクタ。ウィンドウクラスの登録、ウィンドウの作成まで行う。
 	Window(HINSTANCE hInstance, int nCmdShow);
 	~Window();
 
-	void show();
+	//現在のウィンドウを表示
+	void show() const;
+
+	//Gameクラスの情報に従いウィンドウを描画しなおす。
+	void render(Game*);
 
 	//ウィンドウハンドルを取得
 	HWND getHandle()const { return hwnd; }
@@ -36,6 +41,5 @@ private:
 	void registerClass();
 	//ウィンドウ作成。今後、パラメータ類の変更も可能な実装に変える
 	void create();
-	
 };
 

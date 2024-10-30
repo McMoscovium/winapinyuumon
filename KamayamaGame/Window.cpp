@@ -6,7 +6,6 @@
 Window::Window(HINSTANCE hInstance, int nCmdShow) :hInstance(hInstance) {
 	registerClass();
 	create();
-	show();
 }
 
 //デストラクタ
@@ -31,8 +30,12 @@ void Window::create() {
 }
 
 //ウィンドウを表示
-void Window::show() {
+void Window::show() const{
 	ShowWindow(hwnd, SW_SHOW);
+}
+
+void Window::render(Game*)
+{
 }
 
 

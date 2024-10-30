@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="asetts">
+      <UniqueIdentifier>{81b76f0d-bece-45de-b97c-c0c90fd5cad1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="設計図">
+      <UniqueIdentifier>{5189525e-5581-4bfc-b5cc-638ad51fa321}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window.cpp">
@@ -74,5 +80,106 @@
     <ClInclude Include="GameObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="assets\bgm1.wav">
+      <Filter>asetts</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\busan2.dds">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\image.dds">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\kamayama.bmp">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\kamayama.dds">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\アイコン.ico">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\おわる.bmp">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\おわるpointed.bmp">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\ガチャ.bmp">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\ガチャpointed.bmp">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\クマの釜山.bmp">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\クマの釜山.png">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\システムアイコン.ico">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\ステータス.bmp">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\ステータスpointed.bmp">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\タイトル画面.bmp">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\タイトル画面2.bmp">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\はじめる.bmp">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\はじめるpointed.bmp">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\フィールド.bmp">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="assets\打者.bmp">
+      <Filter>asetts</Filter>
+    </Image>
+    <Image Include="設計図\Gameの更新処理.png">
+      <Filter>設計図</Filter>
+    </Image>
+    <Image Include="設計図\タイトル画面作成.png">
+      <Filter>設計図</Filter>
+    </Image>
+    <Image Include="設計図\メインループ.png">
+      <Filter>設計図</Filter>
+    </Image>
+    <Image Include="設計図\初期化パート.png">
+      <Filter>設計図</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\image.xcf">
+      <Filter>asetts</Filter>
+    </None>
+    <None Include="assets\カーソル.cur">
+      <Filter>asetts</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="設計図\Gameの更新処理.txt">
+      <Filter>設計図</Filter>
+    </Text>
+    <Text Include="設計図\タイトル画面作成.txt">
+      <Filter>設計図</Filter>
+    </Text>
+    <Text Include="設計図\メインループ.txt">
+      <Filter>設計図</Filter>
+    </Text>
+    <Text Include="設計図\初期化パート.txt">
+      <Filter>設計図</Filter>
+    </Text>
   </ItemGroup>
 </Project>

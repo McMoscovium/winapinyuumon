@@ -18,6 +18,7 @@ public:
 	GameObject(LPCWSTR path, SIZE size);
 	~GameObject() = default;
 	void loadImage(LPCWSTR path);//pathの画像をビットマップイメージとしてhObjectImageに格納する。
+	void setPosition(POINT);//positionの変更
 private:
 	void setLength(int);
 	void setObjectImage(HBITMAP img);

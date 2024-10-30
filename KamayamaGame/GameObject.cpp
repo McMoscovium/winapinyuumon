@@ -30,6 +30,11 @@ void GameObject::loadImage(LPCWSTR path)
 	}
 }
 
+void GameObject::setPosition(POINT point)
+{
+	position = point;
+}
+
 void GameObject::setLength(int l) {
 	length = l;
 }

@@ -24,12 +24,17 @@ int WINAPI WinMain(
 	// 標準出力をコンソールにリダイレクト
 	FILE* stream;
 	freopen_s(&stream, "CONOUT$", "w", stdout);  // stdoutをコンソールにリダイレクト
+	//以上開発用
 
 
+	//初期化パート
 	//必要なインスタンスを作成、初期化
+	Game game;
 	Window window(hInstance, nShowCmd);
-	Game game(&window);
 	InputManager inputManager;
+
+	window.render(&game);//最初の画面をレンダリング
+	window.show();//最初の画面を表示
 
 	//メインループ
 	MSG msg = {};
