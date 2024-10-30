@@ -1,0 +1,27 @@
+title KamayamaGame-メインループ
+
+participant ユーザー
+participant ウィンドウ
+participant main()
+participant Game
+participant Window
+participant InputManager
+
+autoactivation on
+
+
+loop until WM_QUIT
+ユーザー-->ウィンドウ:見る
+ユーザー-->ウィンドウ:有象無象の入力
+ウィンドウ<-InputManager:入力リッスン
+ウィンドウ-->InputManager:入力内容
+Game->InputManager:update()
+Game<--InputManager:完了
+
+note over Game:いろいろ更新（本当にいろいろ）
+Game->Window:画面更新
+ウィンドウ<-Window:画面表示
+ウィンドウ-->Window:表示完了
+Game<--Window:画面更新完了
+ユーザー-->ウィンドウ:見る
+end
