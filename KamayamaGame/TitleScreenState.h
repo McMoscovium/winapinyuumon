@@ -2,26 +2,22 @@
 
 #include "GameState.h"
 #include <unordered_map>
+#include <string>
+#include "GameObject.h"
 
 class InputManager;
-class GameObject;
 class Game;
 
 class TitleScreenState :
     public GameState
 {
 public:
-    enum class ObjectName {
-        PICTURE_TITLE,
-        BUTTON_START,
-        BUTTON_STATUS,
-        BUTTON_GACHA,
-        BUTTON_QUIT,
-        PICTURE_BUSAN
-    };
     TitleScreenState();
-    ~TitleScreenState() {}
+    ~TitleScreenState()override;
+
     void update(Game* game,InputManager* inputManager)override;//スタートボタンが押されたらPlayingStateに遷移
+
+    const std::unordered_map<std::wstring, GameObject*>* getGameObjects()const override;
 private:
-    std::unordered_map<ObjectName, GameObject*> gameObjects;//GameObjectとその画像のpathのペア
+    std::unordered_map<std::wstring, GameObject*> gameObjects;//GameObjectと名前のペア
 };

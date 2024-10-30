@@ -10,3 +10,8 @@ void GameOverState::update(Game* game,InputManager* inputManager) {
         game->changeState(new TitleScreenState());
     }
 }
+
+const std::unordered_map<std::wstring, GameObject*>* GameOverState::getGameObjects() const
+{
+    return nullptr;
+}

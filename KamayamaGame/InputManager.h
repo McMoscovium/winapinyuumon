@@ -3,6 +3,7 @@
 #include<Windows.h>
 #include<unordered_map>
 
+class Window;
 
 class InputManager
 {
@@ -28,6 +29,8 @@ public:
 
 	//マウスの座標を取得する
 	POINT getMousePosition()const;
+
+	void digestMessage(Window* window);
 
 private:
 	//キーの状態を格納するマップ

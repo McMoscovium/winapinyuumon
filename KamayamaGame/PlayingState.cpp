@@ -10,5 +10,10 @@ void PlayingState::update(Game* game, InputManager* inputManager) {
     }
 }
 
+const std::unordered_map<std::wstring, GameObject*>* PlayingState::getGameObjects() const
+{
+    return nullptr;
+}
+
 PlayingState::~PlayingState() {}
 

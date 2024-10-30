@@ -1,9 +1,11 @@
 #include "InputManager.h"
+#include "Window.h"
 
 InputManager::InputManager() :mousePosition{ 0,0 }
 {
 	//初期化処理
 	keyStates.clear();
+	initializeKeys();
 }
 
 InputManager::~InputManager()
@@ -11,7 +13,7 @@ InputManager::~InputManager()
 }
 
 void InputManager::initializeKeys() {//@TODO
-	VK_LBUTTON;
+	keyStates.insert({ VK_LBUTTON,InputManager::KeyState::KEY_UP });
 }
 
 
@@ -33,7 +35,6 @@ void InputManager::update()
 			keyStates[keyCode] = InputManager::KeyState::KEY_UP;
 		}
 	}
-
 	//マウスの位置を更新
 	GetCursorPos(&mousePosition);
 }
@@ -50,3 +51,4 @@ InputManager::KeyState InputManager::getKeyState(int keyCode)
 POINT InputManager::getMousePosition()const {
 	return mousePosition;
 }
+

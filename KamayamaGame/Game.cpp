@@ -1,6 +1,7 @@
 #include "Game.h"
-#include"VirtualWindow.h"
+#include "VirtualWindow.h"
 #include "TitleScreenState.h"
+#include "GameState.h"
 
 Game::Game() : currentState(new TitleScreenState()) {}
 
@@ -28,3 +29,9 @@ void Game::changeState(GameState* newState) {
 void Game::setBackBuffer(Window* window)
 {
 }
+
+const GameState* Game::getCurrentState() const
+{
+	return currentState;
+}
+

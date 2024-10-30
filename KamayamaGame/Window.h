@@ -1,8 +1,8 @@
 #pragma once
 #include<Windows.h>
 
-class Game;
 class GameState;
+class Game;
 
 class Window
 {
@@ -19,13 +19,15 @@ public:
 	void show() const;
 
 	//Gameクラスの情報に従いウィンドウを描画しなおす。
-	void render(Game*);
+	void render(const Game*);
 
 	//ウィンドウハンドルを取得
 	HWND getHandle()const { return hwnd; }
 
 	//デバイスコンテキストを取得
 	HDC getDC()const;
+
+	bool defaultUpdate();//毎メッセージループで行う処理（WM_DESTROY等の処理）
 
 protected:
 	//ウィンドウプロシージャ
@@ -35,6 +37,7 @@ private:
 	HINSTANCE hInstance;
 	HWND hwnd;
 	const wchar_t* className = L"SampleWindowClass";
+	MSG msg;
 	
 
 	//ウィンドウクラスの登録

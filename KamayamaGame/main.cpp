@@ -9,7 +9,8 @@
 const LPCWSTR gameName = L"クマの釜山のホームランダービー！";
 
 
-
+void mainLoop(Game* game,Window* window,InputManager* inputManager);
+void termination();
 
 int WINAPI WinMain(
 	HINSTANCE hInstance,
@@ -33,31 +34,20 @@ int WINAPI WinMain(
 	Window window(hInstance, nShowCmd);
 	InputManager inputManager;
 
-	window.render(&game);//最初の画面をレンダリング
-	window.show();//最初の画面を表示
+	//初期画面レンダリング
+	window.render(&game);
+	//初期画面表示
+	window.show();
 
 	//メインループ
-	MSG msg = {};
-	while (true) {
-		//メッセージ処理
-		while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+	mainLoop(&game, &window, &inputManager);
 
-			//終了メッセージの場合
-			if (msg.message == WM_QUIT) {
-				return 0;//アプリを終了
-			}
-		}
-		//終了メッセージでない場合
-		//入力の更新
-		inputManager.update();
-		//ゲームの状態を更新
-		game.update(&inputManager);
-		//更新した画面を表示
-		window.show();
-	}
+	//開発用
+	std::cout << "メインループ終了" << std::endl;
 
+	//終了処理
+	//WM_QUITメッセージがもう出されているので、はやく終わる。
+	termination();
 
 	// コンソールが自動で閉じないようにする
 	std::cout << "Press Enter to exit...";
@@ -67,4 +57,21 @@ int WINAPI WinMain(
 	FreeConsole();
 
 	return 0;
+}
+
+void mainLoop(Game* game,Window* window, InputManager* inputManager) {
+	while (window->defaultUpdate()) {// WM_QUITメッセージが受信されたらループを終了
+		//メッセージ処理
+		inputManager->update();
+		//ゲームの状態を更新
+		game->update(inputManager);
+		//ゲーム画面のレンダリング
+		window->render(game);
+		//更新した画面を表示
+		window->show();
+	}
+}
+
+void termination() {
+
 }

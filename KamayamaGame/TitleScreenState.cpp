@@ -7,10 +7,14 @@
 
 TitleScreenState::TitleScreenState() {
     //GameObjectのインスタンスを生成（筋肉実装やめたいなあ。。。。）@TODO
-    gameObjects.emplace(TitleScreenState::ObjectName::PICTURE_TITLE, new GameObject(L".//assets//タイトル画面.bmp", { 1152,720 }));
+    gameObjects.emplace(L"PICTURE_TITLE", new GameObject(L".//assets//タイトル画面.bmp", {1152,720}));
 
     //各GameObjectの描画位置を設定@TODO
-    gameObjects[TitleScreenState::ObjectName::PICTURE_TITLE]->setPosition({ 0,0 });
+    gameObjects[L"PICTURE_TITLE"]->setPosition({0,0});
+}
+
+TitleScreenState::~TitleScreenState()
+{
 }
 
 void TitleScreenState::update(Game* game,InputManager* inputManager) {
@@ -18,4 +22,9 @@ void TitleScreenState::update(Game* game,InputManager* inputManager) {
     if (/*スタートボタンが押された*/false) {
         game->changeState(new PlayingState());
     }
+}
+
+const std::unordered_map<std::wstring, GameObject*>* TitleScreenState::getGameObjects()const
+{
+    return &gameObjects;
 }

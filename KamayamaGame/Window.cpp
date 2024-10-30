@@ -1,9 +1,11 @@
 #include "Window.h"
+#include "Game.h"
+#include "GameState.h"
 #include<Windows.h>
 
 
 //コンストラクタ
-Window::Window(HINSTANCE hInstance, int nCmdShow) :hInstance(hInstance) {
+Window::Window(HINSTANCE hInstance, int nCmdShow) :hInstance(hInstance), msg({}) {
 	registerClass();
 	create();
 }
@@ -34,14 +36,27 @@ void Window::show() const{
 	ShowWindow(hwnd, SW_SHOW);
 }
 
-void Window::render(Game*)
+void Window::render(const Game* game)
 {
+	
 }
 
 
 HDC Window::getDC() const
 {
 	return ::GetDC(hwnd);
+}
+
+bool Window::defaultUpdate()
+{
+	if (PeekMessage(&msg, hwnd, 0, 0, PM_REMOVE)) {//msgにメッセージを格納
+		TranslateMessage(&msg);
+		DispatchMessageW(&msg);//ウィンドウプロシージャを実行
+	}
+	if (msg.message == WM_DESTROY) {
+		return 0;
+	}
+	return 1;
 }
 
 //ウィンドウプロシージャ
@@ -51,15 +66,6 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 		PostQuitMessage(0);//アプリ終了
 		return 0;
 	case WM_PAINT:
-		{
-			PAINTSTRUCT ps;
-			HDC hdc = BeginPaint(hwnd, &ps);
-			/*
-			ここに描画処理を追加
-			*/
-
-			EndPaint(hwnd, &ps);
-		}
 		return 0;
 	}
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);//デフォルトの処理を呼び出す
