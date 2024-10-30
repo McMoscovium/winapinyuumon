@@ -19,8 +19,15 @@ main()<--Window:作成完了
 main()->*InputManager:インスタンス作成
 main()<--InputManager:作成完了
 
+main()->Window:初期画面レンダリング
+Window->Game:描画するオブジェクトの要求
+Game-->Window:描画オブジェクトデータ
+Window->Window:データに従いウィンドウに描画
+Window-->Window:描画完了
+Window-->main():レンダリング完了
 main()->Window:初期画面表示
-Game<-Window:初期画面データ要求
-Game-->Window:初期画面データ
-Window->>ウィンドウ:初期画面表示
-main()<--Window:表示完了
+Window->ウィンドウ:表示
+ウィンドウ-->Window:表示完了
+Window-->main():表示完了
+
+
