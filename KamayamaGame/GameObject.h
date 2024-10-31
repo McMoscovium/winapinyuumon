@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Windows.h>
+#include <string>
 
 /*
 ゲームに登場する絵、ボタンなどのオブジェクト。BITMAP形式で用意する。アニメーション等に使う差分は同じ大きさのビットマップを横に並べるようにして、スプライトシートの形で用意することを想定する。
@@ -8,18 +9,41 @@
 class GameObject
 {
 private:
-	int length = 0;//フレームの個数
+	std::string objectName;
+	int length;//フレームの個数
 	POINT position = { 0,0 };//オブジェクトの描画位置
-	const SIZE size;//オブジェクト1フレームの、長方形としての縦横サイズ（ピクセル）
-	SIZE wholeSize = { 0,0 };//スプライトシートのサイズ
-	HBITMAP hObjectImage = nullptr;//オブジェクトのビットマップイメージ
+	const SIZE frameSize;//オブジェクト1フレームの、長方形としての縦横サイズ（ピクセル）
+	HBITMAP hSpriteImage = nullptr;//スプライトシートのビットマップイメージ
+	int frameNumber;//今、スプライトの何フレーム目か（0から始まる）
+	COLORREF transparent = 0xff00ff;//透過色
 
 public:
-	GameObject(LPCWSTR path, SIZE size);
+	GameObject(LPCTSTR path, std::string objectName, SIZE frameSize);
 	~GameObject() = default;
-	void loadImage(LPCWSTR path);//pathの画像をビットマップイメージとしてhObjectImageに格納する。
-	void setPosition(POINT);//positionの変更
+
+	//positionの変更
+	void setObjectPosition(POINT);
+	//描画される場所のX座標の取得
+	const int getPositionX()const;
+	//描画される場所のY座標の取得
+	const int getPositionY()const;
+	//1フレームの幅を取得
+	const int getWidth()const;
+	//1フレームの高さを取得
+	const int getHeight()const;
+	//hBitmapを取得
+	const HBITMAP getSpriteImage()const;
+	//現在のフレームの原点のスプライトシートにおけるX座標を取得する
+	const int originOfCurrentFrame()const;
+	//スプライトの画像サイズ（px）を取得
+	SIZE getSpriteSize()const;
+	//現在のフレームが何番目かを取得
+	const int getCurrentFrameNumber()const;
+	
 private:
 	void setLength(int);
 	void setObjectImage(HBITMAP img);
+	void loadImage(LPCWSTR path);//pathの画像をビットマップイメージとしてhSpriteImageに格納する。
+	
+	
 };

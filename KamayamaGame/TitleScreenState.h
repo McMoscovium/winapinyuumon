@@ -1,9 +1,8 @@
 #pragma once
 
 #include "GameState.h"
-#include <unordered_map>
+#include <vector>
 #include <string>
-#include "GameObject.h"
 
 class InputManager;
 class Game;
@@ -12,12 +11,23 @@ class TitleScreenState :
     public GameState
 {
 public:
+    //メンバ変数
+
+private:
+    //メンバ変数
+
+public:
+    //メンバ関数
+
     TitleScreenState();
     ~TitleScreenState()override;
 
-    void update(Game* game,InputManager* inputManager)override;//スタートボタンが押されたらPlayingStateに遷移
+    //状態を更新
+    //スタートボタンが押されたらPlayingStateに遷移
+    void update(Game* game, InputManager* inputManager)override;
 
-    const std::unordered_map<std::wstring, GameObject*>* getGameObjects()const override;
+    
+
 private:
-    std::unordered_map<std::wstring, GameObject*> gameObjects;//GameObjectと名前のペア
+    //メンバ関数
 };

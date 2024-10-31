@@ -31,11 +31,15 @@ int WINAPI WinMain(
 	//初期化パート
 	//必要なインスタンスを作成、初期化
 	Game game;
-	Window window(hInstance, nShowCmd);
+	std::cout << "Gameインスタンス生成完了" << std::endl;
+	Window window(hInstance, nShowCmd, &game);
+	std::cout << "Windowインスタンス生成完了" << std::endl;
 	InputManager inputManager;
+	std::cout << "InputManagerインスタンス生成完了" << std::endl;
 
 	//初期画面レンダリング
-	window.render(&game);
+	window.render(game.getCurrentState());
+	std::cout << "初期レンダリング完了" << std::endl;
 	//初期画面表示
 	window.show();
 
@@ -60,15 +64,11 @@ int WINAPI WinMain(
 }
 
 void mainLoop(Game* game,Window* window, InputManager* inputManager) {
-	while (window->defaultUpdate()) {// WM_QUITメッセージが受信されたらループを終了
+	while (window->update(game)) {// WM_DESTROYメッセージが受信されたらループを終了
 		//メッセージ処理
 		inputManager->update();
 		//ゲームの状態を更新
 		game->update(inputManager);
-		//ゲーム画面のレンダリング
-		window->render(game);
-		//更新した画面を表示
-		window->show();
 	}
 }
 

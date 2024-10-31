@@ -1,24 +1,25 @@
 #pragma once
 
 #include"GameState.h"
-#include <unordered_map>
-#include "GameObject.h"
+
 #include <string>
 #include <vector>
 
 class Game;
 class InputManager;
-class GameObject;
 
 class PlayingState :
     public GameState
 {
-public:
+public://メンバ変数
+private://メンバ変数
+
+public://メンバ関数
+    PlayingState();
     ~PlayingState()override;
+    //アップデート関数
+    //ゲームが終了したらGameOverStateに遷移
     void update(Game* game,InputManager* inputManager)override;
-    const std::unordered_map<std::wstring, GameObject*>* getGameObjects()const override;
 
 private:
-    std::vector<std::wstring> objectNames;
-    std::unordered_map<std::wstring, GameObject*> gameObjects;//GameObjectとその名前のペア
 };
