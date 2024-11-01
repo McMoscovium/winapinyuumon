@@ -3,6 +3,7 @@
 #include "GameState.h"
 #include <Windows.h>
 #include "GameObject.h"
+#include <iostream>
 
 
 
@@ -108,25 +109,42 @@ HDC Window::getDC() const
 
 bool Window::update(Game* game)
 {
-	if (PeekMessage(&msg, hwnd, 0, 0, PM_REMOVE)) {//msgにメッセージを格納
+
+	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {//msgにメッセージを格納
+
+		std::wstring message = L"受信したメッセージ: " + std::to_wstring(msg.message) + L"\n";
+		OutputDebugStringW(message.c_str());
+
+		if (msg.message == WM_QUIT) {
+			std::cout << "WM_QUITメッセージを受け取りました" << std::endl;
+			return false;//ループ終了
+		}
 		TranslateMessage(&msg);
-		DispatchMessageW(&msg);//ウィンドウプロシージャを実行
+
+		message = L"変換後のメッセージ: " + std::to_wstring(msg.message) + L"\n";
+		OutputDebugStringW(message.c_str());
+
+		DispatchMessage(&msg);//ウィンドウプロシージャを実行
+		return true;
 	}
-	if (msg.message == WM_DESTROY) {
-		return 0;
+	else {//メッセージがない場合
+		return true;//ループ続行
 	}
-	return 1;
 }
 
 
-//ウィンドウに渡すユーザー定義の構造体。ウィンドウプロシージャ内で外部のデータを使う時に使う
 
 
 //ウィンドウプロシージャ
 LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+	std::wstring logMessage = L"受信したuMsg: " + std::to_wstring(uMsg) + L"\n";
+	OutputDebugStringW(logMessage.c_str());
 	switch (uMsg) {
-	case WM_DESTROY:
-		PostQuitMessage(0);//アプリ終了
+	case WM_CLOSE://×ボタンが押された
+		DestroyWindow(hwnd);
+		return 0;
+	case WM_DESTROY://ウィンドウ破棄メッセージを受信
+		PostQuitMessage(0);//メッセージループ終了
 		return 0;
 	case WM_PAINT:
 		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
