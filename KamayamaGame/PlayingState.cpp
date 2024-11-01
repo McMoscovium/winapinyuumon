@@ -7,6 +7,15 @@
 
 PlayingState::PlayingState()
 {
+    //GameObjectのインスタンスを生成
+    appendObject("PICTURE_FIELD", L".//assets//フィールド.bmp", { 1152,720 });
+    appendObject("PICTURE_BATTER", L".//assets//打者.bmp", { 360,391 });
+
+    //各GameObjectの描画位置を設定
+    gameObjects["PICTURE_FIELD"]->setObjectPosition({ 0,0 });
+    gameObjects["PICTURE_BATTER"]->setObjectPosition({ 32,48 });
+    
+    OutputDebugString(L"PlayingStateのインスタンスが作成されました\n");
 }
 
 PlayingState::~PlayingState() {}

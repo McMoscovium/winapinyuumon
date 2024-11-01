@@ -37,5 +37,7 @@ public:
 
 	//オブジェクトの個数
 	virtual const int numberOfObjects()const;
+
+	virtual bool isClicked(std::string objectName, InputManager* inputManager)const;
 private:
 };

@@ -5,12 +5,14 @@ class GameState;
 class Game;
 class GameObject;
 class Window;
+class InputManager;
 
 struct UserData {
 public:
 	Game* game;
 	Window* window;
-	UserData(Game* game, Window* window) :game(game), window(window) {}
+	InputManager* inputManager;
+	UserData(Game* game, Window* window, InputManager* inputManager) :game(game), window(window), inputManager(inputManager) {}
 };
 
 
@@ -22,7 +24,7 @@ public:
 
 
 	//コンストラクタ。ウィンドウクラスの登録、ウィンドウの作成まで行う。
-	Window(HINSTANCE hInstance, int nCmdShow,Game* game);
+	Window(HINSTANCE hInstance, int nCmdShow, Game* game, InputManager* inputManager);
 	~Window();
 
 	//現在のウィンドウを表示
@@ -56,7 +58,7 @@ private:
 	//ウィンドウ作成。今後、パラメータ類の変更も可能な実装に変える。
 	void create(Game* game);
 	//ウィンドウプロシージャに渡すインスタンスを登録
-	void registerUserData(Game* game);
+	void registerUserData(Game* game, InputManager* inputManager);
 	//クライアント領域の四角形の寸法（ピクセル）を取得
 	//左上隅の座標が(0,0)となる
 	void getClientRect(RECT* rect)const;

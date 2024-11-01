@@ -32,6 +32,11 @@ public:
 
 	void digestMessage(Window* window);
 
+	void setKeyState(int keyCode, KeyState keyState);
+
+	//マウスカーソルの位置を変更する（WM_MOUSEMOVEの時に呼び出す）
+	void setCursorPosition(POINT);
+
 private:
 	//キーの状態を格納するマップ
 	std::unordered_map<int, KeyState>keyStates;

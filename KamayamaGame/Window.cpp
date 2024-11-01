@@ -4,15 +4,15 @@
 #include <Windows.h>
 #include "GameObject.h"
 #include <iostream>
-
+#include "InputManager.h"
 
 
 
 //コンストラクタ
-Window::Window(HINSTANCE hInstance, int nCmdShow, Game* game) :hInstance(hInstance), msg({}) {
+Window::Window(HINSTANCE hInstance, int nCmdShow, Game* game, InputManager* inputManager) :hInstance(hInstance), msg({}) {
 	registerClass();
 	create(game);
-	registerUserData(game);
+	registerUserData(game, inputManager);
 }
 
 //デストラクタ
@@ -36,9 +36,9 @@ void Window::create(Game* game) {
 	);
 }
 
-void Window::registerUserData(Game* game)
+void Window::registerUserData(Game* game,InputManager* inputManager)
 {
-	UserData* userData = new UserData(game, this);
+	UserData* userData = new UserData(game, this, inputManager);
 	SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)userData);
 }
 
@@ -80,6 +80,10 @@ void Window::render(const GameState* currentState)
 	
 	HBITMAP oldhBitmap = (HBITMAP)SelectObject(hdcBackBuffer, hBackBuffer);//バックバッファ用HDCはバックバッファ用ビットマップを選択する。oldBitmapにもともバックバッファ用HDCが選択していたオブジェクトを格納しておく（オブジェクトリークの防止のため）
 
+	//背景を黒で塗りつぶす
+	HBRUSH brush = CreateSolidBrush(RGB(0, 0, 0));  // 黒色で塗りつぶし
+	FillRect(hdcBackBuffer, &ps.rcPaint, brush);
+	DeleteObject(brush);// リソース解放
 	
 	std::vector<std::string> objectOrder = currentState->getObjectOrder();//画面奥から順に描画するので、その順序を取得
 
@@ -109,21 +113,13 @@ HDC Window::getDC() const
 
 bool Window::update(Game* game)
 {
-
 	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {//msgにメッセージを格納
-
-		std::wstring message = L"受信したメッセージ: " + std::to_wstring(msg.message) + L"\n";
-		OutputDebugStringW(message.c_str());
 
 		if (msg.message == WM_QUIT) {
 			std::cout << "WM_QUITメッセージを受け取りました" << std::endl;
 			return false;//ループ終了
 		}
 		TranslateMessage(&msg);
-
-		message = L"変換後のメッセージ: " + std::to_wstring(msg.message) + L"\n";
-		OutputDebugStringW(message.c_str());
-
 		DispatchMessage(&msg);//ウィンドウプロシージャを実行
 		return true;
 	}
@@ -137,8 +133,6 @@ bool Window::update(Game* game)
 
 //ウィンドウプロシージャ
 LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
-	std::wstring logMessage = L"受信したuMsg: " + std::to_wstring(uMsg) + L"\n";
-	OutputDebugStringW(logMessage.c_str());
 	switch (uMsg) {
 	case WM_CLOSE://×ボタンが押された
 		DestroyWindow(hwnd);
@@ -146,12 +140,47 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 	case WM_DESTROY://ウィンドウ破棄メッセージを受信
 		PostQuitMessage(0);//メッセージループ終了
 		return 0;
-	case WM_PAINT:
+	case WM_PAINT: {
 		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		Game* game = userData->game;
 		Window* window = userData->window;
 		window->render(game->getCurrentState());
 		return 0;
+	}
+	case WM_MOUSEMOVE: {
+		// マウスの座標をクライアント領域基準で取得
+		int mouseX = LOWORD(lParam);  // マウスのX座標
+		int mouseY = HIWORD(lParam);  // マウスのY座標
+
+		//InputManagerを更新
+		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		InputManager* inputManager = userData->inputManager;
+		POINT cursor = { LOWORD(lParam),HIWORD(lParam) };
+		inputManager->setCursorPosition(cursor);
+
+		// マウス座標をウィンドウのタイトルに表示
+		std::wstring title = L"Mouse Position: (" + std::to_wstring(mouseX) + L", " + std::to_wstring(mouseY) + L")";
+		SetWindowTextW(hwnd, title.c_str());
+		return 0;
+	}
+	case WM_LBUTTONDOWN: {
+		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		//inputManagerを更新
+		InputManager* inputManager = userData->inputManager;
+		if (inputManager->getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_UP) {//直前までまだ押されてなかった
+			inputManager->setKeyState(VK_LBUTTON, InputManager::KeyState::KEY_PRESSED);
+			return 0;
+		}
+		inputManager->setKeyState(VK_LBUTTON, InputManager::KeyState::KEY_PRESSED);
+		return 0;
+	}
+	case WM_LBUTTONUP: {
+		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		//inputManagerを更新
+		InputManager* inputManager = userData->inputManager;
+		inputManager->setKeyState(VK_LBUTTON, InputManager::KeyState::KEY_UP);
+		return 0;
+	}
 	}
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);//デフォルトの処理を呼び出す
 }

@@ -22,8 +22,9 @@ int WINAPI WinMain(
 	//初期化パート
 	//必要なインスタンスを作成、初期化
 	Game game;
-	Window window(hInstance, nShowCmd, &game);
 	InputManager inputManager;
+	Window window(hInstance, nShowCmd, &game, &inputManager);
+	
 
 	//初期画面レンダリング
 	window.render(game.getCurrentState());
@@ -40,8 +41,6 @@ int WINAPI WinMain(
 
 void mainLoop(Game* game,Window* window, InputManager* inputManager) {
 	while (window->update(game)) {// WM_QUITメッセージが受信されたらループを終了
-		//メッセージ処理
-		inputManager->update();
 		//ゲームの状態を更新
 		game->update(inputManager);
 	}

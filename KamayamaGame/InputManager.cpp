@@ -52,3 +52,13 @@ POINT InputManager::getMousePosition()const {
 	return mousePosition;
 }
 
+void InputManager::setKeyState(int keyCode, KeyState keyState)
+{
+	keyStates[keyCode] = keyState;
+}
+
+void InputManager::setCursorPosition(POINT point)
+{
+	mousePosition = point;
+}
+

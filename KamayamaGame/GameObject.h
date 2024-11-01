@@ -23,10 +23,14 @@ public:
 
 	//positionの変更
 	void setObjectPosition(POINT);
+	//描画される位置を取得
+	const POINT getPosition()const;
 	//描画される場所のX座標の取得
 	const int getPositionX()const;
 	//描画される場所のY座標の取得
 	const int getPositionY()const;
+	//1フレームの寸法（縦横）を取得
+	const RECT getObjectRect()const;
 	//1フレームの幅を取得
 	const int getWidth()const;
 	//1フレームの高さを取得

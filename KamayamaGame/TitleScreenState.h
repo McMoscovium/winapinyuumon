@@ -26,8 +26,6 @@ public:
     //スタートボタンが押されたらPlayingStateに遷移
     void update(Game* game, InputManager* inputManager)override;
 
-    
-
 private:
     //メンバ関数
 };

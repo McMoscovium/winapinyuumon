@@ -27,6 +27,11 @@ void GameObject::setObjectPosition(POINT point)
 	position = point;
 }
 
+const POINT GameObject::getPosition() const
+{
+	return position;
+}
+
 void GameObject::setLength(int l) {
 	length = l;
 }
@@ -65,6 +70,16 @@ const int GameObject::getPositionX() const
 const int GameObject::getPositionY() const
 {
 	return position.y;
+}
+
+const RECT GameObject::getObjectRect() const
+{
+	RECT objectRect;
+	objectRect.left = position.x;
+	objectRect.top = position.y;
+	objectRect.right = position.x + frameSize.cx;
+	objectRect.bottom = position.y + frameSize.cy;
+	return objectRect;
 }
 
 const int GameObject::getWidth() const
