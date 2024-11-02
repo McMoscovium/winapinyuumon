@@ -39,6 +39,8 @@ public:
 	//デバイスコンテキストを取得
 	HDC getDC()const;
 
+	UINT getFps()const;
+
 	bool update(Game* game);//毎メッセージループで行う処理（WM_DESTROY等の処理）
 
 	//ウィンドウプロシージャ
@@ -52,6 +54,7 @@ private:
 	HWND hwnd;
 	const wchar_t* className = L"SampleWindowClass";
 	MSG msg;
+	UINT fps = 30;
 
 	//ウィンドウクラスの登録
 	void registerClass();

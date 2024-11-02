@@ -30,6 +30,8 @@ public:
 	//マウスの座標を取得する
 	POINT getMousePosition()const;
 
+	
+
 	void digestMessage(Window* window);
 
 	void setKeyState(int keyCode, KeyState keyState);

@@ -41,8 +41,6 @@ int WINAPI WinMain(
 
 void mainLoop(Game* game,Window* window, InputManager* inputManager) {
 	while (window->update(game)) {// WM_QUITメッセージが受信されたらループを終了
-		//ゲームの状態を更新
-		game->update(inputManager);
 	}
 	//WM_QUITを受け取るとループを抜ける
 }

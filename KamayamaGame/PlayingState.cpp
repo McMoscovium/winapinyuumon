@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "GameOverState.h"
+#include "InputManager.h"
 
 
 
@@ -25,4 +26,7 @@ void PlayingState::update(Game* game, InputManager* inputManager) {
     if (/*プレイ終了*/false) {
         game->changeState(new GameOverState());
     }
+    //以下、プレイ続行
+    POINT mouse = inputManager->getMousePosition();
+    gameObjects["PICTURE_BATTER"]->setObjectPosition(mouse);
 }

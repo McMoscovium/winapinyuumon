@@ -6,6 +6,7 @@
 #include <iostream>
 #include "InputManager.h"
 
+const UINT fps = 60;
 
 
 //コンストラクタ
@@ -22,11 +23,25 @@ Window::~Window() {
 
 //ウィンドウクラスの登録
 void Window::registerClass() {
-	WNDCLASS wc = {};
+	WNDCLASSEX wc = {};
 	wc.lpfnWndProc = WindowProc;//ウィンドウプロシージャの設定
+	wc.cbSize = sizeof(WNDCLASSEX);
+	wc.cbClsExtra = NULL;
+	wc.cbWndExtra = NULL;
 	wc.hInstance = hInstance;
 	wc.lpszClassName = className;
-	::RegisterClass(&wc);//ウィンドウクラスの登録
+	wc.hIcon = (HICON)LoadImage(
+		NULL, L".\\assets\\アイコン.ico",
+		IMAGE_ICON, NULL, NULL,
+		LR_DEFAULTSIZE | LR_LOADFROMFILE);
+	wc.hCursor = (HCURSOR)LoadCursor(NULL, IDC_ARROW);
+	wc.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));  // 黒色で塗りつぶし
+	wc.lpszMenuName = NULL;
+	wc.hIconSm = (HICON)LoadImage(
+		NULL, L".\\assets\\システムアイコン.ico",
+		IMAGE_ICON, NULL, NULL,
+		LR_DEFAULTSIZE | LR_LOADFROMFILE);
+	::RegisterClassExW(&wc);//ウィンドウクラスの登録
 }
 
 //ウィンドウ作成。
@@ -80,11 +95,7 @@ void Window::render(const GameState* currentState)
 	
 	HBITMAP oldhBitmap = (HBITMAP)SelectObject(hdcBackBuffer, hBackBuffer);//バックバッファ用HDCはバックバッファ用ビットマップを選択する。oldBitmapにもともバックバッファ用HDCが選択していたオブジェクトを格納しておく（オブジェクトリークの防止のため）
 
-	//背景を黒で塗りつぶす
-	HBRUSH brush = CreateSolidBrush(RGB(0, 0, 0));  // 黒色で塗りつぶし
-	FillRect(hdcBackBuffer, &ps.rcPaint, brush);
-	DeleteObject(brush);// リソース解放
-	
+		
 	std::vector<std::string> objectOrder = currentState->getObjectOrder();//画面奥から順に描画するので、その順序を取得
 
 	//ゲームオブジェクトを奥から順にバックバッファに描画する
@@ -111,6 +122,11 @@ HDC Window::getDC() const
 	return ::GetDC(hwnd);
 }
 
+UINT Window::getFps() const
+{
+	return fps;
+}
+
 bool Window::update(Game* game)
 {
 	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {//msgにメッセージを格納
@@ -134,12 +150,24 @@ bool Window::update(Game* game)
 //ウィンドウプロシージャ
 LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	switch (uMsg) {
+	case WM_CREATE: {
+		SetTimer(hwnd, 1, 1000 / ::fps, NULL);
+		break;
+	}
 	case WM_CLOSE://×ボタンが押された
 		DestroyWindow(hwnd);
 		return 0;
 	case WM_DESTROY://ウィンドウ破棄メッセージを受信
 		PostQuitMessage(0);//メッセージループ終了
+		break;
+	case WM_TIMER: {
+		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		Game* game = userData->game;
+		InputManager* inputManager = userData->inputManager;
+		game->update(inputManager);
+		InvalidateRect(hwnd, NULL, FALSE);  //ウィンドウ全体を無効化し、システムにWM_PAINTをポストさせる
 		return 0;
+	}
 	case WM_PAINT: {
 		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		Game* game = userData->game;
