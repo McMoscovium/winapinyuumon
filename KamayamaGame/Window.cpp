@@ -53,7 +53,7 @@ void Window::create(Game* game) {
 
 void Window::registerUserData(Game* game,InputManager* inputManager)
 {
-	UserData* userData = new UserData(game, this, inputManager);
+	userData = new UserData(game, this, inputManager);
 	SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)userData);
 }
 
@@ -96,7 +96,7 @@ void Window::render(const GameState* currentState)
 	HBITMAP oldhBitmap = (HBITMAP)SelectObject(hdcBackBuffer, hBackBuffer);//バックバッファ用HDCはバックバッファ用ビットマップを選択する。oldBitmapにもともバックバッファ用HDCが選択していたオブジェクトを格納しておく（オブジェクトリークの防止のため）
 
 		
-	std::vector<std::string> objectOrder = currentState->getObjectOrder();//画面奥から順に描画するので、その順序を取得
+	std::vector<std::wstring> objectOrder = currentState->getObjectOrder();//画面奥から順に描画するので、その順序を取得
 
 	//ゲームオブジェクトを奥から順にバックバッファに描画する
 	for (int i = 0; i < currentState->numberOfObjects(); i++) {
@@ -211,4 +211,9 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 	}
 	}
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);//デフォルトの処理を呼び出す
+}
+
+void Window::termination()
+{
+	delete userData;
 }

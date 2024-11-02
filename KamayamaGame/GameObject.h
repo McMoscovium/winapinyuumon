@@ -9,7 +9,7 @@
 class GameObject
 {
 private:
-	std::string objectName;
+	std::wstring objectName;
 	int length;//フレームの個数
 	POINT position = { 0,0 };//オブジェクトの描画位置
 	const SIZE frameSize;//オブジェクト1フレームの、長方形としての縦横サイズ（ピクセル）
@@ -18,7 +18,7 @@ private:
 	COLORREF transparent = 0xff00ff;//透過色
 
 public:
-	GameObject(LPCTSTR path, std::string objectName, SIZE frameSize);
+	GameObject(LPCTSTR path, std::wstring objectName, SIZE frameSize);
 	~GameObject() = default;
 
 	//positionの変更

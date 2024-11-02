@@ -16,7 +16,6 @@ private://メンバ変数
 
 public://メンバ関数
     PlayingState();
-    ~PlayingState()override;
     //アップデート関数
     //ゲームが終了したらGameOverStateに遷移
     void update(Game* game,InputManager* inputManager)override;

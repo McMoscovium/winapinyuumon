@@ -46,6 +46,9 @@ public:
 	//ウィンドウプロシージャ
 	static LRESULT CALLBACK WindowProc(HWND, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
+	//終了処理
+	void termination();
+
 protected:
 	
 	
@@ -55,6 +58,7 @@ private:
 	const wchar_t* className = L"SampleWindowClass";
 	MSG msg;
 	UINT fps = 30;
+	UserData* userData = nullptr;
 
 	//ウィンドウクラスの登録
 	void registerClass();

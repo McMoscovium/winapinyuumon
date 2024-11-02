@@ -28,4 +28,6 @@ public:
 	void changeState(GameState* newState);//currentState‚ğ•ÏX‚·‚é
 	void setBackBuffer(Window* window);//virtualWindow‚Ì‰Šúİ’è
 	const GameState* getCurrentState()const;
+	//I—¹ˆ—
+	void termination();
 };

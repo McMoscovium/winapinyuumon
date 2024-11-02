@@ -20,7 +20,6 @@ public:
     //メンバ関数
 
     TitleScreenState();
-    ~TitleScreenState()override;
 
     //状態を更新
     //スタートボタンが押されたらPlayingStateに遷移

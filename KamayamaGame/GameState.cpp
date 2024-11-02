@@ -6,30 +6,41 @@
 
 bool isPointOnRect(POINT point, RECT rect);
 
-const std::unordered_map<std::string,GameObject*>* GameState::getGameObjects() const
+GameState::~GameState()
+{
+    //gameObjectをdelete
+    for (auto& [objectName, gameObject] : gameObjects) {
+        delete gameObject;
+        std::wstring message = L"オブジェクト: " + objectName + L" をdeleteしました\n";
+        OutputDebugString(message.c_str());
+    }
+    OutputDebugString(L"ゲームステートが変更されました\n");
+}
+
+const std::unordered_map<std::wstring,GameObject*>* GameState::getGameObjects() const
 {
 	return &gameObjects;
 }
 
-std::vector<std::string> GameState::getObjectOrder() const
+std::vector<std::wstring> GameState::getObjectOrder() const
 {
     return objectOrder;
 }
 
-const GameObject* GameState::getGameObject(std::string objectName) const
+const GameObject* GameState::getGameObject(std::wstring objectName) const
 {
     return gameObjects.at(objectName);
 }
 
-void GameState::appendObject(std::string objectName, LPCTSTR path, SIZE frameSize)
+void GameState::appendObject(std::wstring objectName, LPCTSTR path, SIZE frameSize)
 {
     if (gameObjects.emplace(objectName, new GameObject(path, objectName, frameSize)).second) {
         //追加成功
         objectOrder.push_back(objectName);
     }
     else {
-        //追加失敗
-        std::cout << "ゲームオブジェクト名: " << objectName << " を追加できませんでした" << std::endl;
+        std::wstring message = L"ゲームオブジェクト: " + objectName + L" を追加できませんでした";
+        OutputDebugString(message.c_str());
     }
 }
 
@@ -38,18 +49,19 @@ const int GameState::numberOfObjects()const
     return objectOrder.size();
 }
 
-bool GameState::isClicked(std::string objectName, InputManager* inputManager) const
+bool GameState::isClicked(std::wstring objectName, InputManager* inputManager) const
 {
     if (inputManager->getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_UP) {//マウスの左ボタンが押されていない
         return false;
     }
-    //以下、マウスの左ボタンが押されている
+
+    if (inputManager->getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_DOWN) {//左ボタンがすでに押されている
+        return false;
+
+    }
+    //以下、マウスの左ボタンがクリックされた直後の処理
 
     POINT cursor = inputManager->getMousePosition();//カーソル座標
-
-    int x = cursor.x, y = cursor.y;
-    std::wstring message = L"x = " + std::to_wstring(x) + L", y = " + std::to_wstring(y) + L" がクリックされた\n";
-    OutputDebugString(message.c_str());
 
 
     GameObject* object = gameObjects.at(objectName);

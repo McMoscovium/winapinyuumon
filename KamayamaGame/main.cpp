@@ -10,7 +10,6 @@ const LPCWSTR gameName = L"クマの釜山のホームランダービー！";
 
 
 void mainLoop(Game* game,Window* window,InputManager* inputManager);
-void termination();
 
 int WINAPI WinMain(
 	HINSTANCE hInstance,
@@ -34,7 +33,8 @@ int WINAPI WinMain(
 
 	//終了処理
 	//WM_QUITメッセージがもう出されているので、はやく終わる。
-	termination();
+	window.termination();
+	game.termination();
 
 	return 0;
 }
@@ -43,8 +43,4 @@ void mainLoop(Game* game,Window* window, InputManager* inputManager) {
 	while (window->update(game)) {// WM_QUITメッセージが受信されたらループを終了
 	}
 	//WM_QUITを受け取るとループを抜ける
-}
-
-void termination() {//メモリ解放処理等
-	
 }

@@ -15,7 +15,6 @@ void Game::drawWindow()
 
 
 Game::~Game() {
-    delete currentState;
 }
 void Game::update(InputManager* inputManager) {
 	currentState->update(this, inputManager);
@@ -33,5 +32,10 @@ void Game::setBackBuffer(Window* window)
 const GameState* Game::getCurrentState() const
 {
 	return currentState;
+}
+
+void Game::termination()
+{
+	delete currentState;
 }
 

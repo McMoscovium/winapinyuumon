@@ -3,13 +3,11 @@
 #include <iostream>
 #include <string>
 
-GameObject::GameObject(LPCTSTR path, std::string objectName, SIZE frameSize)
+GameObject::GameObject(LPCTSTR path, std::wstring objectName, SIZE frameSize)
 	:frameSize(frameSize), objectName(objectName)
 {
 	loadImage(path);//hSpriteImageにビットマップハンドルを格納
 	setLength(static_cast<int>(getSpriteSize().cx / frameSize.cx));//スプライトのコマ数を設定
-	//以下テスト用
-	std::cout << objectName << " のlength: " << length << std::endl;
 }
 void GameObject::loadImage(LPCWSTR path)
 {
@@ -17,8 +15,8 @@ void GameObject::loadImage(LPCWSTR path)
 		NULL, path, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE
 	)));
 	if (hSpriteImage == NULL) {
-		//読み込み失敗
-		std::cout << "ゲームオブジェクト " << objectName << " は画像をロードできませんでした" << std::endl;
+		std::wstring message = L"ゲームオブジェクト: " + objectName + L" は画像をロードできませんでした\n";
+		OutputDebugString(message.c_str());
 	}
 }
 
@@ -52,7 +50,8 @@ SIZE GameObject::getSpriteSize() const
 	}
 	else {
 		//失敗
-		std::cout << "オブジェクト " << objectName << "のビットマップをGetObjectできませんでした。" << std::endl;
+	std::wstring message = L"オブジェクト: " + objectName + L" のビットマップをGetObjectできませんでした\n";
+	OutputDebugString(message.c_str());
 	}
 	return spriteSize;
 }
