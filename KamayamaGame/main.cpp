@@ -1,13 +1,26 @@
-#include<Windows.h>
+#include <Windows.h>
+#include "Window.h"
+#include "Game.h"
+#include "InputManager.h"
 
-#include"Game.h"
+//開発用
+#include <iostream>
+
+const LPCWSTR gameName = L"クマの釜山のホームランダービー！";
+
+
+void mainLoop(Game* game,Window* window,InputManager* inputManager);
+void termination();
 
 int WINAPI WinMain(
 	HINSTANCE hInstance,
 	HINSTANCE hPreInst,
 	LPSTR lpszCmdLine,
-	int nCmdShow) {
+	int nShowCmd) {
 
+
+	//初期化パート
+	//必要なインスタンスを作成、初期化
 	Game game;
 	InputManager inputManager;
 	Window window(hInstance, nShowCmd, &game, &inputManager);

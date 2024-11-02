@@ -1,0 +1,33 @@
+title KamayamaGame-初期化パート
+
+
+actor ユーザー
+participant main()
+
+autoactivation on
+
+ユーザー->main():実行
+main()->*Game:インスタンス作成
+Game->Game:タイトル状態インスタンス作成
+note over Game:タイトル画面作成
+Game-->Game:完了
+main()<--Game:作成完了
+main()->*Window:インスタンス作成
+Window->Window:ウィンドウ作成
+Window-->Window:作成完了
+main()<--Window:作成完了
+main()->*InputManager:インスタンス作成
+main()<--InputManager:作成完了
+
+main()->Window:初期画面レンダリング
+Window->Game:描画するオブジェクトの要求
+Game-->Window:描画オブジェクトデータ
+Window->Window:データに従いウィンドウに描画
+Window-->Window:描画完了
+Window-->main():レンダリング完了
+main()->Window:初期画面表示
+Window->ウィンドウ:表示
+ウィンドウ-->Window:表示完了
+Window-->main():表示完了
+
+

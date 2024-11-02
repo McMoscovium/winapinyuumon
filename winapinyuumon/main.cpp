@@ -141,6 +141,9 @@ int WINAPI WinMain(
 	
 	while (GetMessage(&msg, NULL, 0, 0) > 0)
 	{
+		std::wstring message = L"受信したメッセージ: " + std::to_wstring(msg.message) + L"\n";
+		OutputDebugStringW(message.c_str());
+
 		TranslateMessage(&msg);
 		DispatchMessageW(&msg);
 	}

@@ -1,0 +1,14 @@
+title タイトル画面作成
+
+participant Game
+
+autoactivation on
+
+Game->*TitleScreenState:インスタンス作成
+TitleScreenState->TitleScreenState:コンストラクタ
+participant アセット
+TitleScreenState->GameObject:必要な分だけインスタンス生成
+TitleScreenState<--GameObject:完了
+note over TitleScreenState:各画像の描画位置の設定
+TitleScreenState-->TitleScreenState:コンストラクト完了
+Game<--TitleScreenState:作成完了

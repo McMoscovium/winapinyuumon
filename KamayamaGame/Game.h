@@ -1,20 +1,31 @@
 #pragma once
 
-#include<Windows.h>
-#include"Window.h"
+/*
+PC内部でのゲームの進行を管理するクラス。
+仮想画面への描画も行う。
+*/
+#include "unordered_map"
+
+class GameState;
+class VirtualWindow;
+class Window;
+class InputManager;
+class ObjectName;
 
 class Game
 {
 private:
-	Window window;
+	GameState* currentState;
+
+	void drawWindow();//仮想画面にゲーム画面を描画する
+
 	
 public:
-	enum SeqName {
-		SEQ_TITLE
-	};
+	Game();
+	~Game();
 
-	void initializeWindow(LPCSTR name, LPCSTR iconPath, LPCSTR sysIconPath, SeqName SEQ_NAME);
-	bool terminateFlag();
-	void mainloop();
-	void terminate();
+	void update(InputManager* inputManager);//ゲーム状態ごとに設定された更新処理を行う
+	void changeState(GameState* newState);//currentStateを変更する
+	void setBackBuffer(Window* window);//virtualWindowの初期設定
+	const GameState* getCurrentState()const;
 };
