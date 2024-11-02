@@ -1,0 +1,12 @@
+title KamayamaGame-メインループ
+
+autoactivation on
+
+participant Game
+participant GameState
+
+Game->GameState:update()
+GameState->InputManager:入力データ要求
+GameState<--InputManager:データ
+note over GameState:ゲーム状態の更新処理
+Game<--GameState:更新終了
