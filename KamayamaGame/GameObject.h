@@ -14,7 +14,7 @@ private:
 	POINT position = { 0,0 };//オブジェクトの描画位置
 	const SIZE frameSize;//オブジェクト1フレームの、長方形としての縦横サイズ（ピクセル）
 	HBITMAP hSpriteImage = nullptr;//スプライトシートのビットマップイメージ
-	int frameNumber;//今、スプライトの何フレーム目か（0から始まる）
+	int frameNumber = 0;//今、スプライトの何フレーム目か（0から始まる）
 	COLORREF transparent = 0xff00ff;//透過色
 
 public:
@@ -35,6 +35,8 @@ public:
 	const int getWidth()const;
 	//1フレームの高さを取得
 	const int getHeight()const;
+	//lengthを取得
+	int getLength()const;
 	//hBitmapを取得
 	const HBITMAP getSpriteImage()const;
 	//現在のフレームの原点のスプライトシートにおけるX座標を取得する
@@ -43,11 +45,13 @@ public:
 	SIZE getSpriteSize()const;
 	//現在のフレームが何番目かを取得
 	const int getCurrentFrameNumber()const;
+	//フレームを次に進める（進めれたらtrue）
+	bool nextFrame();
+	//指定したフレームに変える
+	bool changeFrame(int);
 	
 private:
 	void setLength(int);
 	void setObjectImage(HBITMAP img);
 	void loadImage(LPCWSTR path);//pathの画像をビットマップイメージとしてhSpriteImageに格納する。
-	
-	
 };

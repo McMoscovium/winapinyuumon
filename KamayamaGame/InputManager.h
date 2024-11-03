@@ -10,9 +10,10 @@ class InputManager
 public:
 	//キーの状態を表す列挙型
 	enum class KeyState {
-		KEY_UP,//キーは押されていない
+		KEY_UP,//キーは押されていないまま
 		KEY_DOWN,//キーは押されたまま
-		KEY_PRESSED//キーがちょうど押された
+		KEY_PRESSED,//キーがちょうど押された
+		KEY_RELEASED//キーがちょうど離された
 	};
 
 	InputManager();
@@ -40,6 +41,9 @@ public:
 	void setCursorPosition(POINT);
 
 private:
+	//1フレーム前のキーの状態
+	std::unordered_map<int, KeyState>oldKeyStates;
+
 	//キーの状態を格納するマップ
 	std::unordered_map<int, KeyState>keyStates;
 
@@ -48,5 +52,7 @@ private:
 
 	//監視するキーの初期化を行う
 	void initializeKeys();
+
+
 };
 

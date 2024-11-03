@@ -27,14 +27,43 @@ PlayingState::PlayingState()
 void PlayingState::update(Game* game, InputManager* inputManager) {
     //プレイ中の更新処理
 
-
-
     if (isClicked(L"BUTTON_EXIT", inputManager)) {
         game->changeState(new TitleScreenState());
         return;
     }
 
-    //以下、プレイ続行
+    //以下、BUTTON_EXITクリック無し
+
+    //マウス座標を取得し、釜山の座標を変更
     POINT mouse = inputManager->getMousePosition();
     gameObjects[L"PICTURE_BATTER"]->setObjectPosition(mouse);
+
+    //釜山のスイング処理
+    const int kamayamaFrame = gameObjects.at(L"PICTURE_BATTER")->getCurrentFrameNumber();
+    if (kamayamaFrame == 0) {//スイングしてない
+        if (inputManager->getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_PRESSED) {
+            releasedLeftButtonUntilSwingEnded = false;
+            gameObjects.at(L"PICTURE_BATTER")->nextFrame();
+            //OutputDebugString(L"スイング開始\n");
+        }
+    }
+    else if (kamayamaFrame < gameObjects.at(L"PICTURE_BATTER")->getLength()-1) {//スイング途中
+        if (inputManager->getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_UP) {
+            releasedLeftButtonUntilSwingEnded = true;
+        }
+        gameObjects.at(L"PICTURE_BATTER")->nextFrame();
+    }
+    else {//スイング終了
+        if ((inputManager->getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_DOWN) &&
+            (releasedLeftButtonUntilSwingEnded == false)) {
+            //OutputDebugString(L"スイング継続\n");
+        }
+        else {
+            releasedLeftButtonUntilSwingEnded = true;
+            gameObjects.at(L"PICTURE_BATTER")->changeFrame(0);
+            //OutputDebugString(L"スイング終了\n");
+        }
+    }
+    std::wstring message = std::to_wstring(releasedLeftButtonUntilSwingEnded) + L"\n";
+    OutputDebugString(message.c_str());
 }

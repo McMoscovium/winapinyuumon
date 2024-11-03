@@ -1,5 +1,6 @@
 #include "InputManager.h"
 #include "Window.h"
+#include <string>
 
 InputManager::InputManager() :mousePosition{ 0,0 }
 {
@@ -19,24 +20,40 @@ void InputManager::initializeKeys() {//@TODO
 
 void InputManager::update()
 {
-	//ｷｰﾎﾞｰﾄﾞの状態を更新する
-	for (auto& [keyCode, state] : keyStates) {
-		//現在のキー状態を確認
-		if (GetAsyncKeyState(keyCode) & 0x8000) {
-			//キーが押されている場合
-			if (state == InputManager::KeyState::KEY_UP) {
-				keyStates[keyCode] = InputManager::KeyState::KEY_PRESSED;
-			}
-			else {
-				keyStates[keyCode] = InputManager::KeyState::KEY_DOWN;
-			}
+	for (auto& [keyCode, oldKeyState] : oldKeyStates) {
+		//
+		if ((oldKeyState == KeyState::KEY_PRESSED)
+			&& (getKeyState(keyCode) == KeyState::KEY_PRESSED)) {//押されたまま
+			setKeyState(keyCode, KeyState::KEY_DOWN);
 		}
-		else {
-			keyStates[keyCode] = InputManager::KeyState::KEY_UP;
+
+		if ((oldKeyState == KeyState::KEY_RELEASED)
+			&& (getKeyState(keyCode) == KeyState::KEY_RELEASED)) {//離されたまま
+			setKeyState(keyCode, KeyState::KEY_UP);
 		}
 	}
-	//マウスの位置を更新
-	GetCursorPos(&mousePosition);
+
+	std::wstring message = L"";
+
+	switch (getKeyState(VK_LBUTTON)) {
+	case KeyState::KEY_UP:
+		message += L"KEY_UP";
+		break;
+	case KeyState::KEY_DOWN:
+		message += L"KEY_DOWN";
+		break;
+	case KeyState::KEY_PRESSED:
+		message += L"KEY_PRESSED";
+		break;
+	case KeyState::KEY_RELEASED:
+		message += L"KEY_RELEASED";
+		break;
+	}
+	message += L"\n";
+	OutputDebugString(message.c_str());
+
+	//最後に、oldKeyStatesに状態をコピー
+	oldKeyStates = keyStates;
 }
 
 bool InputManager::isKeyPressed(int keyCode) {

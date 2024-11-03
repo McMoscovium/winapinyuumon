@@ -164,7 +164,9 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		Game* game = userData->game;
 		InputManager* inputManager = userData->inputManager;
+		inputManager->update();
 		game->update(inputManager);
+
 		InvalidateRect(hwnd, NULL, FALSE);  //ウィンドウ全体を無効化し、システムにWM_PAINTをポストさせる
 		return 0;
 	}
@@ -187,18 +189,17 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 		inputManager->setCursorPosition(cursor);
 
 		// マウス座標をウィンドウのタイトルに表示
-		std::wstring title = L"Mouse Position: (" + std::to_wstring(mouseX) + L", " + std::to_wstring(mouseY) + L")";
-		SetWindowTextW(hwnd, title.c_str());
+		//std::wstring title = L"Mouse Position: (" + std::to_wstring(mouseX) + L", " + std::to_wstring(mouseY) + L")";
+		//SetWindowTextW(hwnd, title.c_str());
 		return 0;
 	}
 	case WM_LBUTTONDOWN: {
+		OutputDebugString(L"WM_LBUTTONDOWN\n");
+
+
 		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		//inputManagerを更新
 		InputManager* inputManager = userData->inputManager;
-		if (inputManager->getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_UP) {//直前までまだ押されてなかった
-			inputManager->setKeyState(VK_LBUTTON, InputManager::KeyState::KEY_PRESSED);
-			return 0;
-		}
 		inputManager->setKeyState(VK_LBUTTON, InputManager::KeyState::KEY_PRESSED);
 		return 0;
 	}
@@ -206,7 +207,7 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		//inputManagerを更新
 		InputManager* inputManager = userData->inputManager;
-		inputManager->setKeyState(VK_LBUTTON, InputManager::KeyState::KEY_UP);
+		inputManager->setKeyState(VK_LBUTTON, InputManager::KeyState::KEY_RELEASED);
 		return 0;
 	}
 	}

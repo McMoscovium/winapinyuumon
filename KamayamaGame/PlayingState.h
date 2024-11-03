@@ -13,6 +13,7 @@ class PlayingState :
 {
 public://ƒƒ“ƒo•Ï”
 private://ƒƒ“ƒo•Ï”
+    bool releasedLeftButtonUntilSwingEnded = false;
 
 public://ƒƒ“ƒoŠÖ”
     PlayingState();
