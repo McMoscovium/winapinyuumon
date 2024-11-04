@@ -132,7 +132,6 @@ bool Window::update(Game* game)
 	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {//msgにメッセージを格納
 
 		if (msg.message == WM_QUIT) {
-			std::cout << "WM_QUITメッセージを受け取りました" << std::endl;
 			return false;//ループ終了
 		}
 		TranslateMessage(&msg);
@@ -189,12 +188,11 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 		inputManager->setCursorPosition(cursor);
 
 		// マウス座標をウィンドウのタイトルに表示
-		//std::wstring title = L"Mouse Position: (" + std::to_wstring(mouseX) + L", " + std::to_wstring(mouseY) + L")";
-		//SetWindowTextW(hwnd, title.c_str());
+		std::wstring title = L"Mouse Position: (" + std::to_wstring(mouseX) + L", " + std::to_wstring(mouseY) + L")";
+		SetWindowTextW(hwnd, title.c_str());
 		return 0;
 	}
 	case WM_LBUTTONDOWN: {
-		OutputDebugString(L"WM_LBUTTONDOWN\n");
 
 
 		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);

@@ -33,24 +33,6 @@ void InputManager::update()
 		}
 	}
 
-	std::wstring message = L"";
-
-	switch (getKeyState(VK_LBUTTON)) {
-	case KeyState::KEY_UP:
-		message += L"KEY_UP";
-		break;
-	case KeyState::KEY_DOWN:
-		message += L"KEY_DOWN";
-		break;
-	case KeyState::KEY_PRESSED:
-		message += L"KEY_PRESSED";
-		break;
-	case KeyState::KEY_RELEASED:
-		message += L"KEY_RELEASED";
-		break;
-	}
-	message += L"\n";
-	OutputDebugString(message.c_str());
 
 	//最後に、oldKeyStatesに状態をコピー
 	oldKeyStates = keyStates;

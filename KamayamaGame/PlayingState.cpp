@@ -14,11 +14,13 @@ PlayingState::PlayingState()
     appendObject(L"PICTURE_FIELD", L".//assets//フィールド.bmp", { 1152,720 });
     appendObject(L"PICTURE_BATTER", L".//assets//打者.bmp", { 360,391 });
     appendObject(L"BUTTON_EXIT", L".//assets//おわる.bmp", { 256,128 });
+    appendObject(L"PICTURE_PITCHER", L".//assets//投手.bmp", { 112,182 });
 
     //各GameObjectの描画位置を設定
     gameObjects.at(L"PICTURE_FIELD")->setObjectPosition({ 0,0 });
     gameObjects.at(L"PICTURE_BATTER")->setObjectPosition({ 32,48 });
     gameObjects.at(L"BUTTON_EXIT")->setObjectPosition({ 850,500 });
+    gameObjects.at(L"PICTURE_PITCHER")->setObjectPosition({ 514, 22 });
     
     OutputDebugString(L"PlayingStateのインスタンスが作成されました\n");
 }
@@ -34,10 +36,15 @@ void PlayingState::update(Game* game, InputManager* inputManager) {
 
     //以下、BUTTON_EXITクリック無し
 
-    //マウス座標を取得し、釜山の座標を変更
-    POINT mouse = inputManager->getMousePosition();
-    gameObjects[L"PICTURE_BATTER"]->setObjectPosition(mouse);
+    //バッターの位置をマウス位置に合わせて変更
+    updateBatterPos(inputManager);
 
+    //スイングのアニメーション処理
+    animateBatter(inputManager);
+}
+
+void PlayingState::animateBatter(InputManager* inputManager)
+{
     //釜山のスイング処理
     const int kamayamaFrame = gameObjects.at(L"PICTURE_BATTER")->getCurrentFrameNumber();
     if (kamayamaFrame == 0) {//スイングしてない
@@ -47,7 +54,7 @@ void PlayingState::update(Game* game, InputManager* inputManager) {
             //OutputDebugString(L"スイング開始\n");
         }
     }
-    else if (kamayamaFrame < gameObjects.at(L"PICTURE_BATTER")->getLength()-1) {//スイング途中
+    else if (kamayamaFrame < gameObjects.at(L"PICTURE_BATTER")->getLength() - 1) {//スイング途中
         if (inputManager->getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_UP) {
             releasedLeftButtonUntilSwingEnded = true;
         }
@@ -64,6 +71,12 @@ void PlayingState::update(Game* game, InputManager* inputManager) {
             //OutputDebugString(L"スイング終了\n");
         }
     }
-    std::wstring message = std::to_wstring(releasedLeftButtonUntilSwingEnded) + L"\n";
-    OutputDebugString(message.c_str());
+}
+
+void PlayingState::updateBatterPos(InputManager* inputManager)
+{
+    //マウス座標を取得し、釜山の座標を変更
+    POINT mouse = inputManager->getMousePosition();
+    POINT kamayamaOrigin = { mouse.x - 302, mouse.y - 197 };
+    gameObjects[L"PICTURE_BATTER"]->setObjectPosition(kamayamaOrigin);
 }
