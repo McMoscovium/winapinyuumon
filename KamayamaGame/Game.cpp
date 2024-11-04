@@ -11,9 +11,6 @@ void Game::drawWindow()
 {
 }
 
-
-
-
 Game::~Game() {
 }
 void Game::update(InputManager* inputManager) {

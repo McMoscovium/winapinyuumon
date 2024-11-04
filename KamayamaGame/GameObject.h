@@ -9,6 +9,7 @@
 class GameObject
 {
 private:
+	bool visible = true;//trueで描画される
 	std::wstring objectName;
 	int length;//フレームの個数
 	POINT position = { 0,0 };//オブジェクトの描画位置
@@ -49,6 +50,8 @@ public:
 	bool nextFrame();
 	//指定したフレームに変える
 	bool changeFrame(int);
+	//visibleかどうか返す
+	bool isVisible()const;
 	
 private:
 	void setLength(int);

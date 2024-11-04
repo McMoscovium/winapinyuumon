@@ -15,6 +15,7 @@ PlayingState::PlayingState()
     appendObject(L"PICTURE_BATTER", L".//assets//打者.bmp", { 360,391 });
     appendObject(L"BUTTON_EXIT", L".//assets//おわる.bmp", { 256,128 });
     appendObject(L"PICTURE_PITCHER", L".//assets//投手.bmp", { 112,182 });
+    appendObject(L"PICTURE_BALL", L".//assets//ボール.bmp", { 41,50 });
 
     //各GameObjectの描画位置を設定
     gameObjects.at(L"PICTURE_FIELD")->setObjectPosition({ 0,0 });

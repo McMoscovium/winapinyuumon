@@ -85,6 +85,11 @@ bool GameObject::changeFrame(int frameNumber)
 	}
 }
 
+bool GameObject::isVisible() const
+{
+	return visible;
+}
+
 const int GameObject::getPositionX() const
 {
 	return position.x;

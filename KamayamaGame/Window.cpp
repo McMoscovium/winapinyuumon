@@ -100,8 +100,12 @@ void Window::render(const GameState* currentState)
 
 	//ゲームオブジェクトを奥から順にバックバッファに描画する
 	for (int i = 0; i < currentState->numberOfObjects(); i++) {
-		//i番目のオブジェクトを描画
+		//i番目のオブジェクトを選択
 		const GameObject* drawnObject = currentState->getGameObject(objectOrder.at(i));
+		//visible=falseなら次のオブジェクトへ
+		if (!drawnObject->isVisible()) {
+			continue;
+		}
 		renderGameObject(drawnObject,hdcBackBuffer);
 	}
 	//出来上がったバックバッファを本来のデバイスコンテキストに描画
