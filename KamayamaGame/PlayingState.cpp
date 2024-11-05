@@ -55,7 +55,6 @@ PlayingState::PlayingState()
     OutputDebugString(L"PlayingStateのインスタンスが作成されました\n");
 }
 
-
 void PlayingState::update(Game* game, InputManager* inputManager) {
     switch (phase) {
     case WAITING_PITCHING:
@@ -64,7 +63,6 @@ void PlayingState::update(Game* game, InputManager* inputManager) {
     case IN_PITCHING:
         updateInPitchingPhase(inputManager, game);
     }
-    
 }
 
 void PlayingState::updateWaitingPitchingPhase(InputManager* inputManager, Game* game)
@@ -127,6 +125,9 @@ void PlayingState::updateBatFrame(int currentBatterFrame)
 
 void PlayingState::updateInPitchingPhase(InputManager* inputManager, Game* game)
 {
+    //ピッチングアニメーションの更新
+    updatePitchingMotion();
+
     //ヒッティングカーソルの位置を更新
     updateCursorPos(inputManager);
 
@@ -144,6 +145,7 @@ void PlayingState::updateInPitchingPhase(InputManager* inputManager, Game* game)
 
     //スイングのアニメーション処理
     updateBatterAnimation(inputManager);
+
 
 
     int currentBatterFrame = gameObjects.at(L"PICTURE_BATTER")->getCurrentFrameNumber();
@@ -221,10 +223,6 @@ void PlayingState::updateBatterPos(InputManager* inputManager)
         nextKamayamaPos = PlayingState::nextKamayamaPos(gameObjects.at(L"PICTURE_BATTER")->getPosition(), velocityAngle);//次フレームの釜山の位置
     }
     
-    std::wstring message = L"x: " + std::to_wstring(nextKamayamaPos.x) + L" y: " + std::to_wstring(nextKamayamaPos.y) + L"\n";
-
-    OutputDebugString(message.c_str());
-    
     gameObjects[L"PICTURE_BATTER"]->setObjectPosition(nextKamayamaPos);
 }
 
@@ -276,4 +274,9 @@ POINT PlayingState::nextKamayamaPos(POINT position, Vector2D movement)
     nextPos.x = std::max<int>(batterBox.left, std::min<int>(position.x + (int)std::round(movement.x), batterBox.right));
     nextPos.y = std::max<int>(batterBox.top, std::min<int>(position.y + (int)std::round(movement.y), batterBox.bottom));
     return nextPos;
+}
+
+void PlayingState::updatePitchingMotion()
+{
+    //ピッチャーが第0フレーム
 }

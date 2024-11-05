@@ -63,4 +63,6 @@ private://ƒƒ“ƒo•Ï”
     void hitting();
     //
     POINT nextKamayamaPos(POINT position, Vector2D movement);
+    //
+    void updatePitchingMotion();
 };
