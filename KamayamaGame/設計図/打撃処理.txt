@@ -1,0 +1,24 @@
+title 打撃処理
+
+autoactivation on
+
+PlayingState -> Batter:?フレ―ム数
+Batter-->PlayingState:フレ―ム数
+
+opt 3<=フレーム数<=5
+
+PlayingState->Ball:ボールのY座標取得
+Ball-->PlayingState:ボールY座標
+
+PlayingState->Batter:打者のY座標取得
+Batter-->PlayingState:打者Y座標
+
+opt ボールY座標と打者Y座標が近い
+
+
+group 打球速度計算
+note over PlayingState:フレーム数、打者のX座標、ボールのX座標から\nボールの速度、打球角度を計算
+end
+PlayingState-->PlayingState:プレイング状態を「飛球中」に変更
+end
+end
