@@ -52,6 +52,10 @@ public:
 	bool changeFrame(int);
 	//visible‚©‚Ç‚¤‚©•Ô‚·
 	bool isVisible()const;
+	//visible‚É‚·‚é
+	void appear();
+	//invisible‚É‚·‚é
+	void hide();
 	
 private:
 	void setLength(int);

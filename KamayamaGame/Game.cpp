@@ -35,4 +35,3 @@ void Game::termination()
 {
 	delete currentState;
 }
-

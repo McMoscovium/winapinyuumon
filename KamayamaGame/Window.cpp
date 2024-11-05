@@ -6,7 +6,7 @@
 #include <iostream>
 #include "InputManager.h"
 
-const UINT fps = 60;
+const UINT fps = 30;
 
 
 //コンストラクタ

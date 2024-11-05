@@ -90,6 +90,16 @@ bool GameObject::isVisible() const
 	return visible;
 }
 
+void GameObject::appear()
+{
+	visible = true;
+}
+
+void GameObject::hide()
+{
+	visible = false;
+}
+
 const int GameObject::getPositionX() const
 {
 	return position.x;

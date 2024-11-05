@@ -36,6 +36,7 @@ TitleScreenState::TitleScreenState() {
 void TitleScreenState::update(Game* game,InputManager* inputManager) {
     //タイトル画面の更新処理@TODO
 
+    //終わるボタンクリック時@TODO
 
     //スタートボタンクリック時
     if (isClicked(L"BUTTON_START", inputManager)) {
