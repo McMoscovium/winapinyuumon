@@ -1,0 +1,22 @@
+title updatePitchingMotion()
+
+autoactivation on
+
+PlayingState->Pitcher:フレーム更新
+
+alt フレーム数!=20
+note over Pitcher:次のフレームへ
+else フレーム数=5
+Pitcher->Ball:appear
+Ball-->Pitcher:出現完了
+else フレーム数=15
+Pitcher->Ball:ベースへ\n移動開始せよ
+Ball-->Pitcher:移動開始\n設定完了
+end
+Pitcher-->PlayingState:更新完了
+
+PlayingState->Ball:フレーム更新
+opt Ball.ベースへ移動=true
+note over Ball:移動
+end
+Ball-->PlayingState:更新完了
