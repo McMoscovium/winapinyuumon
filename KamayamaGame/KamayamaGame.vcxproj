@@ -157,12 +157,17 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="GameSubState.cpp" />
+    <ClCompile Include="IGameState.cpp" />
+    <ClCompile Include="InPitchingSubState.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlayingState.cpp" />
     <ClCompile Include="StatusState.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="VirtualWindow.cpp" />
     <ClCompile Include="TitleScreenState.cpp" />
+    <ClCompile Include="WaitingPitchingSubState.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,11 +176,16 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameOverState.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="GameSubState.h" />
+    <ClInclude Include="IGameState.h" />
+    <ClInclude Include="InPitchingSubState.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="PlayingState.h" />
     <ClInclude Include="StatusState.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="VirtualWindow.h" />
     <ClInclude Include="TitleScreenState.h" />
+    <ClInclude Include="WaitingPitchingSubState.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>

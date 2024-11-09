@@ -4,16 +4,13 @@
 #include"TitleScreenState.h"
 #include"InputManager.h"
 
-GameOverState::GameOverState()
+GameOverState::GameOverState(Game& game) :
+    GameState<GameOverState,GameSubState<GameOverState>>(game)
 {}
 
-GameOverState::~GameOverState()
-{
-}
-
-void GameOverState::update(Game* game,InputManager* inputManager) {
+void GameOverState::update(Game& game) {
     //ゲームオーバーの更新処理
     if (/*終了ボタンが押された*/true) {
-        game->changeState(new TitleScreenState());
+        game.changeState(new TitleScreenState(game));
     }
 }
