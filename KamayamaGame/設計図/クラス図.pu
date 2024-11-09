@@ -1,0 +1,52 @@
+@startuml クラス図
+class Game{
+  window : Window*
+  inputManager : InputManager*
+  currentState : GameState*
+  mainloop() : void
+  changeState(GameState*) : void
+}
+class Window{
+  update(GameState*) : void
+}
+class InputManager{
+  update() : void
+}
+abstract class GameState{
+  phase : Phase*
+  vector<GameObject*> gameObjects
+  {abstract}update(InputManager*) : void
+  changePhase(Phase*) : Phase*
+}
+class TitleScreenState{
+  update() : void
+}
+class PlayingState{
+  update() : void
+}
+class StatusState{
+
+}
+abstract class GameObject{
+  画像 : HBITMAP
+  position : POINT
+  rect : RECT
+}
+abstract class Phase{
+}
+class Button{
+
+}
+Game "1" o- "1" Window
+InputManager "1" -o "1" Game
+GameState"1..*" --* "1" Game
+GameState<|-TitleScreenState
+PlayingState-|>GameState
+StatusState--|>GameState
+InputManager"1"*-"1"GameState
+Window-up-*GameState
+GameObject "1..*" -down-* "1" GameState
+GameState "1" *-right- "1..*" Phase
+
+
+@enduml

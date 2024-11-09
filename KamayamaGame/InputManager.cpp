@@ -1,6 +1,21 @@
 #include "InputManager.h"
 #include "Window.h"
 #include <string>
+#include "GameObject.h"
+
+bool isPointOnRect(POINT point, RECT rect)
+{
+	if (point.x <= rect.right &&
+		point.x >= rect.left &&
+		point.y <= rect.bottom &&
+		point.y >= rect.top
+		) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 
 InputManager::InputManager() :mousePosition{ 0,0 }
 {
@@ -16,7 +31,6 @@ InputManager::~InputManager()
 void InputManager::initializeKeys() {//@TODO
 	keyStates.insert({ VK_LBUTTON,InputManager::KeyState::KEY_UP });
 }
-
 
 void InputManager::update()
 {
@@ -42,9 +56,33 @@ bool InputManager::isKeyPressed(int keyCode) {
 	return keyStates[keyCode] == InputManager::KeyState::KEY_PRESSED;
 }
 
-InputManager::KeyState InputManager::getKeyState(int keyCode)
+bool InputManager::isClicked(const GameObject& object) const
 {
-	return keyStates.count(keyCode) ? keyStates[keyCode] : InputManager::KeyState::KEY_UP;
+	if (!object.isVisible()) {//オブジェクトが表示されていない
+		return false;
+	}
+
+	//以下、オブジェクトが表示されている
+
+	if (getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_UP) {//マウスの左ボタンが押されていない
+		return false;
+	}
+
+	//以下マウスの左ボタンが押されている
+
+	RECT objectRect = object.getObjectRect();
+	if (isPointOnRect(getMousePosition(), objectRect)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+
+InputManager::KeyState InputManager::getKeyState(int keyCode)const
+{
+	return keyStates.count(keyCode) ? keyStates.at(keyCode) : InputManager::KeyState::KEY_UP;
 }
 
 POINT InputManager::getMousePosition()const {

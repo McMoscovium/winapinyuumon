@@ -1,0 +1,10 @@
+@startuml mainLoop
+autoactivate on
+group while true 30秒に一回
+inputManager->inputManager:update
+return 完了
+gameState->gameState:update(inputManager)
+return 完了
+window-->window:InvalidateRect()
+end
+@enduml

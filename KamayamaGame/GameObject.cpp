@@ -8,8 +8,6 @@ GameObject::GameObject(LPCTSTR path, std::wstring objectName, SIZE frameSize)
 {
 	loadImage(path);//hSpriteImageにビットマップハンドルを格納
 	setLength(static_cast<int>(getSpriteSize().cx / frameSize.cx));//スプライトのコマ数を設定
-	std::wstring message = L"オブジェクト: " + objectName + L" の総フレーム数は " + std::to_wstring(length) + L"\n";
-	OutputDebugString(message.c_str());
 }
 void GameObject::loadImage(LPCWSTR path)
 {
@@ -22,7 +20,7 @@ void GameObject::loadImage(LPCWSTR path)
 	}
 }
 
-void GameObject::setObjectPosition(POINT point)
+void GameObject::setPosition(POINT point)
 {
 	position = point;
 }
@@ -82,6 +80,7 @@ bool GameObject::changeFrame(int frameNumber)
 	}
 	else {
 		GameObject::frameNumber = frameNumber;
+		return true;
 	}
 }
 

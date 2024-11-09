@@ -2,8 +2,10 @@
 
 #include<Windows.h>
 #include<unordered_map>
+#include <memory>
 
 class Window;
+class GameObject;
 
 class InputManager
 {
@@ -24,19 +26,14 @@ public:
 
 	//指定したキーが押されているか確認する
 	bool isKeyPressed(int keyCode);
-
-	//キーの状態を取得する
-	KeyState getKeyState(int keyCode);
-
-	//マウスの座標を取得する
+	//指定したゲームオブジェクトがクリックされているか確認する
+	bool isClicked(const GameObject& object)const;
+	//指定したキーの状態のゲッター
+	KeyState getKeyState(int keyCode)const;
+	//マウスの座標のゲッター
 	POINT getMousePosition()const;
-
-	
-
-	void digestMessage(Window* window);
-
+	//
 	void setKeyState(int keyCode, KeyState keyState);
-
 	//マウスカーソルの位置を変更する（WM_MOUSEMOVEの時に呼び出す）
 	void setCursorPosition(POINT);
 
@@ -44,7 +41,7 @@ private:
 	//1フレーム前のキーの状態
 	std::unordered_map<int, KeyState>oldKeyStates;
 
-	//キーの状態を格納するマップ
+	//現在のキーの状態を格納するマップ
 	std::unordered_map<int, KeyState>keyStates;
 
 	//マウスの現在位置
@@ -52,7 +49,4 @@ private:
 
 	//監視するキーの初期化を行う
 	void initializeKeys();
-
-
 };
-

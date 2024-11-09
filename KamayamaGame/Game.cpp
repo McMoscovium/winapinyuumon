@@ -1,37 +1,35 @@
 #include "Game.h"
-#include "VirtualWindow.h"
 #include "TitleScreenState.h"
 #include "GameState.h"
+#include "AudioManager.h"
 
-Game::Game() : currentState(new TitleScreenState()) {}
+using namespace std;
 
-
-
-void Game::drawWindow()
-{
-}
+Game::Game() :
+	currentState(make_unique<TitleScreenState>(*this))
+{}
 
 Game::~Game() {
 }
-void Game::update(InputManager* inputManager) {
-	currentState->update(this, inputManager);
-}
 
-void Game::changeState(GameState* newState) {
-	delete currentState;
-	currentState = newState;
-}
 
-void Game::setBackBuffer(Window* window)
-{
-}
 
-const GameState* Game::getCurrentState() const
-{
-	return currentState;
-}
 
 void Game::termination()
 {
-	delete currentState;
+}
+
+const InputManager& Game::getConstInputManager()const
+{
+	return inputManager;
+}
+
+InputManager& Game::getInputManager()
+{
+	return inputManager;
+}
+
+const std::unique_ptr<IGameState>& Game::getCurrentState()const
+{
+	return currentState;
 }

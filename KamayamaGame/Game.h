@@ -4,30 +4,39 @@
 PC内部でのゲームの進行を管理するクラス。
 仮想画面への描画も行う。
 */
-#include "unordered_map"
 
-class GameState;
-class VirtualWindow;
+
+#include <memory>
+#include "AudioManager.h"
+#include "InputManager.h"
+#include "IGameState.h"
+
 class Window;
-class InputManager;
-class ObjectName;
+
 
 class Game
 {
 private:
-	GameState* currentState;
+	std::unique_ptr<IGameState> currentState = nullptr;
+	InputManager inputManager;
+	AudioManager audioManager;
 
-	void drawWindow();//仮想画面にゲーム画面を描画する
-
-	
 public:
 	Game();
 	~Game();
 
-	void update(InputManager* inputManager);//ゲーム状態ごとに設定された更新処理を行う
-	void changeState(GameState* newState);//currentStateを変更する
-	void setBackBuffer(Window* window);//virtualWindowの初期設定
-	const GameState* getCurrentState()const;
+	//currentStateを変更する
+	void changeState(std::unique_ptr<IGameState> newState) {
+		currentState = std::move(newState);
+	}
+
 	//終了処理
 	void termination();
+
+	//const版のゲッター
+	const InputManager& getConstInputManager()const;
+	//mutable版のゲッタ―
+	InputManager& getInputManager();
+	//
+	const std::unique_ptr<IGameState>& getCurrentState()const;
 };

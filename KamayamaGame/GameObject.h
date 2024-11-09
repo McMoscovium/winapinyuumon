@@ -8,7 +8,7 @@
 */
 class GameObject
 {
-private:
+protected:
 	bool visible = true;//trueで描画される
 	std::wstring objectName;
 	int length;//フレームの個数
@@ -16,14 +16,18 @@ private:
 	const SIZE frameSize;//オブジェクト1フレームの、長方形としての縦横サイズ（ピクセル）
 	HBITMAP hSpriteImage = nullptr;//スプライトシートのビットマップイメージ
 	int frameNumber = 0;//今、スプライトの何フレーム目か（0から始まる）
-	COLORREF transparent = 0xff00ff;//透過色
+	COLORREF transparent = 0xff00ff;//透過色（既定はマゼンタ）
+
+	void setLength(int);
+	void setObjectImage(HBITMAP img);
+	void loadImage(LPCWSTR path);//pathの画像をビットマップイメージとしてhSpriteImageに格納する。
 
 public:
 	GameObject(LPCTSTR path, std::wstring objectName, SIZE frameSize);
-	~GameObject() = default;
+	virtual ~GameObject() = default;
 
 	//positionの変更
-	void setObjectPosition(POINT);
+	virtual void setPosition(POINT);
 	//描画される位置を取得
 	const POINT getPosition()const;
 	//描画される場所のX座標の取得
@@ -53,12 +57,7 @@ public:
 	//visibleかどうか返す
 	bool isVisible()const;
 	//visibleにする
-	void appear();
+	virtual void appear();
 	//invisibleにする
 	void hide();
-	
-private:
-	void setLength(int);
-	void setObjectImage(HBITMAP img);
-	void loadImage(LPCWSTR path);//pathの画像をビットマップイメージとしてhSpriteImageに格納する。
 };

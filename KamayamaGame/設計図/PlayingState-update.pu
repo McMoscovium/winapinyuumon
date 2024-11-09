@@ -1,0 +1,4 @@
+@startuml PlayingState-update
+title PlayingState::update()
+currentPhase.update()
+@enduml

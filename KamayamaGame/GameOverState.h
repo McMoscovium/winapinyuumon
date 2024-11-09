@@ -9,12 +9,12 @@ class Game;
 class InputManager;
 
 class GameOverState :
-    public GameState
+    public GameState<GameOverState>
 {
+    using SubStateType = GameSubState<GameOverState>;
 public:
-    GameOverState();
+    GameOverState(Game& game);
     ~GameOverState()override;
-    void update(Game* game,InputManager* inputManager)override;
-
+    void update()override;
 private:
 };

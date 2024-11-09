@@ -5,15 +5,23 @@
 #include "GameObject.h"
 #include <iostream>
 #include "InputManager.h"
+#include <memory>
+using namespace std;
 
-const UINT fps = 30;
+const UINT fps = 15;
 
 
 //コンストラクタ
-Window::Window(HINSTANCE hInstance, int nCmdShow, Game* game, InputManager* inputManager) :hInstance(hInstance), msg({}) {
+Window::Window(
+	HINSTANCE hInstance,
+	int nCmdShow,
+	Game* game) :
+	hInstance(hInstance),
+	msg({}) 
+{
 	registerClass();
 	create(game);
-	registerUserData(game, inputManager);
+	registerUserData(game);
 }
 
 //デストラクタ
@@ -46,15 +54,18 @@ void Window::registerClass() {
 
 //ウィンドウ作成。
 void Window::create(Game* game) {
+	//@TODO
+	//gameがゲーム画面の縦横サイズを保持していてそれによってウィンドウのサイズも変わるようにする
 	hwnd = CreateWindowEx(
 		0, className, L"Sample Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, width, height, NULL, NULL, hInstance, NULL
 	);
 }
 
-void Window::registerUserData(Game* game,InputManager* inputManager)
+void Window::registerUserData(Game* game)
 {
-	userData = new UserData(game, this, inputManager);
-	SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)userData);
+	userData.reset();
+	userData = move(make_unique<UserData>(game, this));
+	SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)userData.get());
 }
 
 void Window::getClientRect(RECT* rect) const
@@ -63,17 +74,17 @@ void Window::getClientRect(RECT* rect) const
 }
 
 
-void Window::renderGameObject(const GameObject* gameObject,HDC hdc)const
+void Window::renderGameObject(const GameObject& gameObject,HDC hdc)const
 {
 	HDC hdcMem = CreateCompatibleDC(hdc);//スプライトシートに紐付けるHDC
-	HBITMAP oldMemBitmap = (HBITMAP)SelectObject(hdcMem, gameObject->getSpriteImage());
+	HBITMAP oldMemBitmap = (HBITMAP)SelectObject(hdcMem, gameObject.getSpriteImage());
 	//透過色を考慮してHDCの選択するデバイスに描画
 	TransparentBlt(hdc,
-		gameObject->getPositionX(), gameObject->getPositionY(),
-		gameObject->getWidth(), gameObject->getHeight(),
+		gameObject.getPositionX(), gameObject.getPositionY(),
+		gameObject.getWidth(), gameObject.getHeight(),
 		hdcMem,
-		gameObject->originOfCurrentFrame(), 0,
-		gameObject->getWidth(), gameObject->getHeight(),
+		gameObject.originOfCurrentFrame(), 0,
+		gameObject.getWidth(), gameObject.getHeight(),
 		RGB(255, 0, 255));
 	SelectObject(hdcMem, oldMemBitmap);
 	DeleteDC(hdcMem);//HDC解放
@@ -84,7 +95,7 @@ void Window::show() const{
 	ShowWindow(hwnd, SW_SHOW);
 }
 
-void Window::render(const GameState* currentState)
+void Window::render(const std::unique_ptr<IGameState>& currentState)
 {
 	//HDC達を確保する
 	PAINTSTRUCT ps;
@@ -101,9 +112,9 @@ void Window::render(const GameState* currentState)
 	//ゲームオブジェクトを奥から順にバックバッファに描画する
 	for (int i = 0; i < currentState->numberOfObjects(); i++) {
 		//i番目のオブジェクトを選択
-		const GameObject* drawnObject = currentState->getGameObject(objectOrder.at(i));
+		const GameObject& drawnObject = currentState->getGameObject(objectOrder.at(i));
 		//visible=falseなら次のオブジェクトへ
-		if (!drawnObject->isVisible()) {
+		if (!drawnObject.isVisible()) {
 			continue;
 		}
 		renderGameObject(drawnObject,hdcBackBuffer);
@@ -131,7 +142,7 @@ UINT Window::getFps() const
 	return fps;
 }
 
-bool Window::update(Game* game)
+bool Window::update()
 {
 	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {//msgにメッセージを格納
 
@@ -146,9 +157,6 @@ bool Window::update(Game* game)
 		return true;//ループ続行
 	}
 }
-
-
-
 
 //ウィンドウプロシージャ
 LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -166,9 +174,14 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 	case WM_TIMER: {
 		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		Game* game = userData->game;
-		InputManager* inputManager = userData->inputManager;
-		inputManager->update();
-		game->update(inputManager);
+		if (game == nullptr) {
+			break;
+		}
+		//以下、game != nullptr
+		InputManager& inputManager = game->getInputManager();
+		const unique_ptr<IGameState>& currentState = game->getCurrentState();
+		inputManager.update();
+		currentState->update();
 
 		InvalidateRect(hwnd, NULL, FALSE);  //ウィンドウ全体を無効化し、システムにWM_PAINTをポストさせる
 		return 0;
@@ -187,9 +200,14 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 
 		//InputManagerを更新
 		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-		InputManager* inputManager = userData->inputManager;
+		Game* game = userData->game;
+		if (game == nullptr) {
+			return 0;
+		}
+		//以下、game != nullptr
+		InputManager& inputManager = game->getInputManager();
 		POINT cursor = { LOWORD(lParam),HIWORD(lParam) };
-		inputManager->setCursorPosition(cursor);
+		inputManager.setCursorPosition(cursor);
 
 		// マウス座標をウィンドウのタイトルに表示
 		std::wstring title = L"Mouse Position: (" + std::to_wstring(mouseX) + L", " + std::to_wstring(mouseY) + L")";
@@ -197,19 +215,26 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 		return 0;
 	}
 	case WM_LBUTTONDOWN: {
-
-
 		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		Game* game = userData->game;
+		if (game == nullptr) {
+			return 0;
+		}
+		//以下、game != nullptr
 		//inputManagerを更新
-		InputManager* inputManager = userData->inputManager;
-		inputManager->setKeyState(VK_LBUTTON, InputManager::KeyState::KEY_PRESSED);
+		InputManager& inputManager = game->getInputManager();
+		inputManager.setKeyState(VK_LBUTTON, InputManager::KeyState::KEY_PRESSED);
 		return 0;
 	}
 	case WM_LBUTTONUP: {
 		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		Game* game = userData->game;
+		if (game == nullptr) {
+			return 0;
+		}
 		//inputManagerを更新
-		InputManager* inputManager = userData->inputManager;
-		inputManager->setKeyState(VK_LBUTTON, InputManager::KeyState::KEY_RELEASED);
+		InputManager& inputManager = game->getInputManager();
+		inputManager.setKeyState(VK_LBUTTON, InputManager::KeyState::KEY_RELEASED);
 		return 0;
 	}
 	}
@@ -218,5 +243,4 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 
 void Window::termination()
 {
-	delete userData;
 }
