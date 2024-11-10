@@ -42,10 +42,11 @@ PlayingState::PlayingState(Game& game):
     appendObject(L"PICTURE_FIELD", L".//assets//フィールド.bmp", { 1152,720 });
     appendObject(L"PICTURE_BATTER", L".//assets//打者.bmp", { 360,391 });
     appendObject(L"BUTTON_EXIT", L".//assets//おわる.bmp", { 256,128 });
-    appendObject(L"PICTURE_PITCHER", L".//assets//投手.bmp", { 112,182 });
+    appendObject(L"PICTURE_PITCHER", L".//assets//投手スプライトシート.bmp", { 168,266 });
     appendObject(L"PICTURE_BALL", L".//assets//ボール.bmp", { 41,50 });
     appendObject(L"JUDGE_BAT", L".//assets//battingJudgeFrame.bmp", { 50,50 });//バット当たり判定
 
+    getGameObject(L"PICTURE_BALL").hide();
     gameObjects.at(L"JUDGE_BAT").hide();
 
     //各GameObjectの描画位置を設定

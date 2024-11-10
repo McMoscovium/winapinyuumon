@@ -6,7 +6,7 @@
 #include <iostream>
 #include "InputManager.h"
 
-const UINT fps = 30;
+const UINT fps = 60;
 
 
 //コンストラクタ
@@ -47,7 +47,17 @@ void Window::registerClass() {
 //ウィンドウ作成。
 void Window::create(Game& game) {
 	hwnd = CreateWindowEx(
-		0, className, L"Sample Window", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, width, height, NULL, NULL, hInstance, NULL
+		0,
+		className,
+		L"Sample Window",
+		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
+		CW_USEDEFAULT,
+		CW_USEDEFAULT,
+		width, height,
+		NULL,
+		NULL,
+		hInstance,
+		NULL
 	);
 }
 
