@@ -10,30 +10,20 @@ class InputManager;
 class Vector2D;
 
 class PlayingState :
-    public GameState
+    public GameState<PlayingState,GameSubState<PlayingState>>
 {
 public:
-    enum Phase {
-        WAITING_PITCHING,
-        IN_PITCHING,
-        BALL_FLYING
-    };
-
-    
-
-    PlayingState();
+    PlayingState(Game& game);
 
     //アップデート関数
     //ゲームが終了したらGameOverStateに遷移
-    void update(Game* game,InputManager* inputManager)override;
+    void update(Game& game)override;
     void updateWaitingPitchingPhase(InputManager* inputManager, Game* game);
     void updateBatFrame(int currentBatterFrame);
-    void updateInPitchingPhase(InputManager* inputManager, Game* game);
-    void updateCursorPos(InputManager* inputManager);
     //バッターのアニメーション更新
-    void updateBatterAnimation(InputManager* inputManager);
+    void updateBatterAnimation(const InputManager& inputManager);
     //バッターの位置更新
-    void updateBatterPos(InputManager* inputManager);
+    void updateBatterPos(const InputManager& inputManager);
     //
     const POINT getCursorPos()const;
     //フェイズ開始時の時刻を記録
@@ -48,16 +38,12 @@ private://メンバ変数
     const RECT batterBox = { 178,266,355,357 };
     //ヒッティングカーソルの位置
     POINT cursorPos = { 0,0 };
-    //フェーズ
-    Phase phase = WAITING_PITCHING;
     //フェーズ開始時刻
-    DWORD phaseStartTime = 0;
+    ULONGLONG phaseStartTime = 0;
     //WAITING_PITCHING用タイマー
-    DWORD waitingPitchingTimer = 0;
+    ULONGLONG waitingPitchingTimer = 0;
     //
     void updateWaitingPitchingTimer();
-    //
-    void changePhase(Phase phase);
 
     //スイング中のヒッティング判定
     void hitting();

@@ -4,6 +4,7 @@
 #include<unordered_map>
 
 class Window;
+class GameObject;
 
 class InputManager
 {
@@ -26,19 +27,17 @@ public:
 	bool isKeyPressed(int keyCode);
 
 	//キーの状態を取得する
-	KeyState getKeyState(int keyCode);
+	KeyState getKeyState(int keyCode)const;
 
 	//マウスの座標を取得する
 	POINT getMousePosition()const;
-
-	
-
-	void digestMessage(Window* window);
 
 	void setKeyState(int keyCode, KeyState keyState);
 
 	//マウスカーソルの位置を変更する（WM_MOUSEMOVEの時に呼び出す）
 	void setCursorPosition(POINT);
+	//
+	bool isClicked(GameObject& gameObject);
 
 private:
 	//1フレーム前のキーの状態

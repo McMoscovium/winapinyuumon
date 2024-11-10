@@ -5,12 +5,12 @@ class Game;
 class InputManager;
 
 class StatusState :
-    public GameState
+    public GameState<StatusState,GameSubState<StatusState>>
 {
 public:
     //コンストラクタ
-    StatusState();
+    StatusState(Game& game);
 
-    void update(Game* game, InputManager* inputManager)override;
+    void update(Game& game)override;
 };
 

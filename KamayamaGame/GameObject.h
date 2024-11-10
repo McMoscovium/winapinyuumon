@@ -19,6 +19,7 @@ private:
 	COLORREF transparent = 0xff00ff;//ìßâﬂêF
 
 public:
+	GameObject();
 	GameObject(LPCTSTR path, std::wstring objectName, SIZE frameSize);
 	~GameObject() = default;
 

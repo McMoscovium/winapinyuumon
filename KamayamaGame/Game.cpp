@@ -2,36 +2,48 @@
 #include "VirtualWindow.h"
 #include "TitleScreenState.h"
 #include "GameState.h"
+#include "IGameState.h"
 
-Game::Game() : currentState(new TitleScreenState()) {}
-
-
-
-void Game::drawWindow()
-{
-}
+Game::Game(InputManager& inputManager) :
+	currentState(nullptr),
+	inputManager(inputManager),
+	window(nullptr)
+{}
 
 Game::~Game() {
-}
-void Game::update(InputManager* inputManager) {
-	currentState->update(this, inputManager);
+	if (currentState) {
+		delete currentState;
+		currentState = nullptr;
+	}
 }
 
-void Game::changeState(GameState* newState) {
-	delete currentState;
+
+
+bool Game::registerWindow(Window* window)
+{
+	if (window == nullptr) {
+		return false;
+	}
+
+	Game::window = window;
+	return true;
+}
+
+void Game::update() {
+	if (currentState) {
+		currentState->update(*this);
+	}
+}
+
+void Game::changeState(IGameState* newState) {
+	if (currentState) {
+		delete currentState;
+	}	
 	currentState = newState;
 }
 
-void Game::setBackBuffer(Window* window)
-{
-}
 
-const GameState* Game::getCurrentState() const
+const IGameState* Game::getCurrentState() const
 {
 	return currentState;
-}
-
-void Game::termination()
-{
-	delete currentState;
 }

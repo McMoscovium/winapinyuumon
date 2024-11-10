@@ -3,6 +3,11 @@
 #include <iostream>
 #include <string>
 
+GameObject::GameObject() :
+	objectName(L""), frameSize({ 0,0 })
+{
+}
+
 GameObject::GameObject(LPCTSTR path, std::wstring objectName, SIZE frameSize)
 	:frameSize(frameSize), objectName(objectName)
 {
