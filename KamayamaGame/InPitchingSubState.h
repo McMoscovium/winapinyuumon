@@ -2,6 +2,7 @@
 
 #include "PlayingState.h"
 #include "GameSubState.h"
+#include <Windows.h>
 
 class Game;
 
@@ -10,6 +11,8 @@ class InPitchingSubState :
 {
 private:
     void updatePitchingMotion();
+    void updateBall();
+    LONG pitchingSpeed=30;//‹…‘¬
 public:
     InPitchingSubState(PlayingState& ownerState) :GameSubState(ownerState)
     {}
