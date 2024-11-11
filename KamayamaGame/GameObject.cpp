@@ -88,6 +88,7 @@ bool GameObject::changeFrame(int frameNumber)
 	}
 	else {
 		GameObject::frameNumber = frameNumber;
+		return true;
 	}
 }
 
@@ -112,22 +113,22 @@ bool GameObject::isOutOfClientRect(Window* window)
 	POINT pos = getPosition();
 	if (pos.x < rect.left) {
 		//左にはみ出る
-		return false;
+		return true;
 	}
 	if (pos.x > rect.right) {
 		//右にはみ出る
-		return false;
+		return true;
 	}
 	if (pos.y < rect.top) {
 		//上にはみ出る
-		return false;
+		return true;
 	}
 	if (pos.y > rect.bottom) {
 		//下にはみ出る
-		return false;
+		return true;
 	}
-	//はみ出てない
-	return true;
+	//どこにもはみ出てない
+	return false;
 }
 
 const int GameObject::getPositionX() const

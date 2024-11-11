@@ -3,6 +3,10 @@
 #include <Windows.h>
 #include <string>
 
+
+class Window;
+
+
 /*
 ゲームに登場する絵、ボタンなどのオブジェクト。BITMAP形式で用意する。アニメーション等に使う差分は同じ大きさのビットマップを横に並べるようにして、スプライトシートの形で用意することを想定する。
 */
@@ -57,7 +61,7 @@ public:
 	void appear();
 	//invisibleにする
 	void hide();
-	//
+	//windowのクライアント領域内にあるか調べる
 	bool isOutOfClientRect(Window* window);
 	
 private:

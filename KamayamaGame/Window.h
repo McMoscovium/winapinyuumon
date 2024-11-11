@@ -24,6 +24,10 @@ public:
 	Window(HINSTANCE hInstance, int nCmdShow, InputManager* inputManager, Game& game);
 	~Window();
 
+	//
+	RECT getClientRect();
+
+
 	//現在のウィンドウを表示
 	void show() const;
 
