@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include "Ball.h"
 
 class Game;
 class InputManager;
@@ -28,8 +29,13 @@ public:
     const POINT getCursorPos()const;
     //フェイズ開始時の時刻を記録
     void initializeStartTime();
+    //
+    bool calculateMeet(Ball& ball);
+    //
+    Ball& getBall();
 
-private://メンバ変数
+private:
+    Ball ball;
     //animateBatter()に使う変数
     bool releasedLeftButtonUntilSwingEnded = false;
     //バッターの移動スピード

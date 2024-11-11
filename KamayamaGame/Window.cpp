@@ -67,9 +67,13 @@ void Window::registerUserData(Game* game)
 	SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)userData);
 }
 
-void Window::getClientRect(RECT* rect) const
+RECT Window::getClientRect() const
 {
-	GetClientRect(hwnd, rect);
+	RECT rect;
+	if (GetClientRect(hwnd, &rect)) {
+		return rect;
+	}
+	return { 0,0,0,0 };
 }
 
 

@@ -57,6 +57,8 @@ public:
 	void appear();
 	//invisible‚É‚·‚é
 	void hide();
+	//
+	bool isOutOfClientRect(Window* window);
 	
 private:
 	void setLength(int);

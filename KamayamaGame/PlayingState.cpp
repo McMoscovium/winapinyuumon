@@ -6,6 +6,7 @@
 #include "InputManager.h"
 #include "InPitchingSubState.h"
 #include "WaitingPitchingSubState.h"
+#include <cmath>
 
 #include <algorithm>
 
@@ -145,6 +146,32 @@ const POINT PlayingState::getCursorPos() const
 void PlayingState::initializeStartTime()
 {
     phaseStartTime = GetTickCount64();
+}
+
+bool PlayingState::calculateMeet(Ball& ball)
+{
+    POINT cursorPos = getCursorPos();
+    POINT ballPos = getGameObject(L"PICTURE_BALL").getPosition();
+    if (abs(cursorPos.x - ballPos.x) > 50) {
+        //x座標が遠い
+        return false;
+    }
+    if (abs(cursorPos.y - ballPos.y) > 50) {
+        //y座標が遠い
+        return false;
+    }
+    //当たったのでボールの速度を計算
+    int speed = 50 - abs(cursorPos.x - ballPos.x);
+    getBall().setSpeed(speed);
+    int angle = std::round( - 9 * (float(ballPos.y) - float(cursorPos.y)) / 5);
+    getBall().setSpeed(angle);
+    //最後にtrue
+    return true;
+}
+
+Ball& PlayingState::getBall()
+{
+    return ball;
 }
 
 void PlayingState::updateWaitingPitchingTimer()

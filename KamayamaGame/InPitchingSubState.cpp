@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "TitleScreenState.h"
 #include "WaitingPitchingSubState.h"
+#include "AfterMeetSubState.h"
 
 void InPitchingSubState::updatePitchingMotion()
 {
@@ -48,8 +49,9 @@ void InPitchingSubState::update(Game& game)
         return;
     }
 
-    InputManager& inputManager = game.getInputManager();
+    
 	//終了ボタン処理
+    InputManager& inputManager = game.getInputManager();
     GameObject& exitButton = owner.getGameObject(L"BUTTON_EXIT");
     if (inputManager.isClicked(exitButton)) {
         exit(game);//終了処理
@@ -59,12 +61,12 @@ void InPitchingSubState::update(Game& game)
 
     //ピッチングアニメーションの更新
     updatePitchingMotion();
-    //ボールの更新
+    //ボール位置の更新
     if (owner.getGameObject(L"PICTURE_BALL").isVisible() == true) {
         updateBall();
     }
     
-    //バッターの更新
+    //バッター位置、見た目の更新
     owner.updateBatterPos(inputManager);
     owner.updateBatterAnimation(inputManager);
 
@@ -74,6 +76,11 @@ void InPitchingSubState::update(Game& game)
         //当たり判定が登場
         owner.updateBatFrame(currentBatterFrame);
         //ボールが当たったかどうかで分けて処理
+        if (owner.calculateMeet(owner.getBall())) {
+            //当たった
+            owner.changeSubState(new AfterMeetSubState(owner));
+            return;
+        }
         return;
     }
 

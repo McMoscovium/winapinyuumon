@@ -2,6 +2,7 @@
 //開発用
 #include <iostream>
 #include <string>
+#include "Window.h"
 
 GameObject::GameObject() :
 	objectName(L""), frameSize({ 0,0 })
@@ -103,6 +104,30 @@ void GameObject::appear()
 void GameObject::hide()
 {
 	visible = false;
+}
+
+bool GameObject::isOutOfClientRect(Window* window)
+{
+	RECT rect = window->getClientRect();
+	POINT pos = getPosition();
+	if (pos.x < rect.left) {
+		//左にはみ出る
+		return false;
+	}
+	if (pos.x > rect.right) {
+		//右にはみ出る
+		return false;
+	}
+	if (pos.y < rect.top) {
+		//上にはみ出る
+		return false;
+	}
+	if (pos.y > rect.bottom) {
+		//下にはみ出る
+		return false;
+	}
+	//はみ出てない
+	return true;
 }
 
 const int GameObject::getPositionX() const

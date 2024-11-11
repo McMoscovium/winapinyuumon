@@ -20,7 +20,7 @@ void WaitingPitchingSubState::update(Game & game)
 	timer.update();
 
 	//サブステート開始後5000ms経過したらピッチング開始
-	if (timer.span() > 5000) {
+	if (timer.span() > 2000) {
 		owner.changeSubState(new InPitchingSubState(owner));
 		return;
 	}
