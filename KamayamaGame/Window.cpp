@@ -21,6 +21,13 @@ Window::~Window() {
 	DestroyWindow(hwnd);//ウィンドウの破棄
 }
 
+RECT Window::getClientRect()
+{
+	RECT rect;
+	GetClientRect(hwnd, &rect);
+	return rect;
+}
+
 //ウィンドウクラスの登録
 void Window::registerClass() {
 	WNDCLASSEX wc = {};

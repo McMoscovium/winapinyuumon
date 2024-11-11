@@ -2,6 +2,7 @@
 //開発用
 #include <iostream>
 #include <string>
+#include "Window.h"
 
 GameObject::GameObject(LPCTSTR path, std::wstring objectName, SIZE frameSize)
 	:frameSize(frameSize), objectName(objectName)
@@ -82,6 +83,7 @@ bool GameObject::changeFrame(int frameNumber)
 	}
 	else {
 		GameObject::frameNumber = frameNumber;
+		return true;
 	}
 }
 
@@ -98,6 +100,30 @@ void GameObject::appear()
 void GameObject::hide()
 {
 	visible = false;
+}
+
+bool GameObject::isOutOfClientRect(Window* window)
+{
+	RECT rect = window->getClientRect();
+	POINT pos = getPosition();
+	if (pos.x < rect.left) {
+		//左にはみ出る
+		return true;
+	}
+	if (pos.x > rect.right) {
+		//右にはみ出る
+		return true;
+	}
+	if (pos.y < rect.top) {
+		//上にはみ出る
+		return true;
+	}
+	if (pos.y > rect.bottom) {
+		//下にはみ出る
+		return true;
+	}
+	//どこにもはみ出てない
+	return false;
 }
 
 const int GameObject::getPositionX() const
