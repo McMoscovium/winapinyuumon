@@ -73,5 +73,7 @@ private:
 	
 	//渡されたゲームオブジェクトをHDCの選択するデバイスに描画（透過色を考慮）
 	void renderGameObject(const GameObject& gameObject, HDC hdc)const;
+
+	bool getClientRect(RECT* rect);
 	
 };

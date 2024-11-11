@@ -100,6 +100,14 @@ void Window::renderGameObject(const GameObject& gameObject,HDC hdc)const
 	DeleteDC(hdcMem);//HDC解放
 }
 
+bool Window::getClientRect(RECT* rect)
+{
+	if (GetClientRect(hwnd, rect)) {
+		return true;
+	}
+	return false;
+}
+
 //ウィンドウを表示
 void Window::show() const{
 	ShowWindow(hwnd, SW_SHOW);
