@@ -6,33 +6,14 @@
 #include "InputManager.h"
 #include "InPitchingSubState.h"
 #include "WaitingPitchingSubState.h"
+#include "Vector2D.h"
 
 #include <algorithm>
 
 #include"TitleScreenState.h"
 
 
-class Vector2D {
-public:
-    Vector2D(float x, float y) :x(x), y(y) {}
-    float x;
-    float y;
-    float norm()const {
-        return sqrt(x * x + y * y);
-    }
-    void normalize() {
-        if (norm() == 0) {
-            return;
-        }
-        float r = norm();
-        x = x / r;
-        y = y / r;
-    }
-    void scalar(float r) {
-        x = r * x;
-        y = r * y;
-    }
-};
+
 
 
 PlayingState::PlayingState(Game& game):
@@ -116,7 +97,7 @@ void PlayingState::updateBatterPos(const InputManager& inputManager)
 
     //マウス座標を取得し、釜山の座標を変更
     const POINT mouse = inputManager.getMousePosition();
-    Vector2D velocityAngle(mouse.x - getCursorPos().x,
+    Vector2D<float> velocityAngle(mouse.x - getCursorPos().x,
         mouse.y - getCursorPos().y);//速度ベクトル（向きしか意味を持たない）
 
 
@@ -147,6 +128,11 @@ void PlayingState::initializeStartTime()
     phaseStartTime = GetTickCount64();
 }
 
+Ball& PlayingState::getBall()
+{
+    return ball;
+}
+
 void PlayingState::updateWaitingPitchingTimer()
 {
     ULONGLONG currentTime = GetTickCount64();
@@ -175,7 +161,7 @@ void PlayingState::hitting()
     OutputDebugStringW(L"空振り\n");
 }
 
-POINT PlayingState::nextKamayamaPos(POINT position, Vector2D movement)
+POINT PlayingState::nextKamayamaPos(POINT position, Vector2D<float> movement)
 {
     POINT nextPos = { 0,0 };
     nextPos.x = std::max<int>(batterBox.left, std::min<int>(position.x + (int)std::round(movement.x), batterBox.right));

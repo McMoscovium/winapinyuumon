@@ -24,6 +24,10 @@ public:
 	Window(HINSTANCE hInstance, int nCmdShow, InputManager* inputManager, Game& game);
 	~Window();
 
+	//
+	RECT getClientRect();
+
+
 	//現在のウィンドウを表示
 	void show() const;
 
@@ -45,6 +49,8 @@ public:
 
 	//終了処理
 	void termination();
+	//左上隅の座標が(0,0)となる
+	RECT getClientRect()const;
 
 protected:
 	
@@ -64,9 +70,10 @@ private:
 	//ウィンドウプロシージャに渡すインスタンスを登録
 	void registerUserData(Game* game);
 	//クライアント領域の四角形の寸法（ピクセル）を取得
-	//左上隅の座標が(0,0)となる
-	void getClientRect(RECT* rect)const;
+	
 	//渡されたゲームオブジェクトをHDCの選択するデバイスに描画（透過色を考慮）
 	void renderGameObject(const GameObject& gameObject, HDC hdc)const;
+
+	bool getClientRect(RECT* rect);
 	
 };

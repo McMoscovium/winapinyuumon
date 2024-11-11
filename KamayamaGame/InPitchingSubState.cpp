@@ -5,6 +5,10 @@
 #include "GameObject.h"
 #include "TitleScreenState.h"
 #include "WaitingPitchingSubState.h"
+#include "AfterMeetSubState.h"
+#include "Vector2D.h"
+#include <cmath>
+#include "Ball.h"
 
 void InPitchingSubState::updatePitchingMotion()
 {
@@ -17,7 +21,6 @@ void InPitchingSubState::updatePitchingMotion()
         owner.getGameObject(L"PICTURE_BALL").setObjectPosition({ 529,162 });
         owner.getGameObject(L"PICTURE_BALL").appear();
     }
-    
     return;
 }
 
@@ -38,10 +41,36 @@ void InPitchingSubState::updateBall()
     }
 }
 
+bool InPitchingSubState::calculateMeet(GameObject& ballObject, Ball& ball)
+{
+    POINT cursorPos = owner.getCursorPos();
+    POINT ballPos = ballObject.getPosition();
+    if (abs(ballPos.y - cursorPos.y) > 50) {
+        //カーソルとボールのY座標が遠い
+        return false;
+    }
+    if (abs(ballPos.x - cursorPos.x) > 50) {
+        //カーソルとボールのX座標が遠い
+        return false;
+    }
+    //以下、ボールとバットが当たった
+    //ボールの速度データを計算
+    int angle = std::round((cursorPos.y - ballPos.y) * 9 / 5);
+    ball.setAngle(angle);
+    int speed = 50 - abs(ballPos.x - cursorPos.x);
+    ball.setVelocity(speed);
+    std::wstring message = L"angle: " + std::to_wstring(angle) + L"\n";
+    std::wstring msg2 = L"speed: " + std::to_wstring(speed) + L"\n";
+    OutputDebugString(message.c_str());
+    OutputDebugStringW(msg2.c_str());
+    //最後にtrueを返す
+    return true;
+}
+
 void InPitchingSubState::update(Game& game)
 {
+    //投げたボールが画面下まで行ったらchangeState
     GameObject& ball = owner.getGameObject(L"PICTURE_BALL");
-
     if (ball.getPositionY() > 700) {//画面下に外れた
         ball.hide();
         owner.changeSubState(new WaitingPitchingSubState(owner));
@@ -59,7 +88,7 @@ void InPitchingSubState::update(Game& game)
 
     //ピッチングアニメーションの更新
     updatePitchingMotion();
-    //ボールの更新
+    //ボール座標の更新
     if (owner.getGameObject(L"PICTURE_BALL").isVisible() == true) {
         updateBall();
     }
@@ -74,6 +103,10 @@ void InPitchingSubState::update(Game& game)
         //当たり判定が登場
         owner.updateBatFrame(currentBatterFrame);
         //ボールが当たったかどうかで分けて処理
+        if (calculateMeet(ball, owner.getBall())) {
+            owner.changeSubState(new AfterMeetSubState(owner));
+            return;
+        }
         return;
     }
 
@@ -92,6 +125,7 @@ void InPitchingSubState::enter(Game& game)
 
 void InPitchingSubState::exit(Game& game)
 {
+    owner.getGameObject(L"JUDGE_BAT").hide();
     owner.getGameObject(L"PICTURE_PITCHER").changeFrame(0);//ピッチャーフレーム初期化
     OutputDebugString(L"Exitting InPitchingState\n");
 }

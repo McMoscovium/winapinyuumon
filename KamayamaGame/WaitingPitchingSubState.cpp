@@ -19,8 +19,8 @@ void WaitingPitchingSubState::update(Game & game)
 	InputManager& inputManager = game.getInputManager();
 	timer.update();
 
-	//サブステート開始後5000ms経過したらピッチング開始
-	if (timer.span() > 5000) {
+	//サブステート開始後2000ms経過したらピッチング開始
+	if (timer.span() > 2000) {
 		owner.changeSubState(new InPitchingSubState(owner));
 		return;
 	}

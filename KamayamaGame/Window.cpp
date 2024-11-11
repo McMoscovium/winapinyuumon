@@ -21,6 +21,13 @@ Window::~Window() {
 	DestroyWindow(hwnd);//ウィンドウの破棄
 }
 
+RECT Window::getClientRect()
+{
+	RECT rect;
+	GetClientRect(hwnd, &rect);
+	return rect;
+}
+
 //ウィンドウクラスの登録
 void Window::registerClass() {
 	WNDCLASSEX wc = {};
@@ -67,9 +74,13 @@ void Window::registerUserData(Game* game)
 	SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)userData);
 }
 
-void Window::getClientRect(RECT* rect) const
+RECT Window::getClientRect() const
 {
-	GetClientRect(hwnd, rect);
+	RECT rect;
+	if (GetClientRect(hwnd, &rect)) {
+		return rect;
+	}
+	return { 0,0,0,0 };
 }
 
 
@@ -87,6 +98,14 @@ void Window::renderGameObject(const GameObject& gameObject,HDC hdc)const
 		RGB(255, 0, 255));
 	SelectObject(hdcMem, oldMemBitmap);
 	DeleteDC(hdcMem);//HDC解放
+}
+
+bool Window::getClientRect(RECT* rect)
+{
+	if (GetClientRect(hwnd, rect)) {
+		return true;
+	}
+	return false;
 }
 
 //ウィンドウを表示

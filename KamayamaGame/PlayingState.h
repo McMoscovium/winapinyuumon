@@ -4,10 +4,11 @@
 
 #include <string>
 #include <vector>
+#include "Ball.h"
+#include "Vector2D.h"
 
 class Game;
 class InputManager;
-class Vector2D;
 
 class PlayingState :
     public GameState<PlayingState,GameSubState<PlayingState>>
@@ -18,7 +19,6 @@ public:
     //アップデート関数
     //ゲームが終了したらGameOverStateに遷移
     void update(Game& game)override;
-    void updateWaitingPitchingPhase(InputManager* inputManager, Game* game);
     void updateBatFrame(int currentBatterFrame);
     //バッターのアニメーション更新
     void updateBatterAnimation(const InputManager& inputManager);
@@ -28,8 +28,11 @@ public:
     const POINT getCursorPos()const;
     //フェイズ開始時の時刻を記録
     void initializeStartTime();
+    Ball& getBall();
 
-private://メンバ変数
+
+private:
+    Ball ball;
     //animateBatter()に使う変数
     bool releasedLeftButtonUntilSwingEnded = false;
     //バッターの移動スピード
@@ -48,7 +51,7 @@ private://メンバ変数
     //スイング中のヒッティング判定
     void hitting();
     //
-    POINT nextKamayamaPos(POINT position, Vector2D movement);
+    POINT nextKamayamaPos(POINT position, Vector2D<float> movement);
     //
     void updatePitchingMotion();
 };
