@@ -86,7 +86,7 @@ bool InPitchingSubState::calculateMeet(GameObject& ballObject, Ball& ball)
     //以下、ボールとバットが当たった
     //ボールの速度データを計算
     //左右の角度
-    int angle = std::round((cursorPos.y - ballPos.y) * 9 / 5);
+    int angle = (int)std::round((cursorPos.y - ballPos.y) * 9 / 5);
     ball.setAngle(angle);
     //早さ
     int speed = 50 - abs(ballPos.x - cursorPos.x);
@@ -139,7 +139,7 @@ void InPitchingSubState::update(Game& game)
     if (frame == 34) {//ボールをリリース
         ballObject.setObjectPosition({
             ball.getX(),
-            ball.getY() + ball.getHeight()
+            ball.getY() + (LONG)ball.getHeight()
             });
         ballObject.changeSizeRate(
             (float)(1440 - (720 - ball.getY())) / (float)1440

@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AfterBallLandingSubState.cpp" />
     <ClCompile Include="AfterMeetSubState.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="BallFlyingSubState.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AfterBallLandingSubState.h" />
     <ClInclude Include="AfterMeetSubState.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Ball.h" />

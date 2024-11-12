@@ -53,14 +53,13 @@ void AfterMeetSubState::updateBallPos(GameObject& ballObject, Ball& ball, GameOb
 {
     //ballのメンバ変数を更新
     POINT currentBallPos = ball.getPosition();
-    LONG movementX = -round(std::sin(static_cast<double>(ball.getAngle()) * std::numbers::pi / 180) * ball.getVelocity());
-    LONG movementY = -round(std::cos(static_cast<double>(ball.getAngle()) * std::numbers::pi / 180) * ball.getVelocity());
+    LONG movementX = -(LONG)round(std::sin(static_cast<double>(ball.getAngle()) * std::numbers::pi / 180) * ball.getVelocity());
+    LONG movementY = -(LONG)round(std::cos(static_cast<double>(ball.getAngle()) * std::numbers::pi / 180) * ball.getVelocity());
     POINT nextBallPos = {
         currentBallPos.x + movementX,
         currentBallPos.y + movementY
     };
     ball.setPosition(nextBallPos);
-    ball.sethVelocity(ball.getHVelocity() - ball.getGravity());
     ball.setHeight(ball.getHeight() + ball.getHVelocity());
     //影の描画位置を更新
     shadow.setObjectPosition({
@@ -70,7 +69,7 @@ void AfterMeetSubState::updateBallPos(GameObject& ballObject, Ball& ball, GameOb
     //ボールの描画位置を更新
     ballObject.setObjectPosition({
         shadow.getPositionX(),
-        shadow.getPositionY() - ball.getHeight()
+        shadow.getPositionY() - (LONG)ball.getHeight()
     });
 }
 

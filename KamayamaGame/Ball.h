@@ -18,28 +18,28 @@ private:
 	//•½–Êã‚Ì‘‚³
 	int velocity = 0;
 	//‚‚³•ûŒü‚Ì‘¬“x
-	int hVelocity = 0;
+	float hVelocity = 0;
 	//‚‚³
-	int height = 70;
+	float height = 70.0f;
 	//
-	int gravity=1;
+	float gravity=0.5f;
 
 public:
 	Ball();
 	
 	int getAngle()const;
 	int getVelocity()const;
-	int getHVelocity()const;
-	int getHeight()const;
+	float getHVelocity()const;
+	float getHeight()const;
 	POINT getPosition()const;
 	LONG getX()const;
 	LONG getY()const;
 	int getRadius()const;
-	int getGravity()const;
+	float getGravity()const;
 
 	void setAngle(const int);
 	void setVelocity(const int);
-	void sethVelocity(const int);
+	void sethVelocity(const float);
 	void setPosition(POINT pos);
-	void setHeight(int h);
+	void setHeight(float h);
 };
