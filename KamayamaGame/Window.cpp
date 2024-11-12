@@ -102,9 +102,10 @@ void Window::renderGameObject(const GameObject& gameObject,HDC hdc)const
 		gameObject.getHeight(),
 		RGB(255, 0, 255))
 		) {
-
+		//•`‰æ‚¹‚¢‚±‚¤
 	}
 	else {
+		//•`‰æŽ¸”s
 		OutputDebugString(L"‰¼‘z‰æ–Ê‚É•`‰æŽ¸”s\n");
 	}
 	SelectObject(hdcMem, oldMemBitmap);

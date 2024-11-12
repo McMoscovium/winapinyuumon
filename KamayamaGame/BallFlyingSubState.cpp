@@ -4,6 +4,7 @@
 #include <cmath>
 #include <numbers>
 #include "WaitingPitchingSubState.h"
+#include "AfterBallLandingSubState.h"
 
 void BallFlyingSubState::updateBall(Ball& ball)
 {
@@ -52,7 +53,7 @@ void BallFlyingSubState::update(Game& game)
 	//ボールが着弾したら止める
 	//将来的にはchangeSubState
 	if(ball.getHeight()<1){
-		owner.changeSubState(new WaitingPitchingSubState(owner));
+		owner.changeSubState(new AfterBallLandingSubState(owner));
 		return;
 	}
 	//以下、ボールが着弾してない
