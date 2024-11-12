@@ -5,6 +5,13 @@ IGameState::IGameState(Game& game):
 {
 }
 
+IGameState::~IGameState()
+{
+    for (auto& [key, obj] : gameObjects) {
+        obj.deleteHBITMAP();
+    }
+}
+
 const std::vector<std::wstring>& IGameState::getObjectOrder() const
 {
     return objectOrder;
@@ -22,7 +29,9 @@ const GameObject& IGameState::getConstGameObject(std::wstring objectName)const
 
 void IGameState::appendObject(std::wstring objectName, LPCTSTR path, SIZE frameSize)
 {
-    if (gameObjects.emplace(objectName, GameObject(path, objectName, frameSize)).second) {
+    GameObject obj(path, objectName, frameSize);
+    if (gameObjects.emplace(objectName, std::move(obj)).second) {
+        OutputDebugString(L"PICTURE_TITLE デストラクト？\n");
         //追加成功
         objectOrder.push_back(objectName);
     }
@@ -30,9 +39,17 @@ void IGameState::appendObject(std::wstring objectName, LPCTSTR path, SIZE frameS
         std::wstring message = L"ゲームオブジェクト: " + objectName + L" を追加できませんでした";
         OutputDebugString(message.c_str());
     }
+    
 }
 
 const int IGameState::numberOfObjects() const
 {
     return objectOrder.size();
+}
+
+void IGameState::showAll()
+{
+    for (auto& [key, obj] : gameObjects) {
+        obj.appear();
+    }
 }

@@ -8,6 +8,7 @@
 #include "Ball.h"
 #include <numbers>
 #include <cmath>
+#include "BallFlyingSubState.h"
 
 void AfterMeetSubState::update(Game& game)
 {
@@ -16,8 +17,8 @@ void AfterMeetSubState::update(Game& game)
     GameObject& ballObject = owner.getGameObject(L"PICTURE_BALL");
     Ball& ball = owner.getBall();
     if (ballObject.isOutOfClientRect(window)) {
-        ballObject.hide();
-        owner.changeSubState(new WaitingPitchingSubState(owner));
+        translateBall(ball);
+        owner.changeSubState(new BallFlyingSubState(owner));
         return;
     }
 
@@ -56,4 +57,14 @@ void AfterMeetSubState::updateBallPos(GameObject& ballObject, Ball& ball)
         currentBallPos.y + movementY
     };
     ballObject.setObjectPosition(nextPos);
+}
+
+void AfterMeetSubState::translateBall(Ball& ball)
+{
+    POINT currentPos = ball.getPosition();
+    POINT nextPos = {
+        currentPos.x + 390,
+        currentPos.y + 114
+    };
+    ball.setPosition(nextPos);
 }

@@ -3,10 +3,15 @@
 #include <iostream>
 #include <string>
 #include "Window.h"
+#include <cmath>
 
 GameObject::GameObject() :
-	objectName(L""), frameSize({ 0,0 })
+	objectName(L""),
+	frameSize({ 0,0 }),
+	length(1)
 {
+	//std::wstring message = L"オブジェクト " + objectName + L" のコンストラクタが呼ばれました\n";
+	//OutputDebugString(message.c_str());
 }
 
 GameObject::GameObject(LPCTSTR path, std::wstring objectName, SIZE frameSize)
@@ -14,8 +19,13 @@ GameObject::GameObject(LPCTSTR path, std::wstring objectName, SIZE frameSize)
 {
 	loadImage(path);//hSpriteImageにビットマップハンドルを格納
 	setLength(static_cast<int>(getSpriteSize().cx / frameSize.cx));//スプライトのコマ数を設定
-	std::wstring message = L"オブジェクト: " + objectName + L" の総フレーム数は " + std::to_wstring(length) + L"\n";
-	OutputDebugString(message.c_str());
+	//std::wstring message = L"オブジェクト " + objectName + L" のコンストラクタが呼ばれました\n";
+	//OutputDebugString(message.c_str());
+}
+GameObject::~GameObject()
+{
+	//std::wstring message = L"オブジェクト " + objectName + L"を破棄しました\n";
+	//OutputDebugString(message.c_str());
 }
 void GameObject::loadImage(LPCWSTR path)
 {
@@ -131,6 +141,17 @@ bool GameObject::isOutOfClientRect(Window* window)
 	return false;
 }
 
+void GameObject::deleteHBITMAP()
+{
+	OutputDebugString(L"deleteHBITMAPが呼び出された\n");
+	DeleteObject(hSpriteImage);
+}
+
+void GameObject::changeSizeRate(float r)
+{
+	sizeRate = r;
+}
+
 const int GameObject::getPositionX() const
 {
 	return position.x;
@@ -161,6 +182,20 @@ const int GameObject::getHeight() const
 	return frameSize.cy;
 }
 
+const int GameObject::getWidthOnWindow() const
+{
+	return static_cast<int>(std::round(
+		float(getWidth()) * sizeRate
+	));
+}
+
+const int GameObject::getHeightOnWindow() const
+{
+	return static_cast<int>(std::round(
+		float(getHeight()) * sizeRate
+	));
+}
+
 int GameObject::getLength() const
 {
 	return length;
@@ -169,6 +204,11 @@ int GameObject::getLength() const
 const HBITMAP GameObject::getSpriteImage() const
 {
 	return hSpriteImage;
+}
+
+float GameObject::getSizeRate() const
+{
+	return sizeRate;
 }
 
 const int GameObject::originOfCurrentFrame() const

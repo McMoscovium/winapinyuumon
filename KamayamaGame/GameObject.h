@@ -13,11 +13,12 @@ class Window;
 class GameObject
 {
 private:
-	bool visible = true;//trueで描画される
+	bool visible = false;//trueで描画される
 	std::wstring objectName;
 	int length;//フレームの個数
 	POINT position = { 0,0 };//オブジェクトの描画位置
 	const SIZE frameSize;//オブジェクト1フレームの、長方形としての縦横サイズ（ピクセル）
+	float sizeRate = 1;//何倍に拡大して描画するか
 	HBITMAP hSpriteImage = nullptr;//スプライトシートのビットマップイメージ
 	int frameNumber = 0;//今、スプライトの何フレーム目か（0から始まる）
 	COLORREF transparent = 0xff00ff;//透過色
@@ -25,7 +26,7 @@ private:
 public:
 	GameObject();
 	GameObject(LPCTSTR path, std::wstring objectName, SIZE frameSize);
-	~GameObject() = default;
+	~GameObject();
 
 	//positionの変更
 	void setObjectPosition(POINT);
@@ -41,10 +42,16 @@ public:
 	const int getWidth()const;
 	//1フレームの高さを取得
 	const int getHeight()const;
+	//
+	const int getWidthOnWindow()const;
+	//
+	const int getHeightOnWindow()const;
 	//lengthを取得
 	int getLength()const;
 	//hBitmapを取得
 	const HBITMAP getSpriteImage()const;
+	//
+	float getSizeRate()const;
 	//現在のフレームの原点のスプライトシートにおけるX座標を取得する
 	const int originOfCurrentFrame()const;
 	//スプライトの画像サイズ（px）を取得
@@ -63,6 +70,10 @@ public:
 	void hide();
 	//windowのクライアント領域内にあるか調べる
 	bool isOutOfClientRect(Window* window);
+	//
+	void deleteHBITMAP();
+	//
+	void changeSizeRate(float r);
 	
 private:
 	void setLength(int);
