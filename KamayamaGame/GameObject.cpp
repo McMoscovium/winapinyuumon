@@ -5,13 +5,16 @@
 #include "Window.h"
 #include <cmath>
 
-GameObject::GameObject() :
-	objectName(L""),
-	frameSize({ 0,0 }),
-	length(1)
+
+
+GameObject::GameObject():
+	objectName(std::wstring(L""))
 {
-	//std::wstring message = L"オブジェクト " + objectName + L" のコンストラクタが呼ばれました\n";
-	//OutputDebugString(message.c_str());
+}
+
+GameObject::GameObject(std::wstring objectName):
+	objectName(objectName)
+{
 }
 
 GameObject::GameObject(LPCTSTR path, std::wstring objectName, SIZE frameSize)
@@ -150,6 +153,34 @@ void GameObject::deleteHBITMAP()
 void GameObject::changeSizeRate(float r)
 {
 	sizeRate = r;
+}
+
+void GameObject::render(HDC hdc) const
+{
+	HDC hdcMem = CreateCompatibleDC(hdc);//スプライトシートに紐付けるHDC
+	HBITMAP oldMemBitmap = (HBITMAP)SelectObject(hdcMem, getSpriteImage());
+	//透過色を考慮してHDCの選択するデバイスに描画
+	if (TransparentBlt(
+		hdc,
+		getPositionX(),
+		getPositionY(),
+		getWidthOnWindow(),
+		getHeightOnWindow(),
+		hdcMem,
+		originOfCurrentFrame(),
+		0,
+		getWidth(),
+		getHeight(),
+		RGB(255, 0, 255))
+		) {
+		//描画せいこう
+	}
+	else {
+		//描画失敗
+		OutputDebugString(L"仮想画面に描画失敗\n");
+	}
+	SelectObject(hdcMem, oldMemBitmap);
+	DeleteDC(hdcMem);//HDC解放
 }
 
 const int GameObject::getPositionX() const

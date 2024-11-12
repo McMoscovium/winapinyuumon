@@ -11,7 +11,7 @@ class IGameState
 {
 protected:
     Game& game;//親玉
-    std::unordered_map<std::wstring, GameObject> gameObjects = {};//GameObjectの列（画面奥から順）
+    std::unordered_map<std::wstring, GameObject*> gameObjects = {};//GameObjectの列（画面奥から順）
     std::vector<std::wstring> objectOrder = {};//オブジェクト名を描画順込みで並べたもの
 public:
     IGameState(Game& game);
@@ -21,6 +21,8 @@ public:
     const std::vector<std::wstring>& getObjectOrder()const;
     //指定した名前のゲームオブジェクトのゲッタ
     GameObject& getGameObject(std::wstring objectName);
+    //
+    GameObject* getGameObjectPtr(std::wstring objectName);
     //
     const GameObject& getConstGameObject(std::wstring objectName)const;
     //ゲームオブジェクトを追加

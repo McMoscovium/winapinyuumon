@@ -34,6 +34,8 @@ public:
     Ball& getBall();
     //
     Pitcher* getPitcher();
+    //
+    int& getDistance();
 
 
 private:
@@ -51,6 +53,11 @@ private:
     ULONGLONG phaseStartTime = 0;
     //WAITING_PITCHING用タイマー
     ULONGLONG waitingPitchingTimer = 0;
+    //飛距離を記録する変数
+    int distance = 0;
+
+
+
     //
     void updateWaitingPitchingTimer();
 

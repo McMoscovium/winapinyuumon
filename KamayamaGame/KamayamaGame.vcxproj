@@ -172,9 +172,9 @@
     <ClCompile Include="PlayingState.cpp" />
     <ClCompile Include="StatusState.cpp" />
     <ClCompile Include="Straight.cpp" />
+    <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Tintin.cpp" />
-    <ClCompile Include="VirtualWindow.cpp" />
     <ClCompile Include="TitleScreenState.cpp" />
     <ClCompile Include="WaitingPitchingSubState.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -199,6 +199,7 @@
     <ClInclude Include="PlayingState.h" />
     <ClInclude Include="StatusState.h" />
     <ClInclude Include="Straight.h" />
+    <ClInclude Include="TextObject.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Tintin.h" />
     <ClInclude Include="Vector2D.h" />

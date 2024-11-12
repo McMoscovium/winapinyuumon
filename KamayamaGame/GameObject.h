@@ -15,9 +15,9 @@ class GameObject
 private:
 	bool visible = false;//trueで描画される
 	std::wstring objectName;
-	int length;//フレームの個数
+	int length = 0;//フレームの個数
 	POINT position = { 0,0 };//オブジェクトの描画位置
-	const SIZE frameSize;//オブジェクト1フレームの、長方形としての縦横サイズ（ピクセル）
+	const SIZE frameSize = { 0,0 };//オブジェクト1フレームの、長方形としての縦横サイズ（ピクセル）
 	float sizeRate = 1;//何倍に拡大して描画するか
 	HBITMAP hSpriteImage = nullptr;//スプライトシートのビットマップイメージ
 	int frameNumber = 0;//今、スプライトの何フレーム目か（0から始まる）
@@ -25,8 +25,9 @@ private:
 
 public:
 	GameObject();
+	GameObject(std::wstring objectName);
 	GameObject(LPCTSTR path, std::wstring objectName, SIZE frameSize);
-	~GameObject();
+	virtual ~GameObject();
 
 	//positionの変更
 	void setObjectPosition(POINT);
@@ -74,6 +75,8 @@ public:
 	void deleteHBITMAP();
 	//
 	void changeSizeRate(float r);
+	//
+	virtual void render(HDC hdc)const;
 	
 private:
 	void setLength(int);

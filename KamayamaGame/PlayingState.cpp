@@ -8,6 +8,7 @@
 #include "WaitingPitchingSubState.h"
 #include "Vector2D.h"
 #include "Tintin.h"
+#include "TextObject.h"
 
 #include <algorithm>
 
@@ -38,16 +39,16 @@ PlayingState::PlayingState(Game& game) :
     appendObject(L"PICTURE_PITCHER", L".//assets//投手スプライトシート.bmp", { 168,266 });
     appendObject(L"PICTURE_BALL", L".//assets//ボール.bmp", { 41,50 });
     appendObject(L"JUDGE_BAT", L".//assets//battingJudgeFrame.bmp", { 50,50 });//バット当たり判定
+
+    gameObjects.emplace(L"TEXT_DISTANCE", new TextObject(L"TEXT_DISTANCE", L""));
+    objectOrder.push_back(L"TEXT_DISTANCE");
     
-    //
-    getGameObject(L"PICTURE_BALL").hide();
-    gameObjects.at(L"JUDGE_BAT").hide();
 
     //各GameObjectの描画位置を設定
-    gameObjects.at(L"PICTURE_FIELD").setObjectPosition({ 0,0 });
-    gameObjects.at(L"PICTURE_BATTER").setObjectPosition({ 32,48 });
-    gameObjects.at(L"BUTTON_EXIT").setObjectPosition({ 850,500 });
-    gameObjects.at(L"PICTURE_PITCHER").setObjectPosition({ 514, 22 });
+    getGameObject(L"PICTURE_FIELD").setObjectPosition({ 0,0 });
+    getGameObject(L"PICTURE_BATTER").setObjectPosition({ 32,48 });
+    getGameObject(L"BUTTON_EXIT").setObjectPosition({ 850,500 });
+    getGameObject(L"PICTURE_PITCHER").setObjectPosition({ 514, 22 });
     
     initializeStartTime();
 
@@ -70,13 +71,13 @@ void PlayingState::update(Game& game) {
 
 void PlayingState::updateBatFrame(int currentBatterFrame)
 {
-    POINT batterPos = gameObjects.at(L"PICTURE_BATTER").getPosition();
+    POINT batterPos = getGameObject(L"PICTURE_BATTER").getPosition();
     //バット判定枠移動
     POINT framePos = { getCursorPos().x - 25,
         getCursorPos().y - 25 - (currentBatterFrame - 3) * 25 };
-    gameObjects.at(L"JUDGE_BAT").setObjectPosition(framePos);
+    getGameObject(L"JUDGE_BAT").setObjectPosition(framePos);
     //バット判定枠の出現
-    gameObjects.at(L"JUDGE_BAT").appear();
+    getGameObject(L"JUDGE_BAT").appear();
 }
 
 
@@ -85,19 +86,19 @@ void PlayingState::updateBatFrame(int currentBatterFrame)
 void PlayingState::updateBatterAnimation(const InputManager& inputManager)
 {
     //釜山のスイング処理
-    const int kamayamaFrame = gameObjects.at(L"PICTURE_BATTER").getCurrentFrameNumber();
+    const int kamayamaFrame = getGameObject(L"PICTURE_BATTER").getCurrentFrameNumber();
     if (kamayamaFrame == 0) {//スイングしてない
         if (inputManager.getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_PRESSED) {
             releasedLeftButtonUntilSwingEnded = false;
-            gameObjects.at(L"PICTURE_BATTER").nextFrame();
+            getGameObject(L"PICTURE_BATTER").nextFrame();
             //OutputDebugString(L"スイング開始\n");
         }
     }
-    else if (kamayamaFrame < gameObjects.at(L"PICTURE_BATTER").getLength() - 1) {//スイング途中
+    else if (kamayamaFrame < getGameObject(L"PICTURE_BATTER").getLength() - 1) {//スイング途中
         if (inputManager.getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_UP) {
             releasedLeftButtonUntilSwingEnded = true;
         }
-        gameObjects.at(L"PICTURE_BATTER").nextFrame();
+        getGameObject(L"PICTURE_BATTER").nextFrame();
     }
     else {//スイング終了
         if ((inputManager.getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_DOWN) &&
@@ -106,7 +107,7 @@ void PlayingState::updateBatterAnimation(const InputManager& inputManager)
         }
         else {
             releasedLeftButtonUntilSwingEnded = true;
-            gameObjects.at(L"PICTURE_BATTER").changeFrame(0);
+            getGameObject(L"PICTURE_BATTER").changeFrame(0);
             //OutputDebugString(L"スイング終了\n");
         }
     }
@@ -132,10 +133,10 @@ void PlayingState::updateBatterPos(const InputManager& inputManager)
         velocityAngle.scalar((float)batterMovementSpeed);
 
 
-        nextKamayamaPos = PlayingState::nextKamayamaPos(gameObjects.at(L"PICTURE_BATTER").getPosition(), velocityAngle);//次フレームの釜山の位置
+        nextKamayamaPos = PlayingState::nextKamayamaPos(getGameObject(L"PICTURE_BATTER").getPosition(), velocityAngle);//次フレームの釜山の位置
     }
     
-    gameObjects[L"PICTURE_BATTER"].setObjectPosition(nextKamayamaPos);
+    getGameObject(L"PICTURE_BATTER").setObjectPosition(nextKamayamaPos);
 }
 
 const POINT PlayingState::getCursorPos() const
@@ -160,6 +161,11 @@ Pitcher* PlayingState::getPitcher()
     return pitcher;
 }
 
+int& PlayingState::getDistance()
+{
+    return distance;
+}
+
 void PlayingState::updateWaitingPitchingTimer()
 {
     ULONGLONG currentTime = GetTickCount64();
@@ -169,8 +175,8 @@ void PlayingState::updateWaitingPitchingTimer()
 
 void PlayingState::hitting()
 {
-    POINT ballPos = gameObjects.at(L"PICTURE_BALL").getPosition();
-    POINT batterPos = gameObjects.at(L"PICTURE_BATTER").getPosition();
+    POINT ballPos = getGameObject(L"PICTURE_BALL").getPosition();
+    POINT batterPos = getGameObject(L"PICTURE_BATTER").getPosition();
 
     
 

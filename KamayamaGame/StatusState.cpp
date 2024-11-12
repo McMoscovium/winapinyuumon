@@ -16,8 +16,8 @@ StatusState::StatusState(Game& game) :
 	appendObject(L"BUTTON_CHEAT", L".//assets//チート.bmp", { 256,128 });
 	appendObject(L"BUTTON_START", L".//assets//はじめる.bmp", { 256,128 });
 
-	gameObjects.at(L"BUTTON_CHEAT").setObjectPosition({ 800,500 });
-	gameObjects.at(L"BUTTON_START").setObjectPosition({ 100,500 });
+	getGameObject(L"BUTTON_CHEAT").setObjectPosition({ 800,500 });
+	getGameObject(L"BUTTON_START").setObjectPosition({ 100,500 });
 
 	OutputDebugString(L"StatusStateのインスタンスが作成されました\n");
 }

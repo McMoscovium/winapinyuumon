@@ -14,6 +14,8 @@ private:
     void updateBall(Ball& ball);
     void updateBallObjectPos(GameObject& ballObject, Ball& ball);
     void updateFieldPicture(Ball& ball);
+    void calculateDistance();
+
 public:
     BallFlyingSubState(PlayingState& owner);
     void update(Game& game)override;

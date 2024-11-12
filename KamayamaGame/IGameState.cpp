@@ -8,7 +8,9 @@ IGameState::IGameState(Game& game):
 IGameState::~IGameState()
 {
     for (auto& [key, obj] : gameObjects) {
-        obj.deleteHBITMAP();
+        obj->deleteHBITMAP();
+        delete obj;
+        obj = nullptr;
     }
 }
 
@@ -19,17 +21,22 @@ const std::vector<std::wstring>& IGameState::getObjectOrder() const
 
 GameObject& IGameState::getGameObject(std::wstring objectName)
 {
+    return *gameObjects.at(objectName);
+}
+
+GameObject* IGameState::getGameObjectPtr(std::wstring objectName)
+{
     return gameObjects.at(objectName);
 }
 
 const GameObject& IGameState::getConstGameObject(std::wstring objectName)const
 {
-    return gameObjects.at(objectName);
+    return *gameObjects.at(objectName);
 }
 
 void IGameState::appendObject(std::wstring objectName, LPCTSTR path, SIZE frameSize)
 {
-    GameObject obj(path, objectName, frameSize);
+    GameObject* obj =new GameObject(path, objectName, frameSize);
     if (gameObjects.emplace(objectName, std::move(obj)).second) {
         OutputDebugString(L"PICTURE_TITLE デストラクト？\n");
         //追加成功
@@ -50,6 +57,6 @@ const int IGameState::numberOfObjects() const
 void IGameState::showAll()
 {
     for (auto& [key, obj] : gameObjects) {
-        obj.appear();
+        obj->appear();
     }
 }

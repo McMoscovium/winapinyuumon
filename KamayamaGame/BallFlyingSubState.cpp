@@ -38,6 +38,17 @@ void BallFlyingSubState::updateFieldPicture(Ball& ball)
 		});
 }
 
+void BallFlyingSubState::calculateDistance()
+{
+	POINT ballPos = owner.getBall().getPosition();
+	POINT vector = {
+		ballPos.x - 960,
+		ballPos.y - 764
+	};
+	LONG r2 = vector.x * vector.x + vector.y * vector.y;
+	owner.getDistance() = (int)std::sqrt(r2);
+}
+
 BallFlyingSubState::BallFlyingSubState(PlayingState& owner):
 	GameSubState(owner)
 {
@@ -53,6 +64,8 @@ void BallFlyingSubState::update(Game& game)
 	//ボールが着弾したら止める
 	//将来的にはchangeSubState
 	if(ball.getHeight()<1){
+		//飛距離計算
+		calculateDistance();
 		owner.changeSubState(new AfterBallLandingSubState(owner));
 		return;
 	}

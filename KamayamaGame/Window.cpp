@@ -150,7 +150,7 @@ void Window::render(const IGameState* currentState)
 		if (!drawnObject.isVisible()) {
 			continue;
 		}
-		renderGameObject(drawnObject,hdcBackBuffer);
+		drawnObject.render(hdcBackBuffer);
 	}
 	//出来上がったバックバッファを本来のデバイスコンテキストに描画
 	RECT clientRect;

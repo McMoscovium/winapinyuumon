@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "PlayingState.h"
 #include "StatusState.h"
+#include "TextObject.h"
 
 
 
@@ -28,12 +29,17 @@ TitleScreenState::TitleScreenState(Game& game) :
     showAll();
 
     //各GameObjectの描画位置を設定@TODO
-    gameObjects.at(L"PICTURE_TITLE").setObjectPosition({ 0,0 });
-    gameObjects.at(L"PICTURE_KAMAYAMA").setObjectPosition({ 32,48 });
-    gameObjects.at(L"BUTTON_START").setObjectPosition({ 240,352 });
-    gameObjects.at(L"BUTTON_STATUS").setObjectPosition({ 576,352 });
-    gameObjects.at(L"BUTTON_GACHA").setObjectPosition({ 240,528 });
-    gameObjects.at(L"BUTTON_QUIT").setObjectPosition({ 576,528 });
+    getGameObject(L"PICTURE_TITLE").setObjectPosition({ 0,0 });
+    getGameObject(L"PICTURE_KAMAYAMA").setObjectPosition({ 32,48 });
+    getGameObject(L"BUTTON_START").setObjectPosition({ 240,352 });
+    getGameObject(L"BUTTON_STATUS").setObjectPosition({ 576,352 });
+    getGameObject(L"BUTTON_GACHA").setObjectPosition({ 240,528 });
+    getGameObject(L"BUTTON_QUIT").setObjectPosition({ 576,528 });
+
+    gameObjects.emplace(L"TEXT_TEST", new TextObject(L"TEXT_TEST", L"aiueo"));
+    objectOrder.push_back(L"TEXT_TEST");
+
+    getGameObject(L"TEXT_TEST").appear();
 
     OutputDebugString(L"TitleScreenStateのインスタンスが作成されました\n");
 }
