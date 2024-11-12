@@ -4,40 +4,36 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include "GameSubState.h"
+#include "IGameState.h"
 
 class Game;
 class InputManager;
 
-class GameState
+template<typename DerivedState, typename SubState>
+class GameState:
+	public IGameState
 {
-public:
-
 protected:
-	std::unordered_map<std::wstring, GameObject*> gameObjects;//GameObjectの列（画面奥から順）
-	std::vector<std::wstring> objectOrder;//オブジェクト名を描画順込みで並べたもの
-private:
-	
+	SubState* currentSubState = nullptr;//サブステートへのポインタ
 public:
-	virtual ~GameState();
+	GameState(Game& game) :IGameState(game) {}
+	virtual ~GameState() {
+		if (currentSubState) {
+			delete currentSubState;
+			currentSubState = nullptr;
+		}
+	}
 
-	//状態更新
-	virtual void update(Game* game,InputManager* inputManager) = 0;
+	virtual void update(Game& game) = 0;
 
-	//ゲームオブジェクトリストのゲッタ
-	virtual const std::unordered_map<std::wstring, GameObject*>* getGameObjects()const;
-
-	//objectOrderのゲッタ
-	std::vector<std::wstring> getObjectOrder()const;
-
-	//指定した名前のゲームオブジェクトのゲッタ
-	virtual const GameObject* getGameObject(std::wstring objectName)const;
-
-	//ゲームオブジェクトを追加
-	virtual void appendObject(std::wstring objectName, LPCTSTR path, SIZE frameSize);
-
-	//オブジェクトの個数
-	virtual const int numberOfObjects()const;
-
-	virtual bool isClicked(std::wstring objectName, InputManager* inputManager)const;
-private:
+	//
+	virtual void changeSubState(SubState* newSubState) {
+		if (currentSubState) {
+			currentSubState->exit(game);
+			delete currentSubState;
+		}
+		currentSubState = newSubState;
+		currentSubState->enter(game);
+	}
 };

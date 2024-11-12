@@ -9,6 +9,10 @@ class Window;
 class Ball
 {
 private:
+	//
+	int radius = 20;
+	//ゲーム上の位置（ホームベースが原点）
+	POINT position;
 	//平面上の向き（センターが０、レフトポールが+45、ライトポールが-45）
 	int angle = 0;
 	//平面上の早さ
@@ -16,19 +20,23 @@ private:
 	//高さ方向の速度
 	int hVelocity = 0;
 	//高さ
-	int height = 0;
-	//高さによって変わる、ボールの見かけの大きさの倍率
+	int height = 70;
+	//カメラとボールの距離によって変わる、ボールの見かけの大きさの倍率
 	float sizeRatio = 1;
-	//親玉
-
-
 
 public:
 	Ball();
 	
 	int getAngle()const;
 	int getVelocity()const;
+	int getHeight()const;
+	POINT getPosition()const;
+	LONG getX()const;
+	LONG getY()const;
+	int getRadius()const;
+
 	void setAngle(const int);
 	void setVelocity(const int);
 	void sethVelocity(const int);
+	void setPosition(POINT pos);
 };

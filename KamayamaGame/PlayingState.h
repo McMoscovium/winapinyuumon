@@ -6,6 +6,7 @@
 #include <vector>
 #include "Ball.h"
 #include "Vector2D.h"
+#include "Pitcher.h"
 
 class Game;
 class InputManager;
@@ -15,6 +16,7 @@ class PlayingState :
 {
 public:
     PlayingState(Game& game);
+    ~PlayingState();
 
     //アップデート関数
     //ゲームが終了したらGameOverStateに遷移
@@ -28,11 +30,15 @@ public:
     const POINT getCursorPos()const;
     //フェイズ開始時の時刻を記録
     void initializeStartTime();
+    //
     Ball& getBall();
+    //
+    Pitcher* getPitcher();
 
 
 private:
     Ball ball;
+    Pitcher* pitcher;
     //animateBatter()に使う変数
     bool releasedLeftButtonUntilSwingEnded = false;
     //バッターの移動スピード

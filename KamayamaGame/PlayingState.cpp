@@ -7,6 +7,7 @@
 #include "InPitchingSubState.h"
 #include "WaitingPitchingSubState.h"
 #include "Vector2D.h"
+#include "Tintin.h"
 
 #include <algorithm>
 
@@ -16,17 +17,29 @@
 
 
 
-PlayingState::PlayingState(Game& game):
-    GameState(game)
+PlayingState::PlayingState(Game& game) :
+    GameState(game),
+    pitcher(new Tintin())//今はTintin
 {
+    appendObject(L"PICTURE_FIELD00", L".//assets//フィールド00.bmp", { 1920,1200 });
+    appendObject(L"PICTURE_FIELD01", L".//assets//フィールド01.bmp", { 1920,1200 });
+    appendObject(L"PICTURE_FIELD02", L".//assets//フィールド02.bmp", { 1920,1200 });
+    appendObject(L"PICTURE_FIELD10", L".//assets//フィールド10.bmp", { 1920,1200 });
+    appendObject(L"PICTURE_FIELD11", L".//assets//フィールド11.bmp", { 1920,1200 });
+    appendObject(L"PICTURE_FIELD12", L".//assets//フィールド12.bmp", { 1920,1200 });
+    appendObject(L"PICTURE_FIELD-10", L".//assets//フィールド-10.bmp", { 1920,1200 });
+    appendObject(L"PICTURE_FIELD-11", L".//assets//フィールド-11.bmp", { 1920,1200 });
+    appendObject(L"PICTURE_FIELD-12", L".//assets//フィールド-12.bmp", { 1920,1200 });
     //GameObjectのインスタンスを生成
     appendObject(L"PICTURE_FIELD", L".//assets//フィールド.bmp", { 1152,720 });
+    appendObject(L"PICTURE_SHADOW", L".//assets//ボールの影.bmp", { 33,37 });
     appendObject(L"PICTURE_BATTER", L".//assets//打者.bmp", { 360,391 });
     appendObject(L"BUTTON_EXIT", L".//assets//おわる.bmp", { 256,128 });
     appendObject(L"PICTURE_PITCHER", L".//assets//投手スプライトシート.bmp", { 168,266 });
     appendObject(L"PICTURE_BALL", L".//assets//ボール.bmp", { 41,50 });
     appendObject(L"JUDGE_BAT", L".//assets//battingJudgeFrame.bmp", { 50,50 });//バット当たり判定
-
+    
+    //
     getGameObject(L"PICTURE_BALL").hide();
     gameObjects.at(L"JUDGE_BAT").hide();
 
@@ -41,6 +54,14 @@ PlayingState::PlayingState(Game& game):
     changeSubState(new WaitingPitchingSubState(*this));
 
     OutputDebugString(L"PlayingStateのインスタンスが作成されました\n");
+}
+
+PlayingState::~PlayingState()
+{
+    if (pitcher) {
+        delete pitcher;
+        pitcher = nullptr;
+    }
 }
 
 void PlayingState::update(Game& game) {
@@ -97,8 +118,9 @@ void PlayingState::updateBatterPos(const InputManager& inputManager)
 
     //マウス座標を取得し、釜山の座標を変更
     const POINT mouse = inputManager.getMousePosition();
-    Vector2D<float> velocityAngle(mouse.x - getCursorPos().x,
-        mouse.y - getCursorPos().y);//速度ベクトル（向きしか意味を持たない）
+    Vector2D<float> velocityAngle(
+        (float)(mouse.x - getCursorPos().x),
+        (float)(mouse.y - getCursorPos().y));//速度ベクトル（向きしか意味を持たない）
 
 
     
@@ -131,6 +153,11 @@ void PlayingState::initializeStartTime()
 Ball& PlayingState::getBall()
 {
     return ball;
+}
+
+Pitcher* PlayingState::getPitcher()
+{
+    return pitcher;
 }
 
 void PlayingState::updateWaitingPitchingTimer()

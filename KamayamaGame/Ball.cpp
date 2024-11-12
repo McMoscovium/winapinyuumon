@@ -3,7 +3,8 @@
 #include <Windows.h>
 #include "Window.h"
 
-Ball::Ball()
+Ball::Ball() :
+	position({ 529,162 })
 {
 }
 
@@ -19,6 +20,31 @@ int Ball::getVelocity() const
 	return velocity;
 }
 
+int Ball::getHeight() const
+{
+	return height;
+}
+
+POINT Ball::getPosition() const
+{
+	return position;
+}
+
+LONG Ball::getX() const
+{
+	return position.x;
+}
+
+LONG Ball::getY() const
+{
+	return position.y;
+}
+
+int Ball::getRadius() const
+{
+	return radius;
+}
+
 void Ball::setAngle(const int a)
 {
 	angle = a;
@@ -32,4 +58,9 @@ void Ball::setVelocity(const int v)
 void Ball::sethVelocity(const int v)
 {
 	hVelocity = v;
+}
+
+void Ball::setPosition(POINT pos)
+{
+	position = pos;
 }

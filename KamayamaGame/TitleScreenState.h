@@ -8,23 +8,11 @@ class InputManager;
 class Game;
 
 class TitleScreenState :
-    public GameState
+    public GameState<TitleScreenState,GameSubState<TitleScreenState>>
 {
 public:
-    //メンバ変数
-
-private:
-    //メンバ変数
-
-public:
-    //メンバ関数
-
-    TitleScreenState();
-
+    TitleScreenState(Game& game);
     //状態を更新
     //スタートボタンが押されたらPlayingStateに遷移
-    void update(Game* game, InputManager* inputManager)override;
-
-private:
-    //メンバ関数
+    void update(Game& game)override;
 };
