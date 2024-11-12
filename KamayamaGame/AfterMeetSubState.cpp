@@ -12,10 +12,12 @@
 
 void AfterMeetSubState::update(Game& game)
 {
-    //ボールが画面外に出たらchangeSubState
     Window* window = game.getWindow();
     GameObject& ballObject = owner.getGameObject(L"PICTURE_BALL");
     Ball& ball = owner.getBall();
+    GameObject& shadow = owner.getGameObject(L"PICTURE_SHADOW");
+
+    //ボールが画面外に出たらchangeSubState
     if (ballObject.isOutOfClientRect(window)) {
         translateBall(ball);
         owner.changeSubState(new BallFlyingSubState(owner));
@@ -35,8 +37,8 @@ void AfterMeetSubState::update(Game& game)
     owner.updateBatterPos(inputManager);
     owner.updateBatterAnimation(inputManager);
     
-    //ボール座標の更新
-    updateBallPos(ballObject, ball);
+    //ボールと影の座標の更新
+    updateBallPos(ballObject, ball, shadow);
 }
 
 void AfterMeetSubState::enter(Game& game)
@@ -47,16 +49,29 @@ void AfterMeetSubState::exit(Game& game)
 {
 }
 
-void AfterMeetSubState::updateBallPos(GameObject& ballObject, Ball& ball)
+void AfterMeetSubState::updateBallPos(GameObject& ballObject, Ball& ball, GameObject& shadow)
 {
-    POINT currentBallPos = ballObject.getPosition();
+    //ballのメンバ変数を更新
+    POINT currentBallPos = ball.getPosition();
     LONG movementX = -round(std::sin(static_cast<double>(ball.getAngle()) * std::numbers::pi / 180) * ball.getVelocity());
     LONG movementY = -round(std::cos(static_cast<double>(ball.getAngle()) * std::numbers::pi / 180) * ball.getVelocity());
-    POINT nextPos = {
+    POINT nextBallPos = {
         currentBallPos.x + movementX,
         currentBallPos.y + movementY
     };
-    ballObject.setObjectPosition(nextPos);
+    ball.setPosition(nextBallPos);
+    ball.sethVelocity(ball.getHVelocity() - ball.getGravity());
+    ball.setHeight(ball.getHeight() + ball.getHVelocity());
+    //影の描画位置を更新
+    shadow.setObjectPosition({
+        ball.getX() - (LONG)std::round(ball.getRadius() * shadow.getSizeRate()),
+        ball.getY()
+        });
+    //ボールの描画位置を更新
+    ballObject.setObjectPosition({
+        shadow.getPositionX(),
+        shadow.getPositionY() - ball.getHeight()
+    });
 }
 
 void AfterMeetSubState::translateBall(Ball& ball)

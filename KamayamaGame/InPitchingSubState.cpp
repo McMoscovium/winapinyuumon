@@ -85,10 +85,15 @@ bool InPitchingSubState::calculateMeet(GameObject& ballObject, Ball& ball)
     }
     //以下、ボールとバットが当たった
     //ボールの速度データを計算
+    //左右の角度
     int angle = std::round((cursorPos.y - ballPos.y) * 9 / 5);
     ball.setAngle(angle);
+    //早さ
     int speed = 50 - abs(ballPos.x - cursorPos.x);
     ball.setVelocity(speed);
+    //上向きの速度
+    int hVelocity = 20;
+    ball.sethVelocity(hVelocity);
     std::wstring message = L"angle: " + std::to_wstring(angle) + L"\n";
     std::wstring msg2 = L"speed: " + std::to_wstring(speed) + L"\n";
     OutputDebugString(message.c_str());

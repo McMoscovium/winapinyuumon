@@ -21,22 +21,25 @@ private:
 	int hVelocity = 0;
 	//高さ
 	int height = 70;
-	//カメラとボールの距離によって変わる、ボールの見かけの大きさの倍率
-	float sizeRatio = 1;
+	//
+	int gravity=1;
 
 public:
 	Ball();
 	
 	int getAngle()const;
 	int getVelocity()const;
+	int getHVelocity()const;
 	int getHeight()const;
 	POINT getPosition()const;
 	LONG getX()const;
 	LONG getY()const;
 	int getRadius()const;
+	int getGravity()const;
 
 	void setAngle(const int);
 	void setVelocity(const int);
 	void sethVelocity(const int);
 	void setPosition(POINT pos);
+	void setHeight(int h);
 };

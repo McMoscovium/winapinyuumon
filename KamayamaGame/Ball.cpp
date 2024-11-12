@@ -20,6 +20,11 @@ int Ball::getVelocity() const
 	return velocity;
 }
 
+int Ball::getHVelocity() const
+{
+	return hVelocity;
+}
+
 int Ball::getHeight() const
 {
 	return height;
@@ -45,6 +50,11 @@ int Ball::getRadius() const
 	return radius;
 }
 
+int Ball::getGravity() const
+{
+	return gravity;
+}
+
 void Ball::setAngle(const int a)
 {
 	angle = a;
@@ -63,4 +73,9 @@ void Ball::sethVelocity(const int v)
 void Ball::setPosition(POINT pos)
 {
 	position = pos;
+}
+
+void Ball::setHeight(int h)
+{
+	height = h;
 }

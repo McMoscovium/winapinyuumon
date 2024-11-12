@@ -17,7 +17,7 @@ public:
     void enter(Game& game)override;
     void exit(Game& game)override;
 
-    void updateBallPos(GameObject& ballObject, Ball& ball);
+    void updateBallPos(GameObject& ballObject, Ball& ball, GameObject& shadow);
     //AfterMeetSubStateからBallFlyingSubStateに移るにあたって、背景が変わるのでボールのデータを計算しなおす
     void translateBall(Ball& ball);
 };
