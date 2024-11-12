@@ -23,7 +23,6 @@ public:
 			delete currentSubState;
 			currentSubState = nullptr;
 		}
-		OutputDebugString(L"ゲームステートが変更されました\n");
 	}
 
 	virtual void update(Game& game) = 0;

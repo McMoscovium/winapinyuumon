@@ -9,6 +9,7 @@
 #include "Vector2D.h"
 #include <cmath>
 #include "Ball.h"
+#include <Windows.h>
 
 void InPitchingSubState::updatePitchingMotion()
 {
@@ -20,25 +21,54 @@ void InPitchingSubState::updatePitchingMotion()
     if (frame == 34) {//ボールをリリース
         owner.getGameObject(L"PICTURE_BALL").setObjectPosition({ 529,162 });
         owner.getGameObject(L"PICTURE_BALL").appear();
+        owner.getGameObject(L"PICTURE_SHADOW").appear();
     }
     return;
 }
 
 void InPitchingSubState::updateBall()
 {
-    GameObject& ball = owner.getGameObject(L"PICTURE_BALL");
-    //位置の更新
+    Ball& ball = owner.getBall();
+    //ボールのゲーム内位置の更新
     const POINT formerPos = ball.getPosition();
     const POINT nextPos = {
         formerPos.x,
         formerPos.y + pitchingSpeed
     };
-    ball.setObjectPosition(nextPos);
-
+    ball.setPosition(nextPos);
+    
     //見た目の更新
+    GameObject& ballObject = owner.getGameObject(L"PICTURE_BALL");
+    GameObject& shadow = owner.getGameObject(L"PICTURE_SHADOW");
     if (nextPos.y > 720) {
-        ball.hide();
+        //画面下に外れた
+        ballObject.hide();
+        shadow.hide();
     }
+    //以下、画面下に外れてない
+    // //ボールと影のサイズを更新
+    ballObject.changeSizeRate(
+        (float)(1440 - (720 - ball.getY())) / (float)1440
+    );
+    shadow.changeSizeRate(
+        (float)(1440 - (720 - ball.getY())) / (float)1440
+    );
+    //影とボールの位置を更新
+    POINT shadowPos = {
+        nextPos.x - (LONG)(17*shadow.getSizeRate()),
+        nextPos.y
+    };
+    shadow.setObjectPosition(shadowPos);
+    POINT objectPos = {
+        //ボールの半径だけxざひょうをずらす
+        nextPos.x-(LONG)std::round(
+            ball.getRadius()*ballObject.getSizeRate()
+        ),
+        nextPos.y - (int)std::round(ball.getHeight()*ballObject.getSizeRate())
+    };
+    ballObject.setObjectPosition(objectPos);
+    
+    
 }
 
 bool InPitchingSubState::calculateMeet(GameObject& ballObject, Ball& ball)
@@ -69,16 +99,24 @@ bool InPitchingSubState::calculateMeet(GameObject& ballObject, Ball& ball)
 
 void InPitchingSubState::update(Game& game)
 {
+
+    Ball& ball = owner.getBall();
+    GameObject& ballObject = owner.getGameObject(L"PICTURE_BALL");
+    GameObject& shadow = owner.getGameObject(L"PICTURE_SHADOW");
+    GameObject& pitcher = owner.getGameObject(L"PICTURE_PITCHER");
+    
+    
     //投げたボールが画面下まで行ったらchangeState
-    GameObject& ball = owner.getGameObject(L"PICTURE_BALL");
-    if (ball.getPositionY() > 700) {//画面下に外れた
-        ball.hide();
+    if (ball.getY() > 700) {//画面下に外れた
+        
+        ballObject.hide();
+        shadow.hide();
         owner.changeSubState(new WaitingPitchingSubState(owner));
         return;
     }
 
+    //終了ボタン処理
     InputManager& inputManager = game.getInputManager();
-	//終了ボタン処理
     GameObject& exitButton = owner.getGameObject(L"BUTTON_EXIT");
     if (inputManager.isClicked(exitButton)) {
         exit(game);//終了処理
@@ -86,11 +124,30 @@ void InPitchingSubState::update(Game& game)
         return;
     }
 
-    //ピッチングアニメーションの更新
-    updatePitchingMotion();
     //ボール座標の更新
-    if (owner.getGameObject(L"PICTURE_BALL").isVisible() == true) {
+    if (ballObject.isVisible() == true) {
         updateBall();
+    }
+
+    //ボール見た目の更新
+    int frame = pitcher.getCurrentFrameNumber();
+    if (frame == 34) {//ボールをリリース
+        ballObject.setObjectPosition({
+            ball.getX(),
+            ball.getY() + ball.getHeight()
+            });
+        ballObject.changeSizeRate(
+            (float)(1440 - (720 - ball.getY())) / (float)1440
+        );
+        ballObject.appear();
+        shadow.setObjectPosition(ball.getPosition());
+        shadow.appear();
+    }
+    
+
+    //ピッチングアニメーションの更新
+    if (frame < pitcher.getLength() - 1) {
+        pitcher.nextFrame();
     }
     
     //バッターの更新
@@ -103,7 +160,7 @@ void InPitchingSubState::update(Game& game)
         //当たり判定が登場
         owner.updateBatFrame(currentBatterFrame);
         //ボールが当たったかどうかで分けて処理
-        if (calculateMeet(ball, owner.getBall())) {
+        if (calculateMeet(ballObject, owner.getBall())) {
             owner.changeSubState(new AfterMeetSubState(owner));
             return;
         }
@@ -118,8 +175,15 @@ void InPitchingSubState::update(Game& game)
 
 void InPitchingSubState::enter(Game& game)
 {
-    
-    owner.getGameObject(L"PICTURE_BALL").setObjectPosition({ 529,162 });//ボール座標初期化
+    Ball& ball = owner.getBall();
+    ball.setPosition({ 542,115 });
+    Pitcher* pitcher = owner.getPitcher();
+    if (pitcher) {
+        pitcher->decideNextPitch();
+    }
+    else {
+        OutputDebugString(L"pitcherはnullptrです\n");
+    }
     OutputDebugString(L"Entering InPitchingState\n");
 }
 

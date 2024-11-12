@@ -50,6 +50,14 @@ void WaitingPitchingSubState::update(Game & game)
 void WaitingPitchingSubState::enter(Game& game)
 {
 	OutputDebugString(L"Entering WaitingPitchingSubState\n");
+	owner.getGameObject(L"PICTURE_FIELD").appear();
+	owner.getGameObject(L"PICTURE_BATTER").appear();
+	owner.getGameObject(L"BUTTON_EXIT").appear();
+	owner.getGameObject(L"PICTURE_PITCHER").appear();
+
+	GameObject& pitcher = owner.getGameObject(L"PICTURE_PITCHER");
+	pitcher.changeSizeRate(0.5);
+	pitcher.setObjectPosition({ 519,5 });
 }
 
 void WaitingPitchingSubState::exit(Game& game)

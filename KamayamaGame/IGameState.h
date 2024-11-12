@@ -15,7 +15,7 @@ protected:
     std::vector<std::wstring> objectOrder = {};//オブジェクト名を描画順込みで並べたもの
 public:
     IGameState(Game& game);
-    virtual ~IGameState() = default;
+    virtual ~IGameState();
     virtual void update(Game& game) = 0;
     //objectOrderのゲッタ
     const std::vector<std::wstring>& getObjectOrder()const;
@@ -27,5 +27,7 @@ public:
     void appendObject(std::wstring objectName, LPCTSTR path, SIZE frameSize);
     //オブジェクトの個数
     const int numberOfObjects()const;
+    //
+    void showAll();
 };
 

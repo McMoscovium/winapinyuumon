@@ -17,11 +17,15 @@ TitleScreenState::TitleScreenState(Game& game) :
 {
     //GameObjectのインスタンスを生成（筋肉実装やめたいなあ。。。。）@TODO
     appendObject(L"PICTURE_TITLE", L".//assets//タイトル画面2.bmp", { 1152,720 });
+    
+
     appendObject(L"BUTTON_START", L".//assets//はじめる.bmp", { 256,128 });
     appendObject(L"BUTTON_STATUS", L".//assets//ステータス.bmp", { 256,128 });
     appendObject(L"BUTTON_GACHA", L".//assets//ガチャ.bmp", { 256,128 });
     appendObject(L"BUTTON_QUIT", L".//assets//おわる.bmp", { 256,128 });
     appendObject(L"PICTURE_KAMAYAMA", L".//assets//クマの釜山.bmp", { 172,178 });
+
+    showAll();
 
     //各GameObjectの描画位置を設定@TODO
     gameObjects.at(L"PICTURE_TITLE").setObjectPosition({ 0,0 });
@@ -30,7 +34,6 @@ TitleScreenState::TitleScreenState(Game& game) :
     gameObjects.at(L"BUTTON_STATUS").setObjectPosition({ 576,352 });
     gameObjects.at(L"BUTTON_GACHA").setObjectPosition({ 240,528 });
     gameObjects.at(L"BUTTON_QUIT").setObjectPosition({ 576,528 });
-
 
     OutputDebugString(L"TitleScreenStateのインスタンスが作成されました\n");
 }

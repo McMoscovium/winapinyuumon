@@ -6,6 +6,7 @@ PC内部でのゲームの進行を管理するクラス。
 */
 #include "unordered_map"
 #include "IGameState.h"
+#include "Camera.h"
 
 class Window;
 class InputManager;
@@ -16,6 +17,7 @@ private:
 	IGameState* currentState = nullptr;
 	InputManager& inputManager;
 	Window* window;
+	Camera camera;
 
 	
 public:
