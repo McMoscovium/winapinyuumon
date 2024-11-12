@@ -31,6 +31,12 @@ PlayingState::PlayingState(Game& game) :
     appendObject(L"PICTURE_FIELD-10", L".//assets//フィールド-10.bmp", { 1920,1200 });
     appendObject(L"PICTURE_FIELD-11", L".//assets//フィールド-11.bmp", { 1920,1200 });
     appendObject(L"PICTURE_FIELD-12", L".//assets//フィールド-12.bmp", { 1920,1200 });
+
+    //フィールド画像だけここでまとめておく
+    for (auto& [key, obj] : gameObjects) {
+        fieldImages.emplace(key, *obj);
+    }
+
     //GameObjectのインスタンスを生成
     appendObject(L"PICTURE_FIELD", L".//assets//フィールド.bmp", { 1152,720 });
     appendObject(L"PICTURE_SHADOW", L".//assets//ボールの影.bmp", { 33,37 });
@@ -39,6 +45,7 @@ PlayingState::PlayingState(Game& game) :
     appendObject(L"PICTURE_PITCHER", L".//assets//投手スプライトシート.bmp", { 168,266 });
     appendObject(L"PICTURE_BALL", L".//assets//ボール.bmp", { 41,50 });
     appendObject(L"JUDGE_BAT", L".//assets//battingJudgeFrame.bmp", { 50,50 });//バット当たり判定
+
 
     gameObjects.emplace(L"TEXT_DISTANCE", new TextObject(L"TEXT_DISTANCE", L""));
     objectOrder.push_back(L"TEXT_DISTANCE");
@@ -164,6 +171,11 @@ Pitcher* PlayingState::getPitcher()
 int& PlayingState::getDistance()
 {
     return distance;
+}
+
+std::unordered_map<std::wstring, GameObject&>& PlayingState::getFieldImages()
+{
+    return fieldImages;
 }
 
 void PlayingState::updateWaitingPitchingTimer()

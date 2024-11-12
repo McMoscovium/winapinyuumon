@@ -60,3 +60,8 @@ void IGameState::showAll()
         obj->appear();
     }
 }
+
+Game& IGameState::getGame()
+{
+    return game;
+}

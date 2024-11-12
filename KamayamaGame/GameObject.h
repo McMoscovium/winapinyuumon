@@ -77,6 +77,8 @@ public:
 	void changeSizeRate(float r);
 	//
 	virtual void render(HDC hdc)const;
+	//クライアント領域と交叉する場合true
+	bool isIntersectsWithClientRect(Window* window)const;
 	
 private:
 	void setLength(int);

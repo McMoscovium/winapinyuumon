@@ -7,6 +7,7 @@
 #include "Ball.h"
 #include "Vector2D.h"
 #include "Pitcher.h"
+#include <unordered_map>
 
 class Game;
 class InputManager;
@@ -36,6 +37,8 @@ public:
     Pitcher* getPitcher();
     //
     int& getDistance();
+    //
+    std::unordered_map<std::wstring, GameObject&>& getFieldImages();
 
 
 private:
@@ -55,6 +58,8 @@ private:
     ULONGLONG waitingPitchingTimer = 0;
     //飛距離を記録する変数
     int distance = 0;
+    //フィールド画像への参照の列
+    std::unordered_map<std::wstring, GameObject&> fieldImages;
 
 
 

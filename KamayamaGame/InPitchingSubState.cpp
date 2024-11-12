@@ -89,7 +89,7 @@ bool InPitchingSubState::calculateMeet(GameObject& ballObject, Ball& ball)
     int angle = (int)std::round((cursorPos.y - ballPos.y) * 9 / 5);
     ball.setAngle(angle);
     //ëÅÇ≥
-    int speed = 50 - abs(ballPos.x - cursorPos.x);
+    int speed = (50 - abs(ballPos.x - cursorPos.x))*0.6;
     ball.setVelocity(speed);
     //è„å¸Ç´ÇÃë¨ìx
     int hVelocity = 20;

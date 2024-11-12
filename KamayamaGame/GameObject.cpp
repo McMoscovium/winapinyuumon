@@ -183,6 +183,29 @@ void GameObject::render(HDC hdc) const
 	DeleteDC(hdcMem);//HDC解放
 }
 
+bool GameObject::isIntersectsWithClientRect(Window* window) const
+{
+	RECT objRect = getObjectRect();
+	RECT clientRect = window->getClientRect();
+	if (objRect.right < clientRect.left) {
+		//左に外れる
+		return false;
+	}
+	if (objRect.bottom < clientRect.top) {
+		//上に外れる
+		return false;
+	}
+	if (objRect.left > clientRect.right) {
+		//右に外れる
+		return false;
+	}
+	if (objRect.top > clientRect.bottom) {
+		//下に外れる
+		return false;
+	}
+	return true;
+}
+
 const int GameObject::getPositionX() const
 {
 	return position.x;

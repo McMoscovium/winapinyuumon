@@ -51,14 +51,23 @@ void WaitingPitchingSubState::enter(Game& game)
 {
 	OutputDebugString(L"Entering WaitingPitchingSubState\n");
 	owner.getGameObject(L"PICTURE_FIELD").appear();
-	owner.getGameObject(L"PICTURE_BATTER").appear();
-	owner.getGameObject(L"PICTURE_BATTER").changeSizeRate(1.0f);
+	GameObject& batter = owner.getGameObject(L"PICTURE_BATTER");
+	InputManager& inputManager = game.getInputManager();
+	POINT mouse = inputManager.getMousePosition();
+	batter.setObjectPosition({
+		567-302,
+		514-197
+		});
+	batter.changeSizeRate(1.0f);
+	batter.appear();
+	
 	owner.getGameObject(L"BUTTON_EXIT").appear();
-	owner.getGameObject(L"PICTURE_PITCHER").appear();
+	
 
 	GameObject& pitcher = owner.getGameObject(L"PICTURE_PITCHER");
 	pitcher.changeSizeRate(0.5);
 	pitcher.setObjectPosition({ 519,5 });
+	owner.getGameObject(L"PICTURE_PITCHER").appear();
 }
 
 void WaitingPitchingSubState::exit(Game& game)

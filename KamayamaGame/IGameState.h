@@ -31,5 +31,6 @@ public:
     const int numberOfObjects()const;
     //
     void showAll();
+    Game& getGame();
 };
 

@@ -31,11 +31,58 @@ void BallFlyingSubState::updateBallObjectPos(GameObject& ballObject, Ball& ball)
 
 void BallFlyingSubState::updateFieldPicture(Ball& ball)
 {
-	GameObject& field = owner.getGameObject(L"PICTURE_FIELD00");
-	field.setObjectPosition({
-		575-ball.getX(),
-		360-ball.getY()
+	//座標更新
+	int x = ball.getX();
+	int y = ball.getY();
+	//クソ実装@TODO
+	owner.getGameObject(L"PICTURE_FIELD00").setObjectPosition({
+		576-x,
+		360-y
 		});
+	owner.getGameObject(L"PICTURE_FIELD01").setObjectPosition({
+		576 - x,
+		360 - 1200 - y
+		});
+	owner.getGameObject(L"PICTURE_FIELD02").setObjectPosition({
+		576 - x,
+		360 - 2400 - y
+		});
+	owner.getGameObject(L"PICTURE_FIELD10").setObjectPosition({
+		576 + 1920 - x,
+		360 - y
+		});
+	owner.getGameObject(L"PICTURE_FIELD11").setObjectPosition({
+		576 + 1920 - x,
+		360 - 1200 - y
+		});
+	owner.getGameObject(L"PICTURE_FIELD12").setObjectPosition({
+		576 + 1920 - x,
+		360 - 2400 - y
+		});
+	owner.getGameObject(L"PICTURE_FIELD-10").setObjectPosition({
+		576 - 1920 - x,
+		360 - y
+		});
+	owner.getGameObject(L"PICTURE_FIELD-11").setObjectPosition({
+		576 - 1920 - x,
+		360 - 1200 - y
+		});
+	owner.getGameObject(L"PICTURE_FIELD-12").setObjectPosition({
+		576 - 1920 - x,
+		360 - 2400 - y
+		});
+	
+	//全部のフィールドを描画すると重いので、クライアント領域と重なるもののみ描画する
+	Window* window = owner.getGame().getWindow();
+	for (auto& [key, obj] : owner.getFieldImages()) {
+		if (obj.isIntersectsWithClientRect(window)) {
+			//クライアント領域と交わる
+			obj.appear();
+		}
+		else {
+			obj.hide();
+		}
+	}
 }
 
 void BallFlyingSubState::calculateDistance()
@@ -84,11 +131,13 @@ void BallFlyingSubState::update(Game& game)
 		-ball.getX() + 958+575,
 		-ball.getY() + 236+360
 	});
+	pitcher.appear();
 	//打者の位置を更新
 	batter.setObjectPosition({
 		-ball.getX() + 960+575,
 		-ball.getY() + 764+360
 		});
+	batter.appear();
 	//フィールドの描画位置を更新
 	updateFieldPicture(ball);
 }
@@ -96,21 +145,20 @@ void BallFlyingSubState::update(Game& game)
 void BallFlyingSubState::enter(Game& game)
 {
 	owner.getGameObject(L"PICTURE_FIELD").hide();
-	owner.getGameObject(L"PICTURE_BATTER").changeSizeRate(0.4f);
-	owner.getGameObject(L"PICTURE_BATTER").setObjectPosition({ 484,490 });
+	
 	owner.getGameObject(L"BUTTON_EXIT").hide();
+	owner.getGameObject(L"PICTURE_PITCHER").hide();
+	owner.getGameObject(L"PICTURE_BATTER").hide();
+	owner.getGameObject(L"PICTURE_BATTER").changeSizeRate(0.4f);
 	owner.getGameObject(L"PICTURE_PITCHER").changeSizeRate(0.4f);
-	owner.getGameObject(L"PICTURE_PITCHER").setObjectPosition({ 484,300 });
 	owner.getGameObject(L"PICTURE_BALL").changeSizeRate(0.4f);
 	owner.getGameObject(L"PICTURE_SHADOW").setObjectPosition({ 570,360 });
 	owner.getGameObject(L"PICTURE_SHADOW").changeSizeRate(0.4f);
-	owner.getGameObject(L"PICTURE_FIELD00").appear();
+	updateFieldPicture(owner.getBall());
 }
 
 void BallFlyingSubState::exit(Game& game)
 {
-	GameObject& field = owner.getGameObject(L"PICTURE_FIELD00");
-	field.hide();
 	owner.getGameObject(L"PICTURE_BALL").hide();
 	owner.getGameObject(L"PICTURE_SHADOW").hide();
 }
