@@ -40,7 +40,6 @@ void WaitingPitchingSubState::update(Game & game)
 		owner.updateBatFrame(currentBatterFrame);
 	}
 
-
 	if (currentBatterFrame >= 5) {
 		//ƒoƒbƒg”»’è˜g‚ÌÁ‹
 		owner.getGameObject(L"JUDGE_BAT").hide();
