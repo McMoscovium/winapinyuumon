@@ -143,7 +143,7 @@ void Window::render(const IGameState* currentState)
 	std::vector<std::wstring> objectOrder = currentState->getObjectOrder();//画面奥から順に描画するので、その順序を取得
 
 	//ゲームオブジェクトを奥から順にバックバッファに描画する
-	for (int i = 0; i < currentState->numberOfObjects(); i++) {
+	for (unsigned int i = 0; i < currentState->numberOfObjects(); i++) {
 		//i番目のオブジェクトを選択
 		const GameObject& drawnObject = currentState->getConstGameObject(objectOrder.at(i));
 		//visible=falseなら次のオブジェクトへ

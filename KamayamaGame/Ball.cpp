@@ -2,6 +2,14 @@
 #include "Vector2D.h"
 #include <Windows.h>
 #include "Window.h"
+#include <cmath>
+#include <numbers>
+
+void Ball::updateByPitchType(Pitcher* pitcher)
+{
+	framesSinceReleased++;
+	pitcher->getPitchType()->setBallVelocity(*this, framesSinceReleased);
+}
 
 Ball::Ball() :
 	position({ 529,162 })
@@ -10,7 +18,7 @@ Ball::Ball() :
 
 
 
-int Ball::getAngle() const
+float Ball::getAngle() const
 {
 	return angle;
 }
@@ -55,7 +63,7 @@ float Ball::getGravity() const
 	return gravity;
 }
 
-void Ball::setAngle(const int a)
+void Ball::setAngle(const float a)
 {
 	angle = a;
 }
@@ -79,4 +87,26 @@ void Ball::setPosition(POINT pos)
 void Ball::setHeight(float h)
 {
 	height = h;
+}
+
+void Ball::resetFrame()
+{
+	framesSinceReleased = 0;
+}
+
+POINT Ball::updatePitch(Pitcher* pitcher)
+{
+	//球種に合わせて次のvelocityの更新
+	updateByPitchType(pitcher);
+	//ボールのゲーム内位置の更新
+	const POINT formerPos = getPosition();
+	LONG movementX = (LONG)std::round(getVelocity() * std::sin(std::numbers::pi * getAngle() / 180));
+	LONG movementY= -(LONG)std::round(getVelocity() * std::cos(getAngle() * std::numbers::pi / 180));
+	LONG movementZ = (LONG)std::round(getHVelocity());
+	setPosition({
+		formerPos.x + movementX,
+		formerPos.y + movementY
+		});
+	setHeight(getHeight() + movementZ);
+	return getPosition();
 }

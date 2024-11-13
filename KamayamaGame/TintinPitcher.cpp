@@ -1,7 +1,7 @@
-#include "Tintin.h"
+#include "TintinPitcher.h"
 #include <random>
 
-void Tintin::decideNextPitch()
+void TintinPitcher::decideNextPitch()
 {
 	//球種は今はストレート固定
 
@@ -12,6 +12,6 @@ void Tintin::decideNextPitch()
 	setPitchingSpeed(dis1(gen));
 
 	//コース
-	std::uniform_int_distribution<> dis2(-100, 100);
+	std::uniform_real_distribution<float> dis2(-10.0f, 5.0f);
 	setPitchingCourse(dis2(gen));
 }

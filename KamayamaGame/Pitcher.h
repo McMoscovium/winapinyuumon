@@ -9,21 +9,30 @@ class Pitcher
 {
 private:
 	std::wstring pitcherName;
-	std::vector<PitchType> pitchTypes = { Straight() };
-	PitchType& nextPitch = pitchTypes.at(0);
+	std::vector<PitchType*> pitchTypes;
+	PitchType* nextPitch = nullptr;
 	int armStrength;
 	int pitchingSpeed = 0;
-	int pitchingCourse = 0;
+	//角度
+	float pitchingCourse = 0;
+	//現在の球種の番号
+	int currentPitchNumber = 0;
+
 public:
 	Pitcher(std::wstring pitcherName, int armStrength);
-	virtual ~Pitcher() = default;
+	virtual ~Pitcher();
 
 	//
 	int getArmStrength()const;
 	//
+	int getPitchingSpeed()const;
+	float getPitchingAngle()const;
+	//
 	void setPitchingSpeed(int sp);
 	//
-	void setPitchingCourse(int c);
+	void setPitchingCourse(float c);
+	//現在の球種を取得
+	PitchType* getPitchType();
 	
 	//次の球種、球速、投げるコースをランダムに決定
 	virtual void decideNextPitch() = 0;

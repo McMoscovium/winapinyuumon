@@ -33,12 +33,4 @@ void StatusState::update(Game& game)
 		game.changeState(new TitleScreenState(game));
 		return;
 	}
-
-	//スタートボタンクリック時
-	GameObject& startButton = getGameObject(L"BUTTON_START");
-	if (inputManager.isClicked(startButton)) {
-		OutputDebugString(L"スタートボタンが押された\n");
-		game.changeState(new PlayingState(game));
-		return;
-	}
 }

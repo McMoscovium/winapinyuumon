@@ -8,6 +8,8 @@
 #include "PlayingState.h"
 #include "StatusState.h"
 #include "TextObject.h"
+#include "TintinPitcher.h"
+#include "KamayamaBatter.h"
 
 
 
@@ -56,7 +58,7 @@ void TitleScreenState::update(Game& game) {
     GameObject startButton = getGameObject(L"BUTTON_START");
     if (inputManager.isClicked(startButton)) {
         OutputDebugString(L"スタートボタンがクリックされた\n");
-        game.changeState(new PlayingState(game));
+        game.changeState(new PlayingState(game, new KamayamaBatter, new TintinPitcher));
         return;
     }
     GameObject statusButton = getGameObject(L"BUTTON_STATUS");

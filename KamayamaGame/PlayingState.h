@@ -6,9 +6,10 @@
 #include <vector>
 #include "Ball.h"
 #include "Vector2D.h"
-#include "Pitcher.h"
 #include <unordered_map>
 
+class pitcher;
+class Batter;
 class Game;
 class InputManager;
 
@@ -16,7 +17,7 @@ class PlayingState :
     public GameState<PlayingState,GameSubState<PlayingState>>
 {
 public:
-    PlayingState(Game& game);
+    PlayingState(Game& game, Batter* batter, Pitcher* pitcher);
     ~PlayingState();
 
     //アップデート関数
@@ -39,11 +40,14 @@ public:
     int& getDistance();
     //
     std::unordered_map<std::wstring, GameObject&>& getFieldImages();
+    //バッターの位置をposにする。posがバッターボックスからはみ出ていたらボックスにいれる。
+    void setBatterInBox(POINT pos);
 
 
 private:
     Ball ball;
     Pitcher* pitcher;
+    Batter* batter;
     //animateBatter()に使う変数
     bool releasedLeftButtonUntilSwingEnded = false;
     //バッターの移動スピード

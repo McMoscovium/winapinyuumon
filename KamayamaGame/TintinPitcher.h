@@ -1,12 +1,12 @@
 #pragma once
 #include "Pitcher.h"
-class Tintin :
+class TintinPitcher :
     public Pitcher
 {
 private:
 public:
-    Tintin() :
-        Pitcher(L"Tintin", 30) {}
+    TintinPitcher() :
+        Pitcher(L"tintin", 30) {}
 
     void decideNextPitch()override;
 };

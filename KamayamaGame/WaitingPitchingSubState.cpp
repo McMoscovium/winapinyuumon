@@ -54,10 +54,7 @@ void WaitingPitchingSubState::enter(Game& game)
 	GameObject& batter = owner.getGameObject(L"PICTURE_BATTER");
 	InputManager& inputManager = game.getInputManager();
 	POINT mouse = inputManager.getMousePosition();
-	batter.setObjectPosition({
-		567-302,
-		514-197
-		});
+	owner.setBatterInBox(mouse);
 	batter.changeSizeRate(1.0f);
 	batter.appear();
 	

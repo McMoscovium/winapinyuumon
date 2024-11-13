@@ -7,8 +7,9 @@
 #include "InPitchingSubState.h"
 #include "WaitingPitchingSubState.h"
 #include "Vector2D.h"
-#include "Tintin.h"
+#include "TintinPitcher.h"
 #include "TextObject.h"
+#include "Batter.h"
 
 #include <algorithm>
 
@@ -18,9 +19,10 @@
 
 
 
-PlayingState::PlayingState(Game& game) :
+PlayingState::PlayingState(Game& game, Batter* batter, Pitcher* pitcher) :
     GameState(game),
-    pitcher(new Tintin())//今はTintin
+    batter(batter),
+    pitcher(pitcher)
 {
     appendObject(L"PICTURE_FIELD00", L".//assets//フィールド00.bmp", { 1920,1200 });
     appendObject(L"PICTURE_FIELD01", L".//assets//フィールド01.bmp", { 1920,1200 });
@@ -69,6 +71,10 @@ PlayingState::~PlayingState()
     if (pitcher) {
         delete pitcher;
         pitcher = nullptr;
+    }
+    if (batter) {
+        delete batter;
+        batter = nullptr;
     }
 }
 
@@ -176,6 +182,24 @@ int& PlayingState::getDistance()
 std::unordered_map<std::wstring, GameObject&>& PlayingState::getFieldImages()
 {
     return fieldImages;
+}
+
+void PlayingState::setBatterInBox(POINT mousePos)
+{
+    POINT pos;
+    if (PtInRect(&batterBox, mousePos)) {
+        //posがbatterBoxの中
+        pos = {
+            mousePos.x - 302,
+            mousePos.y - 197
+        };
+        getGameObject(L"PICTURE_BATTER").setObjectPosition(pos);
+        return;
+    }
+    //以下、posはbatterBoxの外
+    LONG x = std::max<LONG>(std::min<LONG>(mousePos.x-302, batterBox.right), batterBox.left);
+    LONG y = std::max<LONG>(std::min<LONG>(mousePos.y-197, batterBox.bottom), batterBox.top);
+    getGameObject(L"PICTURE_BATTER").setObjectPosition({ x,y });    
 }
 
 void PlayingState::updateWaitingPitchingTimer()

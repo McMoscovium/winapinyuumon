@@ -28,7 +28,7 @@ public:
     //ゲームオブジェクトを追加
     void appendObject(std::wstring objectName, LPCTSTR path, SIZE frameSize);
     //オブジェクトの個数
-    const int numberOfObjects()const;
+    const unsigned int numberOfObjects()const;
     //
     void showAll();
     Game& getGame();

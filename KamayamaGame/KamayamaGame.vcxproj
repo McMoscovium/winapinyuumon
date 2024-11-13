@@ -157,6 +157,7 @@
     <ClCompile Include="AfterMeetSubState.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="BallFlyingSubState.cpp" />
+    <ClCompile Include="Batter.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="IGameState.cpp" />
     <ClCompile Include="InPitchingSubState.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="KamayamaBatter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pitcher.cpp" />
     <ClCompile Include="PitchType.cpp" />
@@ -174,7 +176,7 @@
     <ClCompile Include="Straight.cpp" />
     <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="Tintin.cpp" />
+    <ClCompile Include="TintinPitcher.cpp" />
     <ClCompile Include="TitleScreenState.cpp" />
     <ClCompile Include="WaitingPitchingSubState.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -185,6 +187,7 @@
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="BallFlyingSubState.h" />
+    <ClInclude Include="Batter.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
@@ -194,6 +197,7 @@
     <ClInclude Include="IGameState.h" />
     <ClInclude Include="InPitchingSubState.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="KamayamaBatter.h" />
     <ClInclude Include="Pitcher.h" />
     <ClInclude Include="PitchType.h" />
     <ClInclude Include="PlayingState.h" />
@@ -201,7 +205,7 @@
     <ClInclude Include="Straight.h" />
     <ClInclude Include="TextObject.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="Tintin.h" />
+    <ClInclude Include="TintinPitcher.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="VirtualWindow.h" />
     <ClInclude Include="TitleScreenState.h" />

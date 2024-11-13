@@ -28,15 +28,11 @@ void InPitchingSubState::updatePitchingMotion()
 
 void InPitchingSubState::updateBall()
 {
+    Pitcher* pitcher = owner.getPitcher();
     Ball& ball = owner.getBall();
-    //ボールのゲーム内位置の更新
-    const POINT formerPos = ball.getPosition();
-    const POINT nextPos = {
-        formerPos.x,
-        formerPos.y + pitchingSpeed
-    };
-    ball.setPosition(nextPos);
     
+    POINT nextPos = ball.updatePitch(pitcher);
+
     //見た目の更新
     GameObject& ballObject = owner.getGameObject(L"PICTURE_BALL");
     GameObject& shadow = owner.getGameObject(L"PICTURE_SHADOW");
@@ -86,13 +82,13 @@ bool InPitchingSubState::calculateMeet(GameObject& ballObject, Ball& ball)
     //以下、ボールとバットが当たった
     //ボールの速度データを計算
     //左右の角度
-    int angle = (int)std::round((cursorPos.y - ballPos.y) * 9 / 5);
+    float angle = (float)std::round((cursorPos.y - ballPos.y) * 9 / 5);
     ball.setAngle(angle);
     //早さ
-    int speed = (50 - abs(ballPos.x - cursorPos.x))*0.6;
+    int speed = (int)(50 - abs(ballPos.x - cursorPos.x));
     ball.setVelocity(speed);
     //上向きの速度
-    int hVelocity = 20;
+    float hVelocity = 20.0f;
     ball.sethVelocity(hVelocity);
     std::wstring message = L"angle: " + std::to_wstring(angle) + L"\n";
     std::wstring msg2 = L"speed: " + std::to_wstring(speed) + L"\n";
@@ -144,6 +140,7 @@ void InPitchingSubState::update(Game& game)
         ballObject.changeSizeRate(
             (float)(1440 - (720 - ball.getY())) / (float)1440
         );
+        ball.resetFrame();
         ballObject.appear();
         shadow.setObjectPosition(ball.getPosition());
         shadow.appear();
@@ -180,15 +177,22 @@ void InPitchingSubState::update(Game& game)
 
 void InPitchingSubState::enter(Game& game)
 {
+    //ボールの初期位置
     Ball& ball = owner.getBall();
+    ball.setHeight(70);
     ball.setPosition({ 542,115 });
+    ball.sethVelocity(0);
+    ball.setVelocity(0);
+
+    //次の球種を決定
     Pitcher* pitcher = owner.getPitcher();
-    if (pitcher) {
-        pitcher->decideNextPitch();
-    }
-    else {
-        OutputDebugString(L"pitcherはnullptrです\n");
-    }
+    pitcher->decideNextPitch();
+
+    //決定した球種に従いボールの初期速度を設定
+    
+    ball.setVelocity(pitcher->getPitchingSpeed());
+    ball.setAngle(pitcher->getPitchingAngle() + 180.0f);
+    
     OutputDebugString(L"Entering InPitchingState\n");
 }
 

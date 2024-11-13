@@ -18,7 +18,7 @@ void TextObject::render(HDC hdc)const
 {
 	//SetBkMode(hdc, TRANSPARENT);//”wŒi‚ð“§–¾‚É‚·‚é
 	SelectObject(hdc, hFont);
-	TextOut(hdc, getPositionX(), getPositionY(), text.c_str(), text.size());
+	TextOut(hdc, getPositionX(), getPositionY(), text.c_str(), (unsigned int)text.size());
 }
 
 void TextObject::setText(const std::wstring& text)
