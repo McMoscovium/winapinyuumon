@@ -5,6 +5,7 @@
 #include <numbers>
 #include "WaitingPitchingSubState.h"
 #include "AfterBallLandingSubState.h"
+#include "Stadium.h"
 
 void BallFlyingSubState::updateBall(Ball& ball)
 {
@@ -96,6 +97,16 @@ void BallFlyingSubState::calculateDistance()
 	owner.getDistance() = (int)std::sqrt(r2);
 }
 
+PlayingState::FlyBallResult BallFlyingSubState::determineResult(POINT ball)
+{
+	POINT origin = { 959,766 };//フィールド00.bmp上でのホームベースの位置
+	POINT vector = {
+		ball.x - origin.x,
+		ball.y - origin.y
+	};
+	return owner.getStadium()->result(vector);
+}
+
 BallFlyingSubState::BallFlyingSubState(PlayingState& owner):
 	GameSubState(owner)
 {
@@ -113,7 +124,10 @@ void BallFlyingSubState::update(Game& game)
 	if(ball.getHeight()<1){
 		//飛距離計算
 		calculateDistance();
-		owner.changeSubState(new AfterBallLandingSubState(owner));
+		//ホームランかファウルかヒットか
+		POINT ballPos = ball.getPosition();
+		PlayingState::FlyBallResult result = determineResult(ballPos);
+		owner.changeSubState(new AfterBallLandingSubState(owner, result));
 		return;
 	}
 	//以下、ボールが着弾してない

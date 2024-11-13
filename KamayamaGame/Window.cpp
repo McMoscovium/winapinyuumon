@@ -42,7 +42,7 @@ void Window::registerClass() {
 		IMAGE_ICON, NULL, NULL,
 		LR_DEFAULTSIZE | LR_LOADFROMFILE);
 	wc.hCursor = (HCURSOR)LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = CreateSolidBrush(RGB(0, 0, 0));  // 黒色で塗りつぶし
+	wc.hbrBackground = CreateSolidBrush(RGB(100, 100, 100));  // 黒色で塗りつぶし
 	wc.lpszMenuName = NULL;
 	wc.hIconSm = (HICON)LoadImage(
 		NULL, L".\\assets\\システムアイコン.ico",
@@ -139,7 +139,14 @@ void Window::render(const IGameState* currentState)
 	
 	HBITMAP oldhBitmap = (HBITMAP)SelectObject(hdcBackBuffer, hBackBuffer);//バックバッファ用HDCはバックバッファ用ビットマップを選択する。oldBitmapにもともバックバッファ用HDCが選択していたオブジェクトを格納しておく（オブジェクトリークの防止のため）
 
-		
+
+	// バックバッファを薄い灰色で塗りつぶす
+	RECT rect;
+	GetClientRect(hwnd, &rect);
+	HBRUSH hBrush = CreateSolidBrush(RGB(100, 100, 100)); // 薄い灰色 (RGB)
+	FillRect(hdcBackBuffer, &rect, hBrush);  // バックバッファに塗りつぶし
+	DeleteObject(hBrush);  // ブラシを解放
+	
 	std::vector<std::wstring> objectOrder = currentState->getObjectOrder();//画面奥から順に描画するので、その順序を取得
 
 	//ゲームオブジェクトを奥から順にバックバッファに描画する

@@ -10,6 +10,7 @@
 #include <cmath>
 #include "Ball.h"
 #include <Windows.h>
+#include "Batter.h"
 
 void InPitchingSubState::updatePitchingMotion()
 {
@@ -17,11 +18,6 @@ void InPitchingSubState::updatePitchingMotion()
     int frame = pitcher.getCurrentFrameNumber();
     if (frame < pitcher.getLength() - 1) {
         pitcher.nextFrame();
-    }
-    if (frame == 34) {//ボールをリリース
-        owner.getGameObject(L"PICTURE_BALL").setObjectPosition({ 529,162 });
-        owner.getGameObject(L"PICTURE_BALL").appear();
-        owner.getGameObject(L"PICTURE_SHADOW").appear();
     }
     return;
 }
@@ -57,14 +53,12 @@ void InPitchingSubState::updateBall()
     shadow.setObjectPosition(shadowPos);
     POINT objectPos = {
         //ボールの半径だけxざひょうをずらす
-        nextPos.x-(LONG)std::round(
-            ball.getRadius()*ballObject.getSizeRate()
+        nextPos.x - (LONG)std::round(
+            ball.getRadius() * ballObject.getSizeRate()
         ),
         nextPos.y - (int)std::round(ball.getHeight()*ballObject.getSizeRate())
     };
-    ballObject.setObjectPosition(objectPos);
-    
-    
+    ballObject.setObjectPosition(objectPos);   
 }
 
 bool InPitchingSubState::calculateMeet(GameObject& ballObject, Ball& ball)
@@ -85,22 +79,18 @@ bool InPitchingSubState::calculateMeet(GameObject& ballObject, Ball& ball)
     float angle = (float)std::round((cursorPos.y - ballPos.y) * 9 / 5);
     ball.setAngle(angle);
     //早さ
-    int speed = (int)(50 - abs(ballPos.x - cursorPos.x));
+    Batter* batter = owner.getBatter();
+    int speed = (int)(batter->getPower() * (50 - abs(ballPos.x + ball.getRadius() * ballObject.getSizeRate() - cursorPos.x))/50);
     ball.setVelocity(speed);
     //上向きの速度
     float hVelocity = 20.0f;
     ball.sethVelocity(hVelocity);
-    std::wstring message = L"angle: " + std::to_wstring(angle) + L"\n";
-    std::wstring msg2 = L"speed: " + std::to_wstring(speed) + L"\n";
-    OutputDebugString(message.c_str());
-    OutputDebugStringW(msg2.c_str());
     //最後にtrueを返す
     return true;
 }
 
 void InPitchingSubState::update(Game& game)
 {
-
     Ball& ball = owner.getBall();
     GameObject& ballObject = owner.getGameObject(L"PICTURE_BALL");
     GameObject& shadow = owner.getGameObject(L"PICTURE_SHADOW");
@@ -133,16 +123,20 @@ void InPitchingSubState::update(Game& game)
     //ボール見た目の更新
     int frame = pitcher.getCurrentFrameNumber();
     if (frame == 34) {//ボールをリリース
-        ballObject.setObjectPosition({
-            ball.getX(),
-            ball.getY() + (LONG)ball.getHeight()
-            });
-        ballObject.changeSizeRate(
-            (float)(1440 - (720 - ball.getY())) / (float)1440
-        );
+        POINT ballPos = ball.getPosition();
         ball.resetFrame();
+        float sizeRate = (float)(1440 - (720 - ball.getY())) / (float)1440;
+        ballObject.changeSizeRate(sizeRate);
+        shadow.changeSizeRate(sizeRate);
+        ballObject.setObjectPosition({
+            ballPos.x - (LONG)std::round(sizeRate * ball.getRadius()),
+            ballPos.y - (LONG)std::round(ball.getHeight() * sizeRate)
+            });
         ballObject.appear();
-        shadow.setObjectPosition(ball.getPosition());
+        shadow.setObjectPosition({
+            ballPos.x - (LONG)std::round(sizeRate * 17),
+            ballPos.y
+            });
         shadow.appear();
     }
     

@@ -10,6 +10,7 @@
 #include "TintinPitcher.h"
 #include "TextObject.h"
 #include "Batter.h"
+#include "Stadium.h"
 
 #include <algorithm>
 
@@ -19,10 +20,11 @@
 
 
 
-PlayingState::PlayingState(Game& game, Batter* batter, Pitcher* pitcher) :
+PlayingState::PlayingState(Game& game, Batter* batter, Pitcher* pitcher, Stadium* stadium) :
     GameState(game),
     batter(batter),
-    pitcher(pitcher)
+    pitcher(pitcher),
+    stadium(stadium)
 {
     appendObject(L"PICTURE_FIELD00", L".//assets//フィールド00.bmp", { 1920,1200 });
     appendObject(L"PICTURE_FIELD01", L".//assets//フィールド01.bmp", { 1920,1200 });
@@ -51,6 +53,9 @@ PlayingState::PlayingState(Game& game, Batter* batter, Pitcher* pitcher) :
 
     gameObjects.emplace(L"TEXT_DISTANCE", new TextObject(L"TEXT_DISTANCE", L""));
     objectOrder.push_back(L"TEXT_DISTANCE");
+
+    gameObjects.emplace(L"TEXT_RESULT", new TextObject(L"TEXT_RESULT", L""));
+    objectOrder.push_back(L"TEXT_RESULT");
     
 
     //各GameObjectの描画位置を設定
@@ -136,14 +141,13 @@ void PlayingState::updateBatterPos(const InputManager& inputManager)
         (float)(mouse.x - getCursorPos().x),
         (float)(mouse.y - getCursorPos().y));//速度ベクトル（向きしか意味を持たない）
 
-
     
-    if (velocityAngle.norm() < batterMovementSpeed) {//ポインターとバッティングカーソルが近い
+    if (velocityAngle.norm() < getBatter()->getSpeed()) {//ポインターとバッティングカーソルが近い
         nextKamayamaPos = { mouse.x - 302,mouse.y - 197 };
     }
     else {
         velocityAngle.normalize();
-        velocityAngle.scalar((float)batterMovementSpeed);
+        velocityAngle.scalar(getBatter()->getSpeed());
 
 
         nextKamayamaPos = PlayingState::nextKamayamaPos(getGameObject(L"PICTURE_BATTER").getPosition(), velocityAngle);//次フレームの釜山の位置
@@ -169,9 +173,19 @@ Ball& PlayingState::getBall()
     return ball;
 }
 
+Batter* PlayingState::getBatter()
+{
+    return batter;
+}
+
 Pitcher* PlayingState::getPitcher()
 {
     return pitcher;
+}
+
+Stadium* PlayingState::getStadium()
+{
+    return stadium;
 }
 
 int& PlayingState::getDistance()

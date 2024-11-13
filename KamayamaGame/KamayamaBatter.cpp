@@ -3,8 +3,8 @@
 KamayamaBatter::KamayamaBatter():
 	Batter(
 		L"kamayama",
-		50,//パワー
-		20,//スピード
+		30,//パワー
+		4.0f,//スピード
 		50//ミート
 	)
 {

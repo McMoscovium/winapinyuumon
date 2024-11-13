@@ -16,6 +16,9 @@ private:
     void updateFieldPicture(Ball& ball);
     void calculateDistance();
 
+    //ボールの着地点を受け取り、FlyngBallResultを返す
+    PlayingState::FlyBallResult determineResult(POINT ball);
+
 public:
     BallFlyingSubState(PlayingState& owner);
     void update(Game& game)override;

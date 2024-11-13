@@ -12,13 +12,21 @@ class pitcher;
 class Batter;
 class Game;
 class InputManager;
+class Stadium;
 
 class PlayingState :
     public GameState<PlayingState,GameSubState<PlayingState>>
 {
 public:
-    PlayingState(Game& game, Batter* batter, Pitcher* pitcher);
+    PlayingState(Game& game, Batter* batter, Pitcher* pitcher, Stadium* stadium);
     ~PlayingState();
+
+    enum FlyBallResult {
+        HOMERUN,
+        FOUL,
+        HIT
+    };
+
 
     //アップデート関数
     //ゲームが終了したらGameOverStateに遷移
@@ -35,8 +43,11 @@ public:
     //
     Ball& getBall();
     //
+    Batter* getBatter();
+    //
     Pitcher* getPitcher();
     //
+    Stadium* getStadium();
     int& getDistance();
     //
     std::unordered_map<std::wstring, GameObject&>& getFieldImages();
@@ -48,6 +59,7 @@ private:
     Ball ball;
     Pitcher* pitcher;
     Batter* batter;
+    Stadium* stadium;
     //animateBatter()に使う変数
     bool releasedLeftButtonUntilSwingEnded = false;
     //バッターの移動スピード

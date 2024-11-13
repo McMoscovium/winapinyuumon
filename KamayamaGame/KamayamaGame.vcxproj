@@ -172,9 +172,11 @@
     <ClCompile Include="Pitcher.cpp" />
     <ClCompile Include="PitchType.cpp" />
     <ClCompile Include="PlayingState.cpp" />
+    <ClCompile Include="Stadium.cpp" />
     <ClCompile Include="StatusState.cpp" />
     <ClCompile Include="Straight.cpp" />
     <ClCompile Include="TextObject.cpp" />
+    <ClCompile Include="TheHundredAcreWoodStadium.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TintinPitcher.cpp" />
     <ClCompile Include="TitleScreenState.cpp" />
@@ -201,9 +203,11 @@
     <ClInclude Include="Pitcher.h" />
     <ClInclude Include="PitchType.h" />
     <ClInclude Include="PlayingState.h" />
+    <ClInclude Include="Stadium.h" />
     <ClInclude Include="StatusState.h" />
     <ClInclude Include="Straight.h" />
     <ClInclude Include="TextObject.h" />
+    <ClInclude Include="TheHundredAcreWoodStadium.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TintinPitcher.h" />
     <ClInclude Include="Vector2D.h" />

@@ -16,5 +16,6 @@ public:
 
     virtual void render(HDC)const override;
     void setText(const std::wstring& text);
+    void setFont(LPCWSTR fontName);
 };
 
