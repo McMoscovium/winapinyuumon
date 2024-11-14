@@ -4,14 +4,14 @@
 #include <string>
 
 
-class AfterBallLandingSubState :
+class BattingResultSubState :
     public GameSubState<PlayingState>
 {
 private:
     PlayingState::FlyBallResult result;
     std::wstring resultString()const;
 public:
-    AfterBallLandingSubState(PlayingState& owner, PlayingState::FlyBallResult result) :
+    BattingResultSubState(PlayingState& owner, PlayingState::FlyBallResult result) :
         GameSubState(owner),
         result(result) {}
     void update(Game& game)override;

@@ -11,6 +11,9 @@
 #include "Ball.h"
 #include <Windows.h>
 #include "Batter.h"
+#include "EndPlayingSubState.h"
+#include "BattingResultSubState.h"
+#include <random>
 
 void InPitchingSubState::updatePitchingMotion()
 {
@@ -32,11 +35,6 @@ void InPitchingSubState::updateBall()
     //見た目の更新
     GameObject& ballObject = owner.getGameObject(L"PICTURE_BALL");
     GameObject& shadow = owner.getGameObject(L"PICTURE_SHADOW");
-    if (nextPos.y > 720) {
-        //画面下に外れた
-        ballObject.hide();
-        shadow.hide();
-    }
     //以下、画面下に外れてない
     // //ボールと影のサイズを更新
     ballObject.changeSizeRate(
@@ -74,17 +72,32 @@ bool InPitchingSubState::calculateMeet(GameObject& ballObject, Ball& ball)
         return false;
     }
     //以下、ボールとバットが当たった
+    
     //ボールの速度データを計算
+    
     //左右の角度
-    float angle = (float)std::round((cursorPos.y - ballPos.y) * 9 / 5);
+    float angle = (float)std::round((cursorPos.y - ballPos.y) * 1.8f);
     ball.setAngle(angle);
-    //早さ
+
+    //efficiencyの計算
+    float efficiency = 0;//1に近いほどジャストミート
+    efficiency = (50 - abs(ballPos.x + ball.getRadius() * ballObject.getSizeRate() - cursorPos.x)) / 40;
+
+    //上向きの早さを設定
     Batter* batter = owner.getBatter();
-    int speed = (int)(batter->getPower() * (50 - abs(ballPos.x + ball.getRadius() * ballObject.getSizeRate() - cursorPos.x))/50);
-    ball.setVelocity(speed);
-    //上向きの速度
-    float hVelocity = 20.0f;
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::normal_distribution<float> dis(0.6f,0.1f);
+    float hVelocity = (
+        batter->getPower() * efficiency +
+        (1 - efficiency) * ball.getVelocity()
+        ) * std::max<float>(dis(gen), 0.1f);
     ball.sethVelocity(hVelocity);
+
+    //速さの水平成分    
+    int speed = (int)(batter->getPower() * efficiency);
+    ball.setVelocity(speed);
+    
     //最後にtrueを返す
     return true;
 }
@@ -102,7 +115,8 @@ void InPitchingSubState::update(Game& game)
         
         ballObject.hide();
         shadow.hide();
-        owner.changeSubState(new WaitingPitchingSubState(owner));
+        owner.changeSubState(new BattingResultSubState(owner, PlayingState::FlyBallResult::STRIKE));
+        
         return;
     }
 
@@ -186,6 +200,9 @@ void InPitchingSubState::enter(Game& game)
     
     ball.setVelocity(pitcher->getPitchingSpeed());
     ball.setAngle(pitcher->getPitchingAngle() + 180.0f);
+
+    //残り球数を減らす
+    owner.getRestBalls()--;
     
     OutputDebugString(L"Entering InPitchingState\n");
 }

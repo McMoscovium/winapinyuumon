@@ -6,7 +6,7 @@ class TintinPitcher :
 private:
 public:
     TintinPitcher() :
-        Pitcher(L"tintin", 30) {}
+        Pitcher(L"tintin", 20) {}
 
     void decideNextPitch()override;
 };

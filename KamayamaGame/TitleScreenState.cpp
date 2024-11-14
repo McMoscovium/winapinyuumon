@@ -13,8 +13,6 @@
 #include "TheHundredAcreWoodStadium.h"
 
 
-
-
 TitleScreenState::TitleScreenState(Game& game) :
     GameState(game)
 
@@ -59,7 +57,7 @@ void TitleScreenState::update(Game& game) {
     GameObject startButton = getGameObject(L"BUTTON_START");
     if (inputManager.isClicked(startButton)) {
         OutputDebugString(L"スタートボタンがクリックされた\n");
-        game.changeState(new PlayingState(game, new KamayamaBatter, new TintinPitcher, new TheHundredAcreWoodStadium()));
+        game.changeState(new PlayingState(game, new KamayamaBatter, new TintinPitcher, new TheHundredAcreWoodStadium, 100));
         return;
     }
     GameObject statusButton = getGameObject(L"BUTTON_STATUS");

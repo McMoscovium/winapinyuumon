@@ -153,17 +153,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AfterBallLandingSubState.cpp" />
+    <ClCompile Include="BattingResultSubState.cpp" />
     <ClCompile Include="AfterMeetSubState.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="BallFlyingSubState.cpp" />
     <ClCompile Include="Batter.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CompareNormSubState.cpp" />
+    <ClCompile Include="EndPlayingSubState.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameSubState.cpp" />
+    <ClCompile Include="HatimituMeter.cpp" />
+    <ClCompile Include="HatimituMeterObject.cpp" />
     <ClCompile Include="IGameState.cpp" />
     <ClCompile Include="InPitchingSubState.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -172,6 +176,8 @@
     <ClCompile Include="Pitcher.cpp" />
     <ClCompile Include="PitchType.cpp" />
     <ClCompile Include="PlayingState.cpp" />
+    <ClCompile Include="PlayResultState.cpp" />
+    <ClCompile Include="Result.cpp" />
     <ClCompile Include="Stadium.cpp" />
     <ClCompile Include="StatusState.cpp" />
     <ClCompile Include="Straight.cpp" />
@@ -180,22 +186,27 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TintinPitcher.cpp" />
     <ClCompile Include="TitleScreenState.cpp" />
+    <ClCompile Include="ValueMeterObject.cpp" />
     <ClCompile Include="WaitingPitchingSubState.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AfterBallLandingSubState.h" />
+    <ClInclude Include="BattingResultSubState.h" />
     <ClInclude Include="AfterMeetSubState.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="BallFlyingSubState.h" />
     <ClInclude Include="Batter.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CompareNormSubState.h" />
+    <ClInclude Include="EndPlayingSubState.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameOverState.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameSubState.h" />
+    <ClInclude Include="HatimituMeter.h" />
+    <ClInclude Include="HatimituMeterObject.h" />
     <ClInclude Include="IGameState.h" />
     <ClInclude Include="InPitchingSubState.h" />
     <ClInclude Include="InputManager.h" />
@@ -203,6 +214,8 @@
     <ClInclude Include="Pitcher.h" />
     <ClInclude Include="PitchType.h" />
     <ClInclude Include="PlayingState.h" />
+    <ClInclude Include="PlayResultState.h" />
+    <ClInclude Include="Result.h" />
     <ClInclude Include="Stadium.h" />
     <ClInclude Include="StatusState.h" />
     <ClInclude Include="Straight.h" />
@@ -210,6 +223,7 @@
     <ClInclude Include="TheHundredAcreWoodStadium.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TintinPitcher.h" />
+    <ClInclude Include="ValueMeterObject.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="VirtualWindow.h" />
     <ClInclude Include="TitleScreenState.h" />

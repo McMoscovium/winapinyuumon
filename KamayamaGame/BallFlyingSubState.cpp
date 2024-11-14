@@ -4,7 +4,7 @@
 #include <cmath>
 #include <numbers>
 #include "WaitingPitchingSubState.h"
-#include "AfterBallLandingSubState.h"
+#include "BattingResultSubState.h"
 #include "Stadium.h"
 
 void BallFlyingSubState::updateBall(Ball& ball)
@@ -127,7 +127,7 @@ void BallFlyingSubState::update(Game& game)
 		//ホームランかファウルかヒットか
 		POINT ballPos = ball.getPosition();
 		PlayingState::FlyBallResult result = determineResult(ballPos);
-		owner.changeSubState(new AfterBallLandingSubState(owner, result));
+		owner.changeSubState(new BattingResultSubState(owner, result));
 		return;
 	}
 	//以下、ボールが着弾してない

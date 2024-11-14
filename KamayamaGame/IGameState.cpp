@@ -8,9 +8,11 @@ IGameState::IGameState(Game& game):
 IGameState::~IGameState()
 {
     for (auto& [key, obj] : gameObjects) {
-        obj->deleteHBITMAP();
-        delete obj;
-        obj = nullptr;
+        if (obj) {
+            obj->deleteHBITMAP();
+            delete obj;
+            obj = nullptr;
+        }        
     }
 }
 
@@ -38,7 +40,7 @@ void IGameState::appendObject(std::wstring objectName, LPCTSTR path, SIZE frameS
 {
     GameObject* obj =new GameObject(path, objectName, frameSize);
     if (gameObjects.emplace(objectName, std::move(obj)).second) {
-        OutputDebugString(L"PICTURE_TITLE デストラクト？\n");
+        
         //追加成功
         objectOrder.push_back(objectName);
     }

@@ -18,6 +18,7 @@ private:
 	InputManager& inputManager;
 	Window* window;
 	Camera camera;
+	int money = 0;
 
 	
 public:

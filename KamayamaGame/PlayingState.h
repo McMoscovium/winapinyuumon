@@ -7,6 +7,7 @@
 #include "Ball.h"
 #include "Vector2D.h"
 #include <unordered_map>
+#include "Result.h"
 
 class pitcher;
 class Batter;
@@ -18,13 +19,14 @@ class PlayingState :
     public GameState<PlayingState,GameSubState<PlayingState>>
 {
 public:
-    PlayingState(Game& game, Batter* batter, Pitcher* pitcher, Stadium* stadium);
+    PlayingState(Game& game, Batter* batter, Pitcher* pitcher, Stadium* stadium, int trials);
     ~PlayingState();
 
     enum FlyBallResult {
         HOMERUN,
         FOUL,
-        HIT
+        HIT,
+        STRIKE
     };
 
 
@@ -41,6 +43,8 @@ public:
     //フェイズ開始時の時刻を記録
     void initializeStartTime();
     //
+    int& getRestBalls();
+    //
     Ball& getBall();
     //
     Batter* getBatter();
@@ -51,6 +55,8 @@ public:
     int& getDistance();
     //
     std::unordered_map<std::wstring, GameObject&>& getFieldImages();
+    //
+    Result& getResult();
     //バッターの位置をposにする。posがバッターボックスからはみ出ていたらボックスにいれる。
     void setBatterInBox(POINT pos);
 
@@ -60,6 +66,8 @@ private:
     Pitcher* pitcher;
     Batter* batter;
     Stadium* stadium;
+    //残り球数
+    int restBalls;
     //animateBatter()に使う変数
     bool releasedLeftButtonUntilSwingEnded = false;
     //バッターの移動スピード
@@ -76,7 +84,8 @@ private:
     int distance = 0;
     //フィールド画像への参照の列
     std::unordered_map<std::wstring, GameObject&> fieldImages;
-
+    //
+    Result result;
 
 
     //

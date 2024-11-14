@@ -20,11 +20,12 @@
 
 
 
-PlayingState::PlayingState(Game& game, Batter* batter, Pitcher* pitcher, Stadium* stadium) :
+PlayingState::PlayingState(Game& game, Batter* batter, Pitcher* pitcher, Stadium* stadium,int trials) :
     GameState(game),
     batter(batter),
     pitcher(pitcher),
-    stadium(stadium)
+    stadium(stadium),
+    restBalls(trials)
 {
     appendObject(L"PICTURE_FIELD00", L".//assets//フィールド00.bmp", { 1920,1200 });
     appendObject(L"PICTURE_FIELD01", L".//assets//フィールド01.bmp", { 1920,1200 });
@@ -49,6 +50,7 @@ PlayingState::PlayingState(Game& game, Batter* batter, Pitcher* pitcher, Stadium
     appendObject(L"PICTURE_PITCHER", L".//assets//投手スプライトシート.bmp", { 168,266 });
     appendObject(L"PICTURE_BALL", L".//assets//ボール.bmp", { 41,50 });
     appendObject(L"JUDGE_BAT", L".//assets//battingJudgeFrame.bmp", { 50,50 });//バット当たり判定
+    appendObject(L"PICTURE_FINISH", L".//assets//ゲーム終了.bmp", { 680,158 });
 
 
     gameObjects.emplace(L"TEXT_DISTANCE", new TextObject(L"TEXT_DISTANCE", L""));
@@ -64,11 +66,8 @@ PlayingState::PlayingState(Game& game, Batter* batter, Pitcher* pitcher, Stadium
     getGameObject(L"BUTTON_EXIT").setObjectPosition({ 850,500 });
     getGameObject(L"PICTURE_PITCHER").setObjectPosition({ 514, 22 });
     
-    initializeStartTime();
 
     changeSubState(new WaitingPitchingSubState(*this));
-
-    OutputDebugString(L"PlayingStateのインスタンスが作成されました\n");
 }
 
 PlayingState::~PlayingState()
@@ -168,6 +167,11 @@ void PlayingState::initializeStartTime()
     phaseStartTime = GetTickCount64();
 }
 
+int& PlayingState::getRestBalls()
+{
+    return restBalls;
+}
+
 Ball& PlayingState::getBall()
 {
     return ball;
@@ -196,6 +200,11 @@ int& PlayingState::getDistance()
 std::unordered_map<std::wstring, GameObject&>& PlayingState::getFieldImages()
 {
     return fieldImages;
+}
+
+Result& PlayingState::getResult()
+{
+    return result;
 }
 
 void PlayingState::setBatterInBox(POINT mousePos)

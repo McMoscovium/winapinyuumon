@@ -22,8 +22,8 @@ GameObject::GameObject(LPCTSTR path, std::wstring objectName, SIZE frameSize)
 {
 	loadImage(path);//hSpriteImageにビットマップハンドルを格納
 	setLength(static_cast<int>(getSpriteSize().cx / frameSize.cx));//スプライトのコマ数を設定
-	//std::wstring message = L"オブジェクト " + objectName + L" のコンストラクタが呼ばれました\n";
-	//OutputDebugString(message.c_str());
+	std::wstring message = L"オブジェクト " + objectName + L" のコンストラクタが呼ばれました\n";
+	OutputDebugString(message.c_str());
 }
 GameObject::~GameObject()
 {
