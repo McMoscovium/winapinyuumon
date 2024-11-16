@@ -4,6 +4,7 @@
 #include "TextObject.h"
 #include "EndPlayingSubState.h"
 #include "Game.h"
+#include "Result.h"
 
 std::wstring BattingResultSubState::resultString() const
 {
@@ -50,17 +51,21 @@ void BattingResultSubState::enter(Game& game)
 {
 	//ボタンを消す
 	owner.getGameObject(L"BUTTON_EXIT").hide();
-
 	timer.setRecord();
+
+	//Resultを更新
+	const int distance= owner.getDistance() / 20;
+	owner.getResult().update(distance, result == PlayingState::HOMERUN);
+
 	if (result != PlayingState::STRIKE) {
 		//飛距離を表示
 		TextObject* distanceText = static_cast<TextObject*>(owner.getGameObjectPtr(L"TEXT_DISTANCE"));
-		const int distance = owner.getDistance() / 20;//表示用の距離（メートル）に直す
 		std::wstring distanceTxt = L"飞距离 : " + std::to_wstring(distance) + L" m";
 		distanceText->setText(distanceTxt);
 		distanceText->setFont(L"NSimSun");
 		distanceText->setObjectPosition({ 231,353 });
 		distanceText->appear();
+
 	}
 	
 

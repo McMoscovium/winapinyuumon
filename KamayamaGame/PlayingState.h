@@ -14,12 +14,13 @@ class Batter;
 class Game;
 class InputManager;
 class Stadium;
+class Stage;
 
 class PlayingState :
     public GameState<PlayingState,GameSubState<PlayingState>>
 {
 public:
-    PlayingState(Game& game, Batter* batter, Pitcher* pitcher, Stadium* stadium, int trials);
+    PlayingState(Game& game, Stage* stage);
     ~PlayingState();
 
     enum FlyBallResult {
@@ -47,11 +48,6 @@ public:
     //
     Ball& getBall();
     //
-    Batter* getBatter();
-    //
-    Pitcher* getPitcher();
-    //
-    Stadium* getStadium();
     int& getDistance();
     //
     std::unordered_map<std::wstring, GameObject&>& getFieldImages();
@@ -60,12 +56,14 @@ public:
     //バッターの位置をposにする。posがバッターボックスからはみ出ていたらボックスにいれる。
     void setBatterInBox(POINT pos);
 
+    Batter* getBatter();
+    Pitcher* getPitcher();
+    Stadium* getStadium();
 
 private:
     Ball ball;
-    Pitcher* pitcher;
-    Batter* batter;
-    Stadium* stadium;
+    //ステージデータ
+    Stage* stage;
     //残り球数
     int restBalls;
     //animateBatter()に使う変数
@@ -97,4 +95,6 @@ private:
     POINT nextKamayamaPos(POINT position, Vector2D<float> movement);
     //
     void updatePitchingMotion();
+
+    
 };

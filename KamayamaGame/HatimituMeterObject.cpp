@@ -4,7 +4,6 @@ const int gap = 5;//各はちみつのすき間は5ピクセル開ける
 
 void HatimituMeterObject::render(HDC hdc)const
 {
-	OutputDebugString(L"はちみつ描画開始\n");
 	HDC hdcMem = CreateCompatibleDC(hdc);
 	HBITMAP oldMemBitmap = (HBITMAP)SelectObject(hdcMem, getSpriteImage());
 	//2段に並べる
@@ -31,7 +30,6 @@ void HatimituMeterObject::render(HDC hdc)const
 			getHeight(),
 			RGB(255, 0, 255)
 		)) {
-			OutputDebugString(L"はちみつ描画せいこう\n");
 		}
 		else {
 			OutputDebugStringW(L"はちみつ描画しｐっぱい\n");

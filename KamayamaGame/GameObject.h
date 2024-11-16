@@ -75,10 +75,12 @@ public:
 	void deleteHBITMAP();
 	//
 	void changeSizeRate(float r);
-	//
+	//与えられたHDCに自身を描画する
 	virtual void render(HDC hdc)const;
 	//クライアント領域と交叉する場合true
 	bool isIntersectsWithClientRect(Window* window)const;
+	//オブジェクト名へのconst参照を返す
+	const std::wstring& getName()const;
 	
 private:
 	void setLength(int);

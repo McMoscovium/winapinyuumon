@@ -12,6 +12,8 @@
 #include "Batter.h"
 #include "Stadium.h"
 
+#include "Stage.h"
+
 #include <algorithm>
 
 #include"TitleScreenState.h"
@@ -20,12 +22,11 @@
 
 
 
-PlayingState::PlayingState(Game& game, Batter* batter, Pitcher* pitcher, Stadium* stadium,int trials) :
+PlayingState::PlayingState(Game& game, Stage* stage) :
     GameState(game),
-    batter(batter),
-    pitcher(pitcher),
-    stadium(stadium),
-    restBalls(trials)
+    stage(stage),
+    result(Result(stage->getNorm())),
+    restBalls(stage->getTrials())
 {
     appendObject(L"PICTURE_FIELD00", L".//assets//フィールド00.bmp", { 1920,1200 });
     appendObject(L"PICTURE_FIELD01", L".//assets//フィールド01.bmp", { 1920,1200 });
@@ -72,13 +73,9 @@ PlayingState::PlayingState(Game& game, Batter* batter, Pitcher* pitcher, Stadium
 
 PlayingState::~PlayingState()
 {
-    if (pitcher) {
-        delete pitcher;
-        pitcher = nullptr;
-    }
-    if (batter) {
-        delete batter;
-        batter = nullptr;
+    if (stage) {
+        delete stage;
+        stage = nullptr;
     }
 }
 
@@ -177,21 +174,6 @@ Ball& PlayingState::getBall()
     return ball;
 }
 
-Batter* PlayingState::getBatter()
-{
-    return batter;
-}
-
-Pitcher* PlayingState::getPitcher()
-{
-    return pitcher;
-}
-
-Stadium* PlayingState::getStadium()
-{
-    return stadium;
-}
-
 int& PlayingState::getDistance()
 {
     return distance;
@@ -264,4 +246,19 @@ POINT PlayingState::nextKamayamaPos(POINT position, Vector2D<float> movement)
 void PlayingState::updatePitchingMotion()
 {
     //ピッチャーが第0フレーム
+}
+
+Batter* PlayingState::getBatter()
+{
+    return stage->getBatter();
+}
+
+Pitcher* PlayingState::getPitcher()
+{
+    return stage->getPitcher();
+}
+
+Stadium* PlayingState::getStadium()
+{
+    return stage->getStadium();
 }

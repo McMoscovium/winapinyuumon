@@ -51,6 +51,12 @@ void IGameState::appendObject(std::wstring objectName, LPCTSTR path, SIZE frameS
     
 }
 
+void IGameState::appendObject(GameObject* object)
+{
+    gameObjects.emplace(object->getName(), object);
+    objectOrder.push_back(object->getName());
+}
+
 const unsigned int IGameState::numberOfObjects() const
 {
     return (unsigned int)objectOrder.size();

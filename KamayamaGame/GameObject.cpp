@@ -146,7 +146,6 @@ bool GameObject::isOutOfClientRect(Window* window)
 
 void GameObject::deleteHBITMAP()
 {
-	OutputDebugString(L"deleteHBITMAPÇ™åƒÇ—èoÇ≥ÇÍÇΩ\n");
 	DeleteObject(hSpriteImage);
 }
 
@@ -204,6 +203,11 @@ bool GameObject::isIntersectsWithClientRect(Window* window) const
 		return false;
 	}
 	return true;
+}
+
+const std::wstring& GameObject::getName() const
+{
+	return objectName;
 }
 
 const int GameObject::getPositionX() const

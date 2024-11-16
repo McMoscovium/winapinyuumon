@@ -9,9 +9,7 @@ private:
 public:
 	HatimituMeter() :
 		object(new HatimituMeterObject(L".//assets//はちみつ.bmp", L"HATIMITUMETER", { 49,45 })) {}
-	~HatimituMeter() {
-		OutputDebugString(L"HatimituMeterのデストラクタが呼ばれた\n");
-	}
+	~HatimituMeter() {}
 	HatimituMeterObject* getObjPtr();
 	void setValue(int v);
 };

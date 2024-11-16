@@ -48,3 +48,8 @@ PitchType* Pitcher::getPitchType()
 {
 	return pitchTypes.at(currentPitchNumber);
 }
+
+const std::wstring& Pitcher::getName() const
+{
+	return pitcherName;
+}

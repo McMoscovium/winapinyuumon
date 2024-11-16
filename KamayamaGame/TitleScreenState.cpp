@@ -11,6 +11,7 @@
 #include "TintinPitcher.h"
 #include "KamayamaBatter.h"
 #include "TheHundredAcreWoodStadium.h"
+#include "TintinStage.h"
 
 
 TitleScreenState::TitleScreenState(Game& game) :
@@ -57,7 +58,8 @@ void TitleScreenState::update(Game& game) {
     GameObject startButton = getGameObject(L"BUTTON_START");
     if (inputManager.isClicked(startButton)) {
         OutputDebugString(L"スタートボタンがクリックされた\n");
-        game.changeState(new PlayingState(game, new KamayamaBatter, new TintinPitcher, new TheHundredAcreWoodStadium, 100));
+        Stage* tintinStage = new TintinStage();
+        game.changeState(new PlayingState(game, tintinStage));
         return;
     }
     GameObject statusButton = getGameObject(L"BUTTON_STATUS");

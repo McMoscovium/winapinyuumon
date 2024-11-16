@@ -33,6 +33,8 @@ public:
 	void setPitchingCourse(float c);
 	//現在の球種を取得
 	PitchType* getPitchType();
+	//
+	const std::wstring& getName()const;
 	
 	//次の球種、球速、投げるコースをランダムに決定
 	virtual void decideNextPitch() = 0;
