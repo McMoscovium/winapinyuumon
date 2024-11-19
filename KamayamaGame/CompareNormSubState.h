@@ -9,15 +9,15 @@ class CompareNormSubState :
 {
 private:
     int clearPictureFrame = 0;//「クリア！」「しっぱい...」画像のアニメーションに使う
-    std::wstring clearPictureName = L"";
+    std::string clearPictureName = "";
 public:
     CompareNormSubState(PlayResultState& owner) :
-        GameSubState(owner) {
+        GameSubState<PlayResultState>(owner) {
         if (owner.getResult().isClear()) {
-            clearPictureName = L"PICTURE_CLEAR";
+            clearPictureName = "CLEAR";
         }
         else {
-            clearPictureName = L"PICTURE_FAILURE";
+            clearPictureName = "FAILURE";
         }
     }
     ~CompareNormSubState() = default;

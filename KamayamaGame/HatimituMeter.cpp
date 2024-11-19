@@ -1,12 +1,7 @@
 #include "HatimituMeter.h"
 
-HatimituMeterObject* HatimituMeter::getObjPtr()
+void HatimituMeter::setValue(HatimituMeterObject& obj, int v)
 {
-    return object;
-}
-
-void HatimituMeter::setValue(int v)
-{
-    object->setValue(v);
+    obj.setValue(v);
     return;
 }

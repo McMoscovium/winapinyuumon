@@ -14,10 +14,11 @@
 #include "EndPlayingSubState.h"
 #include "BattingResultSubState.h"
 #include <random>
+#include "PictureObject.h"
 
 void InPitchingSubState::updatePitchingMotion()
 {
-    GameObject& pitcher = owner.getGameObject(L"PICTURE_PITCHER");
+    PictureObject& pitcher = gameObjectManager.getObject<PictureObject>("PITCHER");
     int frame = pitcher.getCurrentFrameNumber();
     if (frame < pitcher.getLength() - 1) {
         pitcher.nextFrame();
@@ -33,8 +34,8 @@ void InPitchingSubState::updateBall()
     POINT nextPos = ball.updatePitch(pitcher);
 
     //見た目の更新
-    GameObject& ballObject = owner.getGameObject(L"PICTURE_BALL");
-    GameObject& shadow = owner.getGameObject(L"PICTURE_SHADOW");
+    GameObject& ballObject = gameObjectManager.getObject<PictureObject>("BALL");
+    GameObject& shadow = gameObjectManager.getObject<PictureObject>("BALLSHADOW");
     //以下、画面下に外れてない
     // //ボールと影のサイズを更新
     ballObject.changeSizeRate(
@@ -105,9 +106,9 @@ bool InPitchingSubState::calculateMeet(GameObject& ballObject, Ball& ball)
 void InPitchingSubState::update(Game& game)
 {
     Ball& ball = owner.getBall();
-    GameObject& ballObject = owner.getGameObject(L"PICTURE_BALL");
-    GameObject& shadow = owner.getGameObject(L"PICTURE_SHADOW");
-    GameObject& pitcher = owner.getGameObject(L"PICTURE_PITCHER");
+    PictureObject& ballObject = gameObjectManager.getObject<PictureObject>("BALL");
+    GameObject& shadow = gameObjectManager.getObject<PictureObject>("BALLSHADOW");
+    PictureObject& pitcher = gameObjectManager.getObject<PictureObject>("PITCHER");
     
     
     //投げたボールが画面下まで行ったらchangeState
@@ -122,7 +123,7 @@ void InPitchingSubState::update(Game& game)
 
     //終了ボタン処理
     InputManager& inputManager = game.getInputManager();
-    GameObject& exitButton = owner.getGameObject(L"BUTTON_EXIT");
+    PictureObject& exitButton = gameObjectManager.getObject<PictureObject>("EXIT");
     if (inputManager.isClicked(exitButton)) {
         exit(game);//終了処理
         game.changeState(new TitleScreenState(game));
@@ -165,7 +166,7 @@ void InPitchingSubState::update(Game& game)
     owner.updateBatterAnimation(inputManager);
 
     //打撃処理
-    int currentBatterFrame = owner.getGameObject(L"PICTURE_BATTER").getCurrentFrameNumber();
+    int currentBatterFrame = gameObjectManager.getObject<PictureObject>("BATTER").getCurrentFrameNumber();
     if (2 <= currentBatterFrame && currentBatterFrame <= 4) {
         //当たり判定が登場
         owner.updateBatFrame(currentBatterFrame);
@@ -179,7 +180,7 @@ void InPitchingSubState::update(Game& game)
 
     if (currentBatterFrame >= 5) {
         //バット判定枠の消去
-        owner.getGameObject(L"JUDGE_BAT").hide();
+        gameObjectManager.getObject<PictureObject>("BAT_HITBOX").hide();
     }
 }
 
@@ -209,7 +210,7 @@ void InPitchingSubState::enter(Game& game)
 
 void InPitchingSubState::exit(Game& game)
 {
-    owner.getGameObject(L"JUDGE_BAT").hide();
-    owner.getGameObject(L"PICTURE_PITCHER").changeFrame(0);//ピッチャーフレーム初期化
+    gameObjectManager.getObject<PictureObject>("BAT_HITBOX").hide();
+    gameObjectManager.getObject<PictureObject>("PITCHER").changeFrame(0);//ピッチャーフレーム初期化
     OutputDebugString(L"Exitting InPitchingState\n");
 }

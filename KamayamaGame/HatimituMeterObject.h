@@ -5,7 +5,7 @@ class HatimituMeterObject :
 {
 private:
 public:
-    HatimituMeterObject(LPCTSTR path, std::wstring objectName, SIZE frameSize) :
+    HatimituMeterObject(std::string objectName, LPCTSTR path,  SIZE frameSize) :
         ValueMeterObject(path, objectName, frameSize, 20) {}
     ~HatimituMeterObject() = default;
 

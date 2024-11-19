@@ -30,7 +30,7 @@ int WINAPI WinMain(
 	game.registerWindow(&window);
 	game.changeState(new TitleScreenState(game));
 	//‰Šú‰æ–ÊƒŒƒ“ƒ_ƒŠƒ“ƒO
-	window.render(game.getCurrentState());
+	window.render(game.getCurrentState()->getGameObjectManager());
 	//‰Šú‰æ–Ê•\¦
 	window.show();
 	mainLoop(&game, &window);

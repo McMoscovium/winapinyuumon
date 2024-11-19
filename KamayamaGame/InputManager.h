@@ -5,6 +5,7 @@
 
 class Window;
 class GameObject;
+class PictureObject;
 
 class InputManager
 {
@@ -37,7 +38,7 @@ public:
 	//マウスカーソルの位置を変更する（WM_MOUSEMOVEの時に呼び出す）
 	void setCursorPosition(POINT);
 	//
-	bool isClicked(GameObject& gameObject);
+	bool isClicked(const PictureObject& gameObject)const;
 
 private:
 	//1フレーム前のキーの状態

@@ -26,7 +26,7 @@ void WaitingPitchingSubState::update(Game & game)
 	}
 
 	//終了ボタン処理
-	GameObject& exitButton = owner.getGameObject(L"BUTTON_EXIT");
+	PictureObject& exitButton = gameObjectManager.getObject<PictureObject>("EXIT");
 	if (inputManager.isClicked(exitButton)) {
 		game.changeState(new TitleScreenState(game));
 		return;
@@ -35,35 +35,34 @@ void WaitingPitchingSubState::update(Game & game)
 	//入力に応じてバッターのアニメーションを更新
 	owner.updateBatterPos(inputManager);
 	owner.updateBatterAnimation(inputManager);
-	int currentBatterFrame = owner.getGameObject(L"PICTURE_BATTER").getCurrentFrameNumber();
+	int currentBatterFrame = gameObjectManager.getObject<PictureObject>("BATTER").getCurrentFrameNumber();
 	if (2 <= currentBatterFrame && currentBatterFrame <= 4) {
 		owner.updateBatFrame(currentBatterFrame);
 	}
 
 	if (currentBatterFrame >= 5) {
 		//バット判定枠の消去
-		owner.getGameObject(L"JUDGE_BAT").hide();
+		gameObjectManager.getObject<PictureObject>("BAT_HITBOX").hide();
 	}
 }
 
 void WaitingPitchingSubState::enter(Game& game)
 {
 	OutputDebugString(L"Entering WaitingPitchingSubState\n");
-	owner.getGameObject(L"PICTURE_FIELD").appear();
-	GameObject& batter = owner.getGameObject(L"PICTURE_BATTER");
+	gameObjectManager.getObject<PictureObject>("FIELD").appear();
+	GameObject& batter = gameObjectManager.getObject<PictureObject>("BATTER");
 	InputManager& inputManager = game.getInputManager();
 	POINT mouse = inputManager.getMousePosition();
 	owner.setBatterInBox(mouse);
 	batter.changeSizeRate(1.0f);
 	batter.appear();
 	
-	owner.getGameObject(L"BUTTON_EXIT").appear();
+	gameObjectManager.getObject<PictureObject>("EXIT").appear();
 	
-
-	GameObject& pitcher = owner.getGameObject(L"PICTURE_PITCHER");
-	pitcher.changeSizeRate(0.5);
+	GameObject& pitcher = gameObjectManager.getObject<PictureObject>("PITCHER");
+	pitcher.changeSizeRate(0.5f);
 	pitcher.setObjectPosition({ 519,5 });
-	owner.getGameObject(L"PICTURE_PITCHER").appear();
+	pitcher.appear();
 }
 
 void WaitingPitchingSubState::exit(Game& game)

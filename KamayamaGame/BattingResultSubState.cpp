@@ -50,7 +50,7 @@ void BattingResultSubState::update(Game& game)
 void BattingResultSubState::enter(Game& game)
 {
 	//ボタンを消す
-	owner.getGameObject(L"BUTTON_EXIT").hide();
+	gameObjectManager.getObject<PictureObject>("EXIT").hide();
 	timer.setRecord();
 
 	//Resultを更新
@@ -59,28 +59,28 @@ void BattingResultSubState::enter(Game& game)
 
 	if (result != PlayingState::STRIKE) {
 		//飛距離を表示
-		TextObject* distanceText = static_cast<TextObject*>(owner.getGameObjectPtr(L"TEXT_DISTANCE"));
+		TextObject& distanceText = static_cast<TextObject&>(gameObjectManager.getObject<TextObject>("DISTANCE"));
 		std::wstring distanceTxt = L"飞距离 : " + std::to_wstring(distance) + L" m";
-		distanceText->setText(distanceTxt);
-		distanceText->setFont(L"NSimSun");
-		distanceText->setObjectPosition({ 231,353 });
-		distanceText->appear();
+		distanceText.setText(distanceTxt);
+		distanceText.setFont(L"NSimSun");
+		distanceText.setObjectPosition({ 231,353 });
+		distanceText.appear();
 
 	}
 	
 
 	//結果を表示
-	TextObject* resultText = (TextObject*)(owner.getGameObjectPtr(L"TEXT_RESULT"));
-	resultText->setText(resultString());
-	resultText->setFont(TEXT("HG行書体"));
-	resultText->setObjectPosition({ 382,184 });
-	resultText->appear();
+	TextObject& resultText = (TextObject&)(gameObjectManager.getObject<TextObject>("RESULT"));
+	resultText.setText(resultString());
+	resultText.setFont(TEXT("HG行書体"));
+	resultText.setObjectPosition({ 382,184 });
+	resultText.appear();
 }
 
 void BattingResultSubState::exit(Game& game)
 {
-	GameObject& resultText = owner.getGameObject(L"TEXT_RESULT");
+	GameObject& resultText = gameObjectManager.getObject<TextObject>("RESULT");
 	resultText.hide();
-	GameObject& distanceText = owner.getGameObject(L"TEXT_DISTANCE");
+	GameObject& distanceText = gameObjectManager.getObject<TextObject>("DISTANCE");
 	distanceText.hide();
 }

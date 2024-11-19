@@ -2,6 +2,8 @@
 #include "GameState.h"
 
 #include "Result.h"
+#include "PictureObject.h"
+#include "TextObject.h"
 
 class Pitcher;
 
@@ -10,6 +12,7 @@ class PlayResultState :
 {
 private:
     Result& result;
+
 public:
     PlayResultState(Game& game, Result& result,Pitcher* pitcher);
     ~PlayResultState();

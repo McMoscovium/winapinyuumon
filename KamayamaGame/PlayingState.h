@@ -8,6 +8,7 @@
 #include "Vector2D.h"
 #include <unordered_map>
 #include "Result.h"
+#include "PictureObject.h"
 
 class pitcher;
 class Batter;
@@ -40,7 +41,7 @@ public:
     //バッターの位置更新
     void updateBatterPos(const InputManager& inputManager);
     //
-    const POINT getCursorPos()const;
+    const POINT getCursorPos();
     //フェイズ開始時の時刻を記録
     void initializeStartTime();
     //
@@ -50,7 +51,7 @@ public:
     //
     int& getDistance();
     //
-    std::unordered_map<std::wstring, GameObject&>& getFieldImages();
+    std::unordered_map<std::string, PictureObject&>& getFieldImages();
     //
     Result& getResult();
     //バッターの位置をposにする。posがバッターボックスからはみ出ていたらボックスにいれる。
@@ -61,6 +62,8 @@ public:
     Stadium* getStadium();
 
 private:
+    
+    //ボール
     Ball ball;
     //ステージデータ
     Stage* stage;
@@ -81,16 +84,12 @@ private:
     //飛距離を記録する変数
     int distance = 0;
     //フィールド画像への参照の列
-    std::unordered_map<std::wstring, GameObject&> fieldImages;
+    std::unordered_map<std::string, PictureObject&> fieldImages;
     //
     Result result;
-
-
     //
     void updateWaitingPitchingTimer();
 
-    //スイング中のヒッティング判定
-    void hitting();
     //
     POINT nextKamayamaPos(POINT position, Vector2D<float> movement);
     //

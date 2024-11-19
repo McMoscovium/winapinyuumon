@@ -84,33 +84,7 @@ RECT Window::getClientRect() const
 }
 
 
-void Window::renderGameObject(const GameObject& gameObject,HDC hdc)const
-{
-	HDC hdcMem = CreateCompatibleDC(hdc);//スプライトシートに紐付けるHDC
-	HBITMAP oldMemBitmap = (HBITMAP)SelectObject(hdcMem, gameObject.getSpriteImage());
-	//透過色を考慮してHDCの選択するデバイスに描画
-	if (TransparentBlt(
-		hdc,
-		gameObject.getPositionX(),
-		gameObject.getPositionY(),
-		gameObject.getWidthOnWindow(),
-		gameObject.getHeightOnWindow(),
-		hdcMem,
-		gameObject.originOfCurrentFrame(),
-		0,
-		gameObject.getWidth(),
-		gameObject.getHeight(),
-		RGB(255, 0, 255))
-		) {
-		//描画せいこう
-	}
-	else {
-		//描画失敗
-		OutputDebugString(L"仮想画面に描画失敗\n");
-	}
-	SelectObject(hdcMem, oldMemBitmap);
-	DeleteDC(hdcMem);//HDC解放
-}
+
 
 bool Window::getClientRect(RECT* rect)
 {
@@ -125,11 +99,8 @@ void Window::show() const{
 	ShowWindow(hwnd, SW_SHOW);
 }
 
-void Window::render(const IGameState* currentState)
+void Window::render(const GameObjectManager& gameObjectManager)
 {
-	if (currentState == nullptr) {
-		return;
-	}
 	//HDC達を確保する
 	PAINTSTRUCT ps;
 	HDC hdc = BeginPaint(hwnd, &ps);//ウィンドウのデバイスコンテキスト
@@ -147,17 +118,17 @@ void Window::render(const IGameState* currentState)
 	FillRect(hdcBackBuffer, &rect, hBrush);  // バックバッファに塗りつぶし
 	DeleteObject(hBrush);  // ブラシを解放
 	
-	std::vector<std::wstring> objectOrder = currentState->getObjectOrder();//画面奥から順に描画するので、その順序を取得
+	std::vector<std::reference_wrapper<GameObject>> objectOrder = gameObjectManager.getDrawOrder();//画面奥から順に描画するので、その順序を取得
 
 	//ゲームオブジェクトを奥から順にバックバッファに描画する
-	for (unsigned int i = 0; i < currentState->numberOfObjects(); i++) {
+	for (auto& object : objectOrder) {
 		//i番目のオブジェクトを選択
-		const GameObject& drawnObject = currentState->getConstGameObject(objectOrder.at(i));
-		//visible=falseなら次のオブジェクトへ
-		if (!drawnObject.isVisible()) {
+		//visible=falseなら次のオブジェクトへ]
+		GameObject& obj = object.get();
+		if (!(obj.isVisible())) {
 			continue;
 		}
-		drawnObject.render(hdcBackBuffer);
+		obj.render(hdcBackBuffer);
 	}
 	//出来上がったバックバッファを本来のデバイスコンテキストに描画
 	RECT clientRect;
@@ -229,7 +200,7 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		Game* game = userData->game;
 		Window* window = game->getWindow();
-		window->render(game->getCurrentState());
+		window->render(game->getCurrentState()->getGameObjectManager());
 		return 0;
 	}
 	case WM_MOUSEMOVE: {

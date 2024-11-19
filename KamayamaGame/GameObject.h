@@ -12,21 +12,14 @@ class Window;
 */
 class GameObject
 {
-private:
+protected:
 	bool visible = false;//trueで描画される
-	std::wstring objectName;
-	int length = 0;//フレームの個数
+	std::string objectName;
 	POINT position = { 0,0 };//オブジェクトの描画位置
-	const SIZE frameSize = { 0,0 };//オブジェクト1フレームの、長方形としての縦横サイズ（ピクセル）
-	float sizeRate = 1;//何倍に拡大して描画するか
-	HBITMAP hSpriteImage = nullptr;//スプライトシートのビットマップイメージ
-	int frameNumber = 0;//今、スプライトの何フレーム目か（0から始まる）
-	COLORREF transparent = 0xff00ff;//透過色
+	float sizeRate = 1.0f;//何倍に拡大して描画するか
 
 public:
-	GameObject();
-	GameObject(std::wstring objectName);
-	GameObject(LPCTSTR path, std::wstring objectName, SIZE frameSize);
+	GameObject(std::string objectName);
 	virtual ~GameObject();
 
 	//positionの変更
@@ -36,54 +29,21 @@ public:
 	//描画される場所のX座標の取得
 	const int getPositionX()const;
 	//描画される場所のY座標の取得
-	const int getPositionY()const;
-	//1フレームの寸法（縦横）を取得
-	const RECT getObjectRect()const;
-	//1フレームの幅を取得
-	const int getWidth()const;
-	//1フレームの高さを取得
-	const int getHeight()const;
-	//
-	const int getWidthOnWindow()const;
-	//
-	const int getHeightOnWindow()const;
-	//lengthを取得
-	int getLength()const;
-	//hBitmapを取得
-	const HBITMAP getSpriteImage()const;
+	const int getPositionY()const;	
 	//
 	float getSizeRate()const;
-	//現在のフレームの原点のスプライトシートにおけるX座標を取得する
-	const int originOfCurrentFrame()const;
-	//スプライトの画像サイズ（px）を取得
-	SIZE getSpriteSize()const;
-	//現在のフレームが何番目かを取得
-	const int getCurrentFrameNumber()const;
-	//フレームを次に進める（進めれたらtrue）
-	bool nextFrame();
-	//指定したフレームに変える
-	bool changeFrame(int);
+	
 	//visibleかどうか返す
 	bool isVisible()const;
 	//visibleにする
 	void appear();
 	//invisibleにする
 	void hide();
-	//windowのクライアント領域内にあるか調べる
-	bool isOutOfClientRect(Window* window);
-	//
-	void deleteHBITMAP();
+	
 	//
 	void changeSizeRate(float r);
 	//与えられたHDCに自身を描画する
-	virtual void render(HDC hdc)const;
-	//クライアント領域と交叉する場合true
-	bool isIntersectsWithClientRect(Window* window)const;
+	virtual void render(HDC hdc)const = 0;
 	//オブジェクト名へのconst参照を返す
-	const std::wstring& getName()const;
-	
-private:
-	void setLength(int);
-	void setObjectImage(HBITMAP img);
-	void loadImage(LPCWSTR path);//pathの画像をビットマップイメージとしてhSpriteImageに格納する。
+	const std::string& getName()const;	
 };

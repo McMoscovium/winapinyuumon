@@ -43,7 +43,7 @@ void Game::changeState(IGameState* newState) {
 }
 
 
-const IGameState* Game::getCurrentState() const
+IGameState* Game::getCurrentState() const
 {
 	return currentState;
 }

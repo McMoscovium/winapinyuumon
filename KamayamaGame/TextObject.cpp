@@ -1,6 +1,6 @@
 #include "TextObject.h"
 
-TextObject::TextObject(std::wstring objectName, std::wstring text):
+TextObject::TextObject(std::string objectName, std::wstring text):
 	GameObject(objectName),
 	text(text),
 	hFont(CreateFontW(60, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
@@ -41,3 +41,5 @@ void TextObject::setFont(LPCWSTR fontName)
 	//作成失敗
 	OutputDebugString(L"フォントの変更に失敗\n");
 }
+
+

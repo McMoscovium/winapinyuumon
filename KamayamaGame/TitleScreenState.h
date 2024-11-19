@@ -1,8 +1,8 @@
 #pragma once
 
 #include "GameState.h"
-#include <vector>
-#include <string>
+
+#include "PictureObject.h"
 
 class InputManager;
 class Game;
@@ -10,6 +10,7 @@ class Game;
 class TitleScreenState :
     public GameState<TitleScreenState,GameSubState<TitleScreenState>>
 {
+private:
 public:
     TitleScreenState(Game& game);
     //ó‘Ô‚ğXV

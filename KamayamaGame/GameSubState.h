@@ -1,6 +1,10 @@
 #pragma once
 
 #include "Timer.h"
+#include "GameObjectManager.h"
+#include <type_traits>
+#include "IGameState.h"
+
 
 class Game;
 
@@ -9,7 +13,11 @@ class GameSubState
 {
 public:
     // コンストラクタで所属するGameStateを受け取る
-    GameSubState(StateType& ownerState) : owner(ownerState) {}
+    
+    GameSubState(StateType& ownerState) :
+        owner(ownerState),
+        gameObjectManager(ownerState.getGameObjectManager())
+    {}
     virtual ~GameSubState() = default;
 
     virtual void update(Game& game) = 0;
@@ -20,4 +28,6 @@ public:
 protected:
     StateType& owner; // 所属するStateTypeへの参照
     Timer timer;
+
+    GameObjectManager& gameObjectManager;//親玉のおさがり
 };

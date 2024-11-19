@@ -7,34 +7,30 @@
 #include <string>
 
 
-PlayResultState::PlayResultState(Game& game, Result& result,Pitcher* pitcher):
+PlayResultState::PlayResultState(Game& game, Result& result, Pitcher* pitcher) :
 	GameState(game),
 	result(result)
 {
 	OutputDebugString(L"Entering PlayResultState\n");
 
 	//GameObjectよみこみ
-	appendObject(L"PICTURE_KEKKAHAPPYOU", L".//assets//結果発表.bmp", { 1152,720 });//背景
-	//appendObject({バッター画像オブジェクトへのポインター});//バッター画像
-
-	std::wstring pitcherName = pitcher->getName();
-	appendObject(new TextObject(L"TEXT_PITCHERNAME", pitcherName));//ピッチャー名
+	gameObjectManager.addFront<PictureObject>("KEKKAHAPPYOU", L".//assets//結果発表.bmp", SIZE{ 1152,720 });
 	
-
-	appendObject(new TextObject(L"TEXT_BALLS", L"1oku"));//球数
-	appendObject(new TextObject(L"TEXT_NORM", L"1oku"));//ノルマ
-	std::wstring runs = std::to_wstring(result.getRuns());
-	appendObject(new TextObject(L"TEXT_RUNS", runs));//ホームラン数
-	appendObject(L"PICTURE_CLEAR", L".//assets//クリア.bmp", { 273,78 });
-	appendObject(L"PICTURE_FAILURE", L".//assets//しっぱい.bmp", { 273,78 });
-	appendObject(L"BUTTON_NEXT", L".//assets//次へ.bmp", { 115,49 });
+	//appendObject({バッター画像オブジェクトへのポインター});//バッター画像
+	gameObjectManager.addFront<TextObject>("PITCHERNAME", pitcher->getName());
+	gameObjectManager.addFront<TextObject>("BALLS", L"1oku");
+	gameObjectManager.addFront<TextObject>("NORM", L"1oku");
+	gameObjectManager.addFront<TextObject>("RUNS", std::to_wstring(result.getRuns()));
+	gameObjectManager.addFront<PictureObject>("CLEAR", L".//assets//クリア.bmp", SIZE{ 273,78 });
+	gameObjectManager.addFront<PictureObject>("FAILURE", L".//assets//しっぱい.bmp", SIZE{ 273,78 });
+	gameObjectManager.addFront<PictureObject>("NEXT", L".//assets//次へ.bmp", SIZE{ 115,49 });
 
 	//位置設定
-	getGameObject(L"TEXT_PITCHERNAME").setObjectPosition({ 312,224 });
-	getGameObject(L"TEXT_BALLS").setObjectPosition({ 606,330 });
-	getGameObject(L"TEXT_NORM").setObjectPosition({ 606,393 });
-	getGameObject(L"TEXT_RUNS").setObjectPosition({ 741,514 });
-	getGameObject(L"BUTTON_NEXT").setObjectPosition({ 920,623 });
+	gameObjectManager.getObject<PictureObject>("PITCHERNAME").setObjectPosition({ 312,224 });
+	gameObjectManager.getObject<TextObject>("BALLS").setObjectPosition({ 606,330 });
+	gameObjectManager.getObject<TextObject>("NORM").setObjectPosition({ 606,393 });
+	gameObjectManager.getObject<TextObject>("RUNS").setObjectPosition({ 741,514 });
+	gameObjectManager.getObject<PictureObject>("NEXT").setObjectPosition({ 920,623 });
 
 	//substate初期化
 	changeSubState(new CompareNormSubState(*this));

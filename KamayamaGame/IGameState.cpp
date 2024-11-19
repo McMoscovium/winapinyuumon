@@ -1,5 +1,7 @@
 #include "IGameState.h"
 
+#include "PictureObject.h"
+
 IGameState::IGameState(Game& game):
     game(game)
 {
@@ -7,69 +9,21 @@ IGameState::IGameState(Game& game):
 
 IGameState::~IGameState()
 {
-    for (auto& [key, obj] : gameObjects) {
-        if (obj) {
-            obj->deleteHBITMAP();
-            delete obj;
-            obj = nullptr;
-        }        
-    }
-}
-
-const std::vector<std::wstring>& IGameState::getObjectOrder() const
-{
-    return objectOrder;
-}
-
-GameObject& IGameState::getGameObject(std::wstring objectName)
-{
-    return *gameObjects.at(objectName);
-}
-
-GameObject* IGameState::getGameObjectPtr(std::wstring objectName)
-{
-    return gameObjects.at(objectName);
-}
-
-const GameObject& IGameState::getConstGameObject(std::wstring objectName)const
-{
-    return *gameObjects.at(objectName);
-}
-
-void IGameState::appendObject(std::wstring objectName, LPCTSTR path, SIZE frameSize)
-{
-    GameObject* obj =new GameObject(path, objectName, frameSize);
-    if (gameObjects.emplace(objectName, std::move(obj)).second) {
-        
-        //追加成功
-        objectOrder.push_back(objectName);
-    }
-    else {
-        std::wstring message = L"ゲームオブジェクト: " + objectName + L" を追加できませんでした";
-        OutputDebugString(message.c_str());
-    }
-    
-}
-
-void IGameState::appendObject(GameObject* object)
-{
-    gameObjects.emplace(object->getName(), object);
-    objectOrder.push_back(object->getName());
-}
-
-const unsigned int IGameState::numberOfObjects() const
-{
-    return (unsigned int)objectOrder.size();
 }
 
 void IGameState::showAll()
 {
-    for (auto& [key, obj] : gameObjects) {
-        obj->appear();
+    for (auto& obj : gameObjectManager.getDrawOrder()) {
+        obj.get().appear();
     }
 }
 
 Game& IGameState::getGame()
 {
     return game;
+}
+
+GameObjectManager& IGameState::getGameObjectManager()
+{
+    return gameObjectManager;
 }

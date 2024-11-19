@@ -15,12 +15,12 @@ void CompareNormSubState::update(Game& game)
 
 	//クリアアニメーションを表示し終える
 	if (clearPictureFrame == 20) {
-		owner.getGameObject(L"BUTTON_NEXT").appear();
+		gameObjectManager.getObject<PictureObject>("NEXT").appear();
 	}
 
 	//アニメーション更新
 	if (clearPictureFrame < 20) {
-		GameObject& clearPicture = owner.getGameObject(clearPictureName);
+		GameObject& clearPicture = gameObjectManager.getObject<PictureObject>(clearPictureName);
 		clearPicture.setObjectPosition({
 			448 - (20 - clearPictureFrame) * 50,
 			590
@@ -30,7 +30,7 @@ void CompareNormSubState::update(Game& game)
 	}
 
 	//次へボタン処理
-	GameObject& nextButton = owner.getGameObject(L"BUTTON_NEXT");
+	PictureObject& nextButton = gameObjectManager.getObject<PictureObject>("NEXT");
 	InputManager& inputManager = game.getInputManager();
 	if (inputManager.isClicked(nextButton)) {
 		//次へボタンが押された
@@ -42,11 +42,11 @@ void CompareNormSubState::update(Game& game)
 
 void CompareNormSubState::enter(Game& game)
 {
-	owner.getGameObject(L"PICTURE_KEKKAHAPPYOU").appear();
-	owner.getGameObject(L"TEXT_BALLS").appear();
-	owner.getGameObject(L"TEXT_NORM").appear();
-	owner.getGameObject(L"TEXT_RUNS").appear();
-	owner.getGameObject(L"TEXT_PITCHERNAME").appear();
+	gameObjectManager.getObject<PictureObject>("KEKKAHAPPYOU").appear();
+	gameObjectManager.getObject<TextObject>("BALLS").appear();
+	gameObjectManager.getObject<TextObject>("NORM").appear();
+	gameObjectManager.getObject<TextObject>("RUNS").appear();
+	gameObjectManager.getObject<TextObject>("PITCHERNAME").appear();
 }
 
 void CompareNormSubState::exit(Game& game)

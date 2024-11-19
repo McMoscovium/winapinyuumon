@@ -16,7 +16,7 @@ void EndPlayingSubState::update(Game& game)
 void EndPlayingSubState::enter(Game& game)
 {
 	timer.setRecord();
-	GameObject& finish = owner.getGameObject(L"PICTURE_FINISH");
+	GameObject& finish = gameObjectManager.getObject<PictureObject>("FINISH");
 	finish.setObjectPosition({ 313,282 });
 	finish.appear();
 	OutputDebugString(L"Entering EndPlayingSubState\n");

@@ -11,7 +11,7 @@ private:
     std::wstring text;
     HFONT hFont;
 public:
-    TextObject(std::wstring objectName, std::wstring text);
+    TextObject(std::string objectName, std::wstring text);
     ~TextObject();
 
     virtual void render(HDC)const override;

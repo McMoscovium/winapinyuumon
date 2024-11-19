@@ -4,6 +4,8 @@
 #include "Window.h"
 #include <string>
 
+#include "PictureObject.h"
+
 InputManager::InputManager() :mousePosition{ 0,0 }
 {
 	//初期化処理
@@ -78,7 +80,7 @@ bool isPointOnRect(POINT point, RECT rect)
 	}
 }
 
-bool InputManager::isClicked(GameObject& gameObject)
+bool InputManager::isClicked(const PictureObject& gameObject)const
 {
 	if (!gameObject.isVisible()) {//オブジェクトが見えない
 		return false;

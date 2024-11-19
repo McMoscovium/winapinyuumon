@@ -13,12 +13,12 @@
 void AfterMeetSubState::update(Game& game)
 {
     Window* window = game.getWindow();
-    GameObject& ballObject = owner.getGameObject(L"PICTURE_BALL");
+    PictureObject& ballObject = gameObjectManager.getObject<PictureObject>("BALL");
     Ball& ball = owner.getBall();
-    GameObject& shadow = owner.getGameObject(L"PICTURE_SHADOW");
+    PictureObject& shadow = gameObjectManager.getObject<PictureObject>("BALLSHADOW");
 
     //ボールが画面外に出たらchangeSubState
-    if (ballObject.isOutOfClientRect(window)) {
+    if (!ballObject.isIntersectsWithClientRect(window)) {
         translateBall(ball);
         owner.changeSubState(new BallFlyingSubState(owner));
         return;
@@ -26,7 +26,7 @@ void AfterMeetSubState::update(Game& game)
 
     //終了ボタン処理
     InputManager& inputManager = game.getInputManager();
-    GameObject& exitButton = owner.getGameObject(L"BUTTON_EXIT");
+    PictureObject& exitButton = gameObjectManager.getObject<PictureObject>("EXIT");
     if (inputManager.isClicked(exitButton)) {
         exit(game);//終了処理
         game.changeState(new TitleScreenState(game));

@@ -31,7 +31,7 @@ public:
 	void update();//ゲーム状態ごとに設定された更新処理を行う
 	void changeState(IGameState* newState);//currentStateを変更する
 	//
-	const IGameState* getCurrentState()const;
+	IGameState* getCurrentState()const;
 	//
 	InputManager& getInputManager() {
 		return inputManager;

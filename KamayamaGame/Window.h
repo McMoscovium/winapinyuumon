@@ -5,6 +5,7 @@ class IGameState;
 class Game;
 class GameObject;
 class InputManager;
+class GameObjectManager;
 
 struct UserData {
 public:
@@ -32,7 +33,7 @@ public:
 	void show() const;
 
 	//Gameクラスの情報に従いウィンドウを描画しなおす。
-	void render(const IGameState* currentState);
+	void render(const GameObjectManager& gameObjectManager);
 
 	//ウィンドウハンドルを取得
 	HWND getHandle()const { return hwnd; }
@@ -71,8 +72,6 @@ private:
 	void registerUserData(Game* game);
 	//クライアント領域の四角形の寸法（ピクセル）を取得
 	
-	//渡されたゲームオブジェクトをHDCの選択するデバイスに描画（透過色を考慮）
-	void renderGameObject(const GameObject& gameObject, HDC hdc)const;
 
 	bool getClientRect(RECT* rect);
 	
