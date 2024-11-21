@@ -29,7 +29,7 @@ public:
 
 	//オブジェクトを手前に追加
 	template <typename T, typename... Args>
-	void addFront(const std::string& name, Args&&...args) {
+	T& addFront(const std::string& name, Args&&...args) {
 		static_assert(std::is_base_of<GameObject, T>::value, "T must derive from GameObject");
 		if (objects.find(name) != objects.end()) {
 			//すでにnameと同じ名前のオブジェクトをもつ
@@ -37,6 +37,7 @@ public:
 		}
 		objects.emplace(name, ObjectEntry{ std::make_unique<T>(name, std::forward<Args>(args)...), std::type_index(typeid(T)) });
 		drawOrder.push_back(name);
+		return getObject<T>(name);
 	}
 	//描画順に並べたGameObject&型参照のリストを返す
 	std::vector<std::reference_wrapper<GameObject>> getDrawOrder()const {

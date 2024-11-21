@@ -182,6 +182,7 @@
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="Stadium.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="StageListState.cpp" />
     <ClCompile Include="StatusState.cpp" />
     <ClCompile Include="Straight.cpp" />
     <ClCompile Include="TextObject.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="Result.h" />
     <ClInclude Include="Stadium.h" />
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="StageListState.h" />
     <ClInclude Include="StatusState.h" />
     <ClInclude Include="Straight.h" />
     <ClInclude Include="TextObject.h" />

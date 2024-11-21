@@ -5,9 +5,8 @@
 #include "Game.h"
 #include "InputManager.h"
 #include <Windows.h>
-
+#include "StageListState.h"
 #include "GameObject.h"
-#include "PlayingState.h"
 #include "StatusState.h"
 #include "TextObject.h"
 #include "TintinPitcher.h"
@@ -53,7 +52,7 @@ void TitleScreenState::update(Game& game) {
     if (inputManager.isClicked(startButton)) {
         OutputDebugString(L"スタートボタンがクリックされた\n");
         Stage* tintinStage = new TintinStage();
-        game.changeState(new PlayingState(game, tintinStage));
+        game.changeState(new StageListState(game));
         return;
     }
     //ステータスボタンクリック時
