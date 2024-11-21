@@ -37,7 +37,7 @@ public:
 
 	//マウスカーソルの位置を変更する（WM_MOUSEMOVEの時に呼び出す）
 	void setCursorPosition(POINT);
-	//
+	//KEY_PRESSEDか調べる
 	bool isClicked(const PictureObject& gameObject)const;
 
 private:

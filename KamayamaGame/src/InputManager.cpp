@@ -89,7 +89,7 @@ bool InputManager::isClicked(const PictureObject& gameObject)const
 		//マウスの左ボタンが押されていない
 		return false;
 	}
-	if (getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_DOWN) {//左ボタンがすでに押されている
+	if (getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_PRESSED) {//左ボタンがすでに押されている
 		return false;
 	}
 
