@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "InputManager.h"
+#include "DetailResultSubState.h"
 
 void CompareNormSubState::update(Game& game)
 {
@@ -34,7 +35,8 @@ void CompareNormSubState::update(Game& game)
 	InputManager& inputManager = game.getInputManager();
 	if (inputManager.isClicked(nextButton)) {
 		//次へボタンが押された
-		OutputDebugString(L"次へボタンが押された\n");
+		owner.changeSubState(new DetailResultSubState(owner, owner.getResult()));
+		return;
 	}
 
 
@@ -51,4 +53,9 @@ void CompareNormSubState::enter(Game& game)
 
 void CompareNormSubState::exit(Game& game)
 {
+	gameObjectManager.getObject<PictureObject>("KEKKAHAPPYOU").hide();
+	gameObjectManager.getObject<TextObject>("BALLS").hide();
+	gameObjectManager.getObject<TextObject>("NORM").hide();
+	gameObjectManager.getObject<TextObject>("RUNS").hide();
+	gameObjectManager.getObject<TextObject>("PITCHERNAME").hide();
 }

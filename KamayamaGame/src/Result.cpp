@@ -70,3 +70,18 @@ int Result::getRuns() const
 {
 	return runs;
 }
+
+int Result::getMaxSuccessiveRuns() const
+{
+	return maxSuccessiveRuns;
+}
+
+int Result::getMaxDistance() const
+{
+	return maxDistance;
+}
+
+int Result::getDistanceSum() const
+{
+	return distanceSum;
+}

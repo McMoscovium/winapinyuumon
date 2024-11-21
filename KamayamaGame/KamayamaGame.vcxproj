@@ -72,18 +72,20 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\winrt;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\ucrt;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame\include</IncludePath>
     <LibraryPath>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\ucrt\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\shared;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\winrt;C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\ucrt;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame\include</IncludePath>
     <LibraryPath>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\um\x64;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.22621.0\ucrt\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -153,94 +155,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BattingResultSubState.cpp" />
-    <ClCompile Include="AfterMeetSubState.cpp" />
-    <ClCompile Include="Ball.cpp" />
-    <ClCompile Include="BallFlyingSubState.cpp" />
-    <ClCompile Include="Batter.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CompareNormSubState.cpp" />
-    <ClCompile Include="EndPlayingSubState.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GameObjectManager.cpp" />
-    <ClCompile Include="GameOverState.cpp" />
-    <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="GameSubState.cpp" />
-    <ClCompile Include="HatimituMeter.cpp" />
-    <ClCompile Include="HatimituMeterObject.cpp" />
-    <ClCompile Include="IGameState.cpp" />
-    <ClCompile Include="InPitchingSubState.cpp" />
-    <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="KamayamaBatter.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="PictureObject.cpp" />
-    <ClCompile Include="Pitcher.cpp" />
-    <ClCompile Include="PitchType.cpp" />
-    <ClCompile Include="PlayingState.cpp" />
-    <ClCompile Include="PlayResultState.cpp" />
-    <ClCompile Include="Result.cpp" />
-    <ClCompile Include="Stadium.cpp" />
-    <ClCompile Include="Stage.cpp" />
-    <ClCompile Include="StageListState.cpp" />
-    <ClCompile Include="StatusState.cpp" />
-    <ClCompile Include="Straight.cpp" />
-    <ClCompile Include="TextObject.cpp" />
-    <ClCompile Include="TheHundredAcreWoodStadium.cpp" />
-    <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="TintinPitcher.cpp" />
-    <ClCompile Include="TintinStage.cpp" />
-    <ClCompile Include="TitleScreenState.cpp" />
-    <ClCompile Include="ValueMeterObject.cpp" />
-    <ClCompile Include="WaitingPitchingSubState.cpp" />
-    <ClCompile Include="Window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="BattingResultSubState.h" />
-    <ClInclude Include="AfterMeetSubState.h" />
-    <ClInclude Include="AudioManager.h" />
-    <ClInclude Include="Ball.h" />
-    <ClInclude Include="BallFlyingSubState.h" />
-    <ClInclude Include="Batter.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="CompareNormSubState.h" />
-    <ClInclude Include="EndPlayingSubState.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GameObjectManager.h" />
-    <ClInclude Include="GameOverState.h" />
-    <ClInclude Include="GameState.h" />
-    <ClInclude Include="GameSubState.h" />
-    <ClInclude Include="HatimituMeter.h" />
-    <ClInclude Include="HatimituMeterObject.h" />
-    <ClInclude Include="IGameState.h" />
-    <ClInclude Include="InPitchingSubState.h" />
-    <ClInclude Include="InputManager.h" />
-    <ClInclude Include="KamayamaBatter.h" />
-    <ClInclude Include="PictureObject.h" />
-    <ClInclude Include="Pitcher.h" />
-    <ClInclude Include="PitchType.h" />
-    <ClInclude Include="PlayingState.h" />
-    <ClInclude Include="PlayResultState.h" />
-    <ClInclude Include="Result.h" />
-    <ClInclude Include="Stadium.h" />
-    <ClInclude Include="Stage.h" />
-    <ClInclude Include="StageListState.h" />
-    <ClInclude Include="StatusState.h" />
-    <ClInclude Include="Straight.h" />
-    <ClInclude Include="TextObject.h" />
-    <ClInclude Include="TheHundredAcreWoodStadium.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="TintinPitcher.h" />
-    <ClInclude Include="TintinStage.h" />
-    <ClInclude Include="ValueMeterObject.h" />
-    <ClInclude Include="Vector2D.h" />
-    <ClInclude Include="VirtualWindow.h" />
-    <ClInclude Include="TitleScreenState.h" />
-    <ClInclude Include="WaitingPitchingSubState.h" />
-    <ClInclude Include="Window.h" />
-  </ItemGroup>
-  <ItemGroup>
     <Media Include="assets\bgm1.wav" />
   </ItemGroup>
   <ItemGroup>
@@ -278,6 +192,97 @@
     <Text Include="設計図\タイトル画面作成.txt" />
     <Text Include="設計図\メインループ.txt" />
     <Text Include="設計図\初期化パート.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\AfterMeetSubState.cpp" />
+    <ClCompile Include="src\Ball.cpp" />
+    <ClCompile Include="src\BallFlyingSubState.cpp" />
+    <ClCompile Include="src\Batter.cpp" />
+    <ClCompile Include="src\BattingResultSubState.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\CompareNormSubState.cpp" />
+    <ClCompile Include="src\DetailResultSubState.cpp" />
+    <ClCompile Include="src\EndPlayingSubState.cpp" />
+    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameObject.cpp" />
+    <ClCompile Include="src\GameObjectManager.cpp" />
+    <ClCompile Include="src\GameOverState.cpp" />
+    <ClCompile Include="src\GameState.cpp" />
+    <ClCompile Include="src\GameSubState.cpp" />
+    <ClCompile Include="src\HatimituMeter.cpp" />
+    <ClCompile Include="src\HatimituMeterObject.cpp" />
+    <ClCompile Include="src\IGameState.cpp" />
+    <ClCompile Include="src\InPitchingSubState.cpp" />
+    <ClCompile Include="src\InputManager.cpp" />
+    <ClCompile Include="src\KamayamaBatter.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\PictureObject.cpp" />
+    <ClCompile Include="src\Pitcher.cpp" />
+    <ClCompile Include="src\PitchType.cpp" />
+    <ClCompile Include="src\PlayingState.cpp" />
+    <ClCompile Include="src\PlayResultState.cpp" />
+    <ClCompile Include="src\Result.cpp" />
+    <ClCompile Include="src\Stadium.cpp" />
+    <ClCompile Include="src\Stage.cpp" />
+    <ClCompile Include="src\StageListState.cpp" />
+    <ClCompile Include="src\StatusState.cpp" />
+    <ClCompile Include="src\Straight.cpp" />
+    <ClCompile Include="src\TextObject.cpp" />
+    <ClCompile Include="src\TheHundredAcreWoodStadium.cpp" />
+    <ClCompile Include="src\Timer.cpp" />
+    <ClCompile Include="src\TintinPitcher.cpp" />
+    <ClCompile Include="src\TintinStage.cpp" />
+    <ClCompile Include="src\TitleScreenState.cpp" />
+    <ClCompile Include="src\ValueMeterObject.cpp" />
+    <ClCompile Include="src\VirtualWindow.cpp" />
+    <ClCompile Include="src\WaitingPitchingSubState.cpp" />
+    <ClCompile Include="src\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\AfterMeetSubState.h" />
+    <ClInclude Include="include\AudioManager.h" />
+    <ClInclude Include="include\Ball.h" />
+    <ClInclude Include="include\BallFlyingSubState.h" />
+    <ClInclude Include="include\Batter.h" />
+    <ClInclude Include="include\BattingResultSubState.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\CompareNormSubState.h" />
+    <ClInclude Include="include\DetailResultSubState.h" />
+    <ClInclude Include="include\EndPlayingSubState.h" />
+    <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\GameObjectManager.h" />
+    <ClInclude Include="include\GameOverState.h" />
+    <ClInclude Include="include\GameState.h" />
+    <ClInclude Include="include\GameSubState.h" />
+    <ClInclude Include="include\HatimituMeter.h" />
+    <ClInclude Include="include\HatimituMeterObject.h" />
+    <ClInclude Include="include\IGameState.h" />
+    <ClInclude Include="include\InPitchingSubState.h" />
+    <ClInclude Include="include\InputManager.h" />
+    <ClInclude Include="include\KamayamaBatter.h" />
+    <ClInclude Include="include\PictureObject.h" />
+    <ClInclude Include="include\Pitcher.h" />
+    <ClInclude Include="include\PitchType.h" />
+    <ClInclude Include="include\PlayingState.h" />
+    <ClInclude Include="include\PlayResultState.h" />
+    <ClInclude Include="include\Result.h" />
+    <ClInclude Include="include\Stadium.h" />
+    <ClInclude Include="include\Stage.h" />
+    <ClInclude Include="include\StageListState.h" />
+    <ClInclude Include="include\StatusState.h" />
+    <ClInclude Include="include\Straight.h" />
+    <ClInclude Include="include\TextObject.h" />
+    <ClInclude Include="include\TheHundredAcreWoodStadium.h" />
+    <ClInclude Include="include\Timer.h" />
+    <ClInclude Include="include\TintinPitcher.h" />
+    <ClInclude Include="include\TintinStage.h" />
+    <ClInclude Include="include\TitleScreenState.h" />
+    <ClInclude Include="include\ValueMeterObject.h" />
+    <ClInclude Include="include\Vector2D.h" />
+    <ClInclude Include="include\VirtualWindow.h" />
+    <ClInclude Include="include\WaitingPitchingSubState.h" />
+    <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

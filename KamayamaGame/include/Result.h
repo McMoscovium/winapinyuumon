@@ -36,5 +36,11 @@ public:
 
 	//
 	int getRuns()const;
+	//
+	int getMaxSuccessiveRuns()const;
+	//
+	int getMaxDistance()const;
+	//
+	int getDistanceSum()const;
 };
 
