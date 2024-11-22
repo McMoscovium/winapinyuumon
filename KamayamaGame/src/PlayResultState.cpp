@@ -37,7 +37,7 @@ PlayResultState::PlayResultState(Game& game, Result& result, Pitcher* pitcher) :
 	gameObjectManager.getObject<TextObject>("NORM").setObjectPosition({ 606,393 });
 	gameObjectManager.getObject<TextObject>("RUNS").setObjectPosition({ 741,514 });
 	gameObjectManager.getObject<PictureObject>("NEXT").setObjectPosition({ 920,623 });
-	toStageList.setObjectPosition({ 832,643 });
+	toStageList.setObjectPosition({ 718,643 });
 
 	//substateèâä˙âª
 	changeSubState(new CompareNormSubState(*this));

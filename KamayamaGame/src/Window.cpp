@@ -53,14 +53,21 @@ void Window::registerClass() {
 
 //ウィンドウ作成。
 void Window::create(Game& game) {
+	DWORD dwStyle = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU;
+	RECT rect = { 0, 0, width, height };//クライアント領域
+	AdjustWindowRect(&rect, dwStyle, FALSE); // FALSEはメニューバーがない場合
+
+	int windowWidth = rect.right - rect.left;
+	int windowHeight = rect.bottom - rect.top;
+
 	hwnd = CreateWindowEx(
 		0,
 		className,
 		L"Sample Window",
-		WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
+		dwStyle,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
-		width, height,
+		windowWidth, windowHeight,
 		NULL,
 		NULL,
 		hInstance,

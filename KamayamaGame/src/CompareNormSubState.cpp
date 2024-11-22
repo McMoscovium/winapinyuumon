@@ -58,4 +58,8 @@ void CompareNormSubState::exit(Game& game)
 	gameObjectManager.getObject<TextObject>("NORM").hide();
 	gameObjectManager.getObject<TextObject>("RUNS").hide();
 	gameObjectManager.getObject<TextObject>("PITCHERNAME").hide();
+	gameObjectManager.getObject<PictureObject>("CLEAR").hide();
+	gameObjectManager.getObject<PictureObject>("FAILURE").hide();
+	gameObjectManager.getObject<PictureObject>("NEXT").hide();
+
 }

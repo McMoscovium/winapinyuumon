@@ -86,13 +86,19 @@ bool InputManager::isClicked(const PictureObject& gameObject)const
 		return false;
 	}
 	if (getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_UP) {
-		//マウスの左ボタンが押されていない
+		//マウスの左ボタンが離されたまま
 		return false;
 	}
-	if (getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_PRESSED) {//左ボタンがすでに押されている
+	if (getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_DOWN) {
+		//左ボタンがすでに押されている
+		return false;
+	}
+	if (getKeyState(VK_LBUTTON) == InputManager::KeyState::KEY_PRESSED) {
+		//左ボタンがちょうど押された
 		return false;
 	}
 
+	//左ボタンがちょうど離された
 	POINT cursor = getMousePosition();
 
 	RECT rect = gameObject.getObjectRect();

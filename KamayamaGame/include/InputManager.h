@@ -52,7 +52,5 @@ private:
 
 	//ŠÄ‹‚·‚éƒL[‚Ì‰Šú‰»‚ğs‚¤
 	void initializeKeys();
-
-
 };
 
