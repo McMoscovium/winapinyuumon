@@ -222,6 +222,8 @@
     <ClCompile Include="src\PlayingState.cpp" />
     <ClCompile Include="src\PlayResultState.cpp" />
     <ClCompile Include="src\Result.cpp" />
+    <ClCompile Include="src\SasakiPitcher.cpp" />
+    <ClCompile Include="src\SasakiStage.cpp" />
     <ClCompile Include="src\Stadium.cpp" />
     <ClCompile Include="src\Stage.cpp" />
     <ClCompile Include="src\StageListState.cpp" />
@@ -267,6 +269,8 @@
     <ClInclude Include="include\PlayingState.h" />
     <ClInclude Include="include\PlayResultState.h" />
     <ClInclude Include="include\Result.h" />
+    <ClInclude Include="include\SasakiPitcher.h" />
+    <ClInclude Include="include\SasakiStage.h" />
     <ClInclude Include="include\Stadium.h" />
     <ClInclude Include="include\Stage.h" />
     <ClInclude Include="include\StageListState.h" />

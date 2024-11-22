@@ -53,9 +53,19 @@ void BattingResultSubState::enter(Game& game)
 	gameObjectManager.getObject<PictureObject>("EXIT").hide();
 	timer.setRecord();
 
+	bool isHomeRun = result==PlayingState::HOMERUN;
+
+	
+
 	//Resultを更新
 	const int distance= owner.getDistance() / 20;
-	owner.getResult().update(distance, result == PlayingState::HOMERUN);
+	owner.getResult().update(distance, isHomeRun);
+
+	//画面上の数字更新
+	TextObject& runsText = gameObjectManager.getObject<TextObject>("RUNS");
+	TextObject& restText = gameObjectManager.getObject<TextObject>("REST");
+	runsText.setText(std::to_wstring(owner.getResult().getRuns()));
+	restText.setText(std::to_wstring(owner.getRestBalls()));
 
 	if (result != PlayingState::STRIKE) {
 		//飛距離を表示

@@ -63,6 +63,13 @@ void WaitingPitchingSubState::enter(Game& game)
 	pitcher.changeSizeRate(0.5f);
 	pitcher.setObjectPosition({ 519,5 });
 	pitcher.appear();
+
+	TextObject& normText = gameObjectManager.getObject<TextObject>("NORM");
+	TextObject& runsText = gameObjectManager.getObject<TextObject>("RUNS");
+	TextObject& restText = gameObjectManager.getObject<TextObject>("REST");
+	normText.appear();
+	runsText.appear();
+	restText.appear();
 }
 
 void WaitingPitchingSubState::exit(Game& game)

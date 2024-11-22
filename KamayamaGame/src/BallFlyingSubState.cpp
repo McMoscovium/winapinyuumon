@@ -163,6 +163,11 @@ void BallFlyingSubState::enter(Game& game)
 	gameObjectManager.getObject<PictureObject>("EXIT").hide();
 	gameObjectManager.getObject<PictureObject>("PITCHER").hide();
 	gameObjectManager.getObject<PictureObject>("BATTER").hide();
+	gameObjectManager.getObject<TextObject>("NORM").hide();
+	gameObjectManager.getObject<TextObject>("RUNS").hide();
+	gameObjectManager.getObject<TextObject>("REST").hide();
+
+
 	gameObjectManager.getObject<PictureObject>("BATTER").changeSizeRate(0.4f);
 	gameObjectManager.getObject<PictureObject>("PITCHER").changeSizeRate(0.4f);
 	gameObjectManager.getObject<PictureObject>("BALL").changeSizeRate(0.4f);

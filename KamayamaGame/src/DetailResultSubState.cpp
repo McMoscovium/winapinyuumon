@@ -25,7 +25,7 @@ void DetailResultSubState::enter(Game& game)
 	TextObject& distanceSum = gameObjectManager.getObject<TextObject>("DISTANCE_SUM");
 	TextObject& bonus = gameObjectManager.getObject<TextObject>("BONUS_POINT");
 
-	runs.setObjectPosition({ 752,22 });
+	runs.setObjectPosition({ 752,204 });
 	runStreak.setObjectPosition({ 803,298 });
 	maxDist.setObjectPosition({ 788,378 });
 	distanceSum.setObjectPosition({ 720,456 });

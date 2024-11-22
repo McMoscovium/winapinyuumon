@@ -5,7 +5,7 @@
 #include "PictureObject.h"
 #include "TextObject.h"
 
-class Pitcher;
+class Stage;
 
 class PlayResultState :
     public GameState<PlayResultState,GameSubState<PlayResultState>>
@@ -14,7 +14,7 @@ private:
     Result& result;
 
 public:
-    PlayResultState(Game& game, Result& result,Pitcher* pitcher);
+    PlayResultState(Game& game, Result& result,Stage* stage);
     ~PlayResultState();
 
     void update(Game& game)override;

@@ -2,12 +2,12 @@
 
 #include "CompareNormSubState.h"
 #include "TextObject.h"
+#include "Stage.h"
 #include "Pitcher.h"
-
 #include <string>
 
 
-PlayResultState::PlayResultState(Game& game, Result& result, Pitcher* pitcher) :
+PlayResultState::PlayResultState(Game& game, Result& result, Stage* stage) :
 	GameState(game),
 	result(result)
 {
@@ -18,9 +18,11 @@ PlayResultState::PlayResultState(Game& game, Result& result, Pitcher* pitcher) :
 	gameObjectManager.addFront<PictureObject>("KEKKAHAPPYOU2", L".//assets//結果発表2.bmp", SIZE{ 1152,720 });
 	
 	//appendObject({バッター画像オブジェクトへのポインター});//バッター画像
+
+	Pitcher* pitcher = stage->getPitcher();
 	gameObjectManager.addFront<TextObject>("PITCHERNAME", pitcher->getName());
-	gameObjectManager.addFront<TextObject>("BALLS", L"1oku");
-	gameObjectManager.addFront<TextObject>("NORM", L"1oku");
+	gameObjectManager.addFront<TextObject>("BALLS", std::to_wstring(stage->getTrials()));
+	gameObjectManager.addFront<TextObject>("NORM", std::to_wstring(stage->getNorm()));
 	gameObjectManager.addFront<TextObject>("RUNS", std::to_wstring(result.getRuns()));
 	gameObjectManager.addFront<TextObject>("RUNSTREAK", std::to_wstring(result.getMaxSuccessiveRuns()));
 	gameObjectManager.addFront<TextObject>("MAX_DISTANCE", std::to_wstring(result.getMaxDistance()));

@@ -60,9 +60,9 @@ PlayingState::PlayingState(Game& game, Stage* stage) :
     gameObjectManager.addFront<PictureObject>("FINISH", L".//assets//ゲーム終了.bmp", SIZE{ 680,158 });
 
     //ここでテキストオブジェクトいっときますか
-    gameObjectManager.addFront<TextObject>("NORM", L"");
-    gameObjectManager.addFront<TextObject>("RUNS", L"");
-    gameObjectManager.addFront<TextObject>("REST", L"");
+    TextObject& normText = gameObjectManager.addFront<TextObject>("NORM", std::to_wstring(stage->getNorm()));
+    TextObject& runsText = gameObjectManager.addFront<TextObject>("RUNS", std::to_wstring(0));
+    TextObject& restText = gameObjectManager.addFront<TextObject>("REST", std::to_wstring(stage->getTrials()));
     gameObjectManager.addFront<TextObject>("DISTANCE", L"");
     gameObjectManager.addFront<TextObject>("RESULT", L"");
 
@@ -71,6 +71,9 @@ PlayingState::PlayingState(Game& game, Stage* stage) :
     gameObjectManager.getObject<PictureObject>("BATTER").setObjectPosition({ 32,48 });
     gameObjectManager.getObject<PictureObject>("EXIT").setObjectPosition({ 850,500 });
     gameObjectManager.getObject<PictureObject>("PITCHER").setObjectPosition({ 514, 22 });
+    normText.setObjectPosition({ 166,121 });
+    runsText.setObjectPosition({ 192,198 });
+    restText.setObjectPosition({ 160,259 });
     
     //各テキストを初期化
     std::wstring normString = std::to_wstring(stage->getNorm());
@@ -256,4 +259,9 @@ Pitcher* PlayingState::getPitcher()
 Stadium* PlayingState::getStadium()
 {
     return stage->getStadium();
+}
+
+Stage* PlayingState::getStage()
+{
+    return stage;
 }

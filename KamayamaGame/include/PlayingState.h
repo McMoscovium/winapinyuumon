@@ -60,6 +60,7 @@ public:
     Batter* getBatter();
     Pitcher* getPitcher();
     Stadium* getStadium();
+    Stage* getStage();
 
 private:
     
