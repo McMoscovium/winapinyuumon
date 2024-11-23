@@ -49,10 +49,13 @@ PlayingState::PlayingState(Game& game, Stage* stage) :
     fieldImages.emplace("FIELD-11", gameObjectManager.getObject<PictureObject>("FIELD-11"));
     fieldImages.emplace("FIELD-12", gameObjectManager.getObject<PictureObject>("FIELD-12"));
 
+    Batter* batter = stage->getBatter();
+    Pitcher* pitcher = stage->getPitcher();
+
     //他の画像も読み込み
     gameObjectManager.addFront<PictureObject>("FIELD", L".//assets//フィールド.bmp", SIZE{ 1152,720 });
-    gameObjectManager.addFront<PictureObject>("BATTER", L".//assets//打者.bmp", SIZE{ 360,391 });
-    gameObjectManager.addFront<PictureObject>("PITCHER", L".//assets//投手スプライトシート.bmp", SIZE{ 168,266 });
+    gameObjectManager.addFront<PictureObject>("BATTER", batter->path.c_str(), batter->frameSize);
+    gameObjectManager.addFront<PictureObject>("PITCHER", pitcher->path.c_str(), pitcher->frameSize);
     gameObjectManager.addFront<PictureObject>("EXIT", L".//assets//おわる.bmp", SIZE{ 256,128 });
     gameObjectManager.addFront<PictureObject>("BALL", L".//assets//ボール.bmp", SIZE{ 41,50 });
     gameObjectManager.addFront<PictureObject>("BALLSHADOW", L".//assets//ボールの影.bmp", SIZE{ 33,37 });

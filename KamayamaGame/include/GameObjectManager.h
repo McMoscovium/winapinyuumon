@@ -39,6 +39,7 @@ public:
 		drawOrder.push_back(name);
 		return getObject<T>(name);
 	}
+
 	//•`‰æ‡‚É•À‚×‚½GameObject&Œ^QÆ‚ÌƒŠƒXƒg‚ğ•Ô‚·
 	std::vector<std::reference_wrapper<GameObject>> getDrawOrder()const {
 		std::vector<std::reference_wrapper<GameObject>> result;

@@ -4,13 +4,15 @@
 #include "Batter.h"
 #include "Stadium.h"
 
-Stage::Stage(std::wstring name, Pitcher* pitcher, Batter* batter, Stadium* stadium, int norm, int trials):
+Stage::Stage(std::wstring name, Pitcher* pitcher, Batter* batter, Stadium* stadium, int norm, int trials, const std::wstring& pitcherPath, const std::wstring& batterPath):
 	stageName(name),
 	norm(norm),
 	trials(trials),
 	pitcher(pitcher),
 	batter(batter),
-	stadium(stadium)
+	stadium(stadium),
+	pitcherPath(pitcherPath),
+	batterPath(batterPath)
 {
 }
 

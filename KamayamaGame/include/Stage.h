@@ -17,7 +17,16 @@ private:
 	Stadium* stadium;//‹…ê
 	
 public:
-	Stage(std::wstring name, Pitcher* pitcher, Batter* batter, Stadium* stadium, int norm, int trials);
+	Stage(
+		std::wstring name,
+		Pitcher* pitcher,
+		Batter* batter,
+		Stadium* stadium,
+		int norm,
+		int trials,
+		const std::wstring& pitcherPath,
+		const std::wstring& batterPath
+	);
 	virtual ~Stage();
 
 	const int getNorm()const;
@@ -25,5 +34,7 @@ public:
 	Pitcher* getPitcher();
 	Batter* getBatter();
 	Stadium* getStadium();
+	const std::wstring pitcherPath;
+	const std::wstring batterPath;
 };
 

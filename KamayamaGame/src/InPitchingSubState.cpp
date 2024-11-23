@@ -108,7 +108,7 @@ void InPitchingSubState::update(Game& game)
     Ball& ball = owner.getBall();
     PictureObject& ballObject = gameObjectManager.getObject<PictureObject>("BALL");
     GameObject& shadow = gameObjectManager.getObject<PictureObject>("BALLSHADOW");
-    PictureObject& pitcher = gameObjectManager.getObject<PictureObject>("PITCHER");
+    PictureObject& pitcherObject = gameObjectManager.getObject<PictureObject>("PITCHER");
     
     
     //投げたボールが画面下まで行ったらchangeState
@@ -135,9 +135,10 @@ void InPitchingSubState::update(Game& game)
         updateBall();
     }
 
+    Pitcher* pitcher = owner.getPitcher();
     //ボール見た目の更新
-    int frame = pitcher.getCurrentFrameNumber();
-    if (frame == 34) {//ボールをリリース
+    int frame = pitcherObject.getCurrentFrameNumber();
+    if (frame == pitcher->releaseFrame) {//ボールをリリース
         POINT ballPos = ball.getPosition();
         ball.resetFrame();
         float sizeRate = (float)(1440 - (720 - ball.getY())) / (float)1440;
@@ -157,8 +158,8 @@ void InPitchingSubState::update(Game& game)
     
 
     //ピッチングアニメーションの更新
-    if (frame < pitcher.getLength() - 1) {
-        pitcher.nextFrame();
+    if (frame < pitcherObject.getLength() - 1) {
+        pitcherObject.nextFrame();
     }
     
     //バッターの更新

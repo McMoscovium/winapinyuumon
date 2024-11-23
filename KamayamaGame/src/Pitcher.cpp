@@ -2,9 +2,17 @@
 
 #include "Straight.h"
 
-Pitcher::Pitcher(std::wstring pitcherName, int armStrength) :
+Pitcher::Pitcher(
+	const std::wstring& pitcherName,
+	int armStrength,
+	int releaseFrame,
+	const std::wstring& path,
+	SIZE frameSize) :
 	pitcherName(pitcherName),
-	armStrength(armStrength)
+	armStrength(armStrength),
+	releaseFrame(releaseFrame),
+	path(path),
+	frameSize(frameSize)
 {
 	pitchTypes.push_back(new Straight());
 }

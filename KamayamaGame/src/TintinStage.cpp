@@ -4,13 +4,16 @@
 #include "KamayamaBatter.h"
 #include "TheHundredAcreWoodStadium.h"
 
-TintinStage::TintinStage():
+TintinStage::TintinStage() :
 	Stage(L"TintinStage",
 		new TintinPitcher(),
 		new KamayamaBatter(),
 		new TheHundredAcreWoodStadium(),
 		3,
-		5)
+		5,
+		L".//assets//投手スプライトシート.bmp",
+		L".//assets//打者.bmp"
+		)
 {
 	
 }

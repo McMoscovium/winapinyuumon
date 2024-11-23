@@ -16,7 +16,7 @@ private:
     void setObjectImage(HBITMAP img);
     bool loadImage(LPCWSTR path);//pathの画像をビットマップイメージとしてhSpriteImageに格納する。
 public:
-    PictureObject(std::string objectName, LPCTSTR path, SIZE frameSize);
+    PictureObject(const std::string objectName, const LPCTSTR& path, const SIZE& frameSize);
     ~PictureObject();
 
     
@@ -31,7 +31,7 @@ public:
     //現在のフレームが何番目かを取得
     const int getCurrentFrameNumber()const;
     //フレームを次に進める（進めれたらtrue）
-    bool nextFrame();
+    virtual bool nextFrame();
     //指定したフレームに変える
     bool changeFrame(int);
     //

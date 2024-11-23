@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <Windows.h>
 #include "PitchType.h"
 #include "Straight.h"
 
@@ -17,9 +18,24 @@ private:
 	float pitchingCourse = 0;
 	//現在の球種の番号
 	int currentPitchNumber = 0;
+	
 
 public:
-	Pitcher(std::wstring pitcherName, int armStrength);
+	//ボールをリリースするフレーム
+	const int releaseFrame;
+	//
+	const std::wstring path;
+	//
+	SIZE frameSize;
+
+
+	Pitcher(
+		const std::wstring& pitcherName,
+		int armStrength,
+		int releaseFrame,
+		const std::wstring& path,
+		SIZE frameSize
+	);
 	virtual ~Pitcher();
 
 	//

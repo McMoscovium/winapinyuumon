@@ -1,13 +1,21 @@
 #pragma once
 #include "Pitcher.h"
+
+using namespace std;
+
 class SasakiPitcher :
     public Pitcher
 {
 private:
 public:
     SasakiPitcher() :
-        Pitcher(L"²X–Ø˜NŠó", 30) {}
-
+        Pitcher(
+            L"²X–Ø˜NŠó",
+            30,
+            25,
+            L".//assets//²X–Ø˜NŠó.bmp",
+            SIZE{200,266}
+            ) {}
     void decideNextPitch()override;
 };
 

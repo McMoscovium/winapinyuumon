@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <Windows.h>
 
 class Batter
 {
@@ -10,7 +11,10 @@ private:
 	float speed;
 	float meet;
 public:
-	Batter(std::wstring batterName, int power, float speed, int meet);
+	const std::wstring path;
+	const SIZE frameSize;
+
+	Batter(const std::wstring& batterName, int power, float speed, int meet, const std::wstring& path, const SIZE& frameSize);
 	virtual ~Batter() = default;
 
 	//

@@ -1,10 +1,12 @@
 #include "Batter.h"
 
-Batter::Batter(std::wstring batterName, int power, float speed, int meet):
+Batter::Batter(const std::wstring& batterName, int power, float speed, int meet, const std::wstring& path, const SIZE& frameSize) :
 	name(batterName),
 	power(power),
 	speed(speed),
-	meet(meet)
+	meet(meet),
+	path(path),
+	frameSize(frameSize)
 {
 }
 

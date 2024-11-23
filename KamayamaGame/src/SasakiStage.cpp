@@ -10,6 +10,9 @@ SasakiStage::SasakiStage():
 		new KamayamaBatter(),
 		new TheHundredAcreWoodStadium(),
 		3,
-		5)
+		5,
+		L".//assets//²X–Ø˜NŠó.bmp",
+		L".//assets//‘ÅÒ.bmp"
+	)
 {
 }
