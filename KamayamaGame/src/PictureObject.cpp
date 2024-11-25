@@ -25,7 +25,7 @@ bool PictureObject::loadImage(LPCWSTR path)
 	return true;
 }
 
-PictureObject::PictureObject(const std::string objectName, const LPCTSTR& path, const SIZE& frameSize) :
+PictureObject::PictureObject(const std::string& objectName, const LPCTSTR& path, const SIZE& frameSize) :
 	GameObject(objectName),
 	frameSize(frameSize)
 {

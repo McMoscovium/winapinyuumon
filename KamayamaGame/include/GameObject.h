@@ -19,7 +19,7 @@ protected:
 	float sizeRate = 1.0f;//‰½”{‚ÉŠg‘å‚µ‚Ä•`‰æ‚·‚é‚©
 
 public:
-	GameObject(std::string objectName);
+	GameObject(const std::string& objectName);
 	virtual ~GameObject();
 
 	//position‚Ì•ÏX

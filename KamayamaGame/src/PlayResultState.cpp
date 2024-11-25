@@ -19,8 +19,7 @@ PlayResultState::PlayResultState(Game& game, Result& result, Stage* stage) :
 	
 	//appendObject({バッター画像オブジェクトへのポインター});//バッター画像
 
-	Pitcher* pitcher = stage->getPitcher();
-	gameObjectManager.addFront<TextObject>("PITCHERNAME", pitcher->getName());
+	gameObjectManager.addFront<TextObject>("PITCHERNAME", stage->pitcherName);
 	gameObjectManager.addFront<TextObject>("BALLS", std::to_wstring(stage->getTrials()));
 	gameObjectManager.addFront<TextObject>("NORM", std::to_wstring(stage->getNorm()));
 	gameObjectManager.addFront<TextObject>("RUNS", std::to_wstring(result.getRuns()));

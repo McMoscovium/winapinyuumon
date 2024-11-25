@@ -56,11 +56,8 @@ public:
     Result& getResult();
     //バッターの位置をposにする。posがバッターボックスからはみ出ていたらボックスにいれる。
     void setBatterInBox(POINT pos);
-
-    Batter* getBatter();
-    Pitcher* getPitcher();
-    Stadium* getStadium();
     Stage* getStage();
+    Stadium& getStadium();
 
 private:
     
@@ -68,6 +65,8 @@ private:
     Ball ball;
     //ステージデータ
     Stage* stage;
+    //
+    std::unique_ptr<Stadium> stadium;
     //残り球数
     int restBalls;
     //animateBatter()に使う変数

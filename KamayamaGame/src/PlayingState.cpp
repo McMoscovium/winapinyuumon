@@ -11,13 +11,14 @@
 #include "TextObject.h"
 #include "Batter.h"
 #include "Stadium.h"
-#include "TextObject.h"
 
 #include "Stage.h"
 
 #include <algorithm>
 
 #include"TitleScreenState.h"
+
+#include <typeinfo>
 
 
 
@@ -48,14 +49,14 @@ PlayingState::PlayingState(Game& game, Stage* stage) :
     fieldImages.emplace("FIELD-10", gameObjectManager.getObject<PictureObject>("FIELD-10"));
     fieldImages.emplace("FIELD-11", gameObjectManager.getObject<PictureObject>("FIELD-11"));
     fieldImages.emplace("FIELD-12", gameObjectManager.getObject<PictureObject>("FIELD-12"));
+    
 
-    Batter* batter = stage->getBatter();
-    Pitcher* pitcher = stage->getPitcher();
 
     //他の画像も読み込み
     gameObjectManager.addFront<PictureObject>("FIELD", L".//assets//フィールド.bmp", SIZE{ 1152,720 });
-    gameObjectManager.addFront<PictureObject>("BATTER", batter->path.c_str(), batter->frameSize);
-    gameObjectManager.addFront<PictureObject>("PITCHER", pitcher->path.c_str(), pitcher->frameSize);
+
+    gameObjectManager.addFrontDirect<Pitcher>("PITCHER", stage->createPitcher());
+    gameObjectManager.addFrontDirect<Batter>("BATTER", stage->createBatter());
     gameObjectManager.addFront<PictureObject>("EXIT", L".//assets//おわる.bmp", SIZE{ 256,128 });
     gameObjectManager.addFront<PictureObject>("BALL", L".//assets//ボール.bmp", SIZE{ 41,50 });
     gameObjectManager.addFront<PictureObject>("BALLSHADOW", L".//assets//ボールの影.bmp", SIZE{ 33,37 });
@@ -156,14 +157,14 @@ void PlayingState::updateBatterPos(const InputManager& inputManager)
         (float)(mouse.x - getCursorPos().x),
         (float)(mouse.y - getCursorPos().y));//速度ベクトル（向きしか意味を持たない）
 
-    PictureObject& batter = gameObjectManager.getObject<PictureObject>("BATTER");
+    Batter& batter = gameObjectManager.getObject<Batter> ("BATTER");
 
-    if (velocityAngle.norm() < getBatter()->getSpeed()) {//ポインターとバッティングカーソルが近い
+    if (velocityAngle.norm() < batter.getSpeed()) {//ポインターとバッティングカーソルが近い
         nextKamayamaPos = { mouse.x - 302,mouse.y - 197 };
     }
     else {
         velocityAngle.normalize();
-        velocityAngle.scalar(getBatter()->getSpeed());
+        velocityAngle.scalar(batter.getSpeed());
 
 
         nextKamayamaPos = PlayingState::nextKamayamaPos(batter.getPosition(), velocityAngle);//次フレームの釜山の位置
@@ -249,22 +250,12 @@ void PlayingState::updatePitchingMotion()
     //ピッチャーが第0フレーム
 }
 
-Batter* PlayingState::getBatter()
-{
-    return stage->getBatter();
-}
-
-Pitcher* PlayingState::getPitcher()
-{
-    return stage->getPitcher();
-}
-
-Stadium* PlayingState::getStadium()
-{
-    return stage->getStadium();
-}
-
 Stage* PlayingState::getStage()
 {
     return stage;
+}
+
+Stadium& PlayingState::getStadium()
+{
+    return *stadium;
 }

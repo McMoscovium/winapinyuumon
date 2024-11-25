@@ -7,7 +7,7 @@
 
 
 
-GameObject::GameObject(std::string objectName):
+GameObject::GameObject(const std::string& objectName):
 	objectName(objectName)
 {
 }

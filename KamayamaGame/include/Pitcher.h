@@ -5,10 +5,12 @@
 #include <Windows.h>
 #include "PitchType.h"
 #include "Straight.h"
+#include "PictureObject.h"
 
-class Pitcher
+class Pitcher:
+	public PictureObject
 {
-private:
+protected:
 	std::wstring pitcherName;
 	std::vector<PitchType*> pitchTypes;
 	PitchType* nextPitch = nullptr;
@@ -18,6 +20,8 @@ private:
 	float pitchingCourse = 0;
 	//現在の球種の番号
 	int currentPitchNumber = 0;
+
+	bool isOddFrame = false;
 	
 
 public:
@@ -51,6 +55,8 @@ public:
 	PitchType* getPitchType();
 	//
 	const std::wstring& getName()const;
+	//
+	virtual bool nextFrame()override;
 	
 	//次の球種、球速、投げるコースをランダムに決定
 	virtual void decideNextPitch() = 0;

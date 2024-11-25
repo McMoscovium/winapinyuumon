@@ -8,6 +8,7 @@ Pitcher::Pitcher(
 	int releaseFrame,
 	const std::wstring& path,
 	SIZE frameSize) :
+	PictureObject("PITCHER",path.c_str(), frameSize),
 	pitcherName(pitcherName),
 	armStrength(armStrength),
 	releaseFrame(releaseFrame),
@@ -60,4 +61,16 @@ PitchType* Pitcher::getPitchType()
 const std::wstring& Pitcher::getName() const
 {
 	return pitcherName;
+}
+
+bool Pitcher::nextFrame()
+{
+	if (frameNumber == length - 1) {
+		frameNumber = 0;
+		return true;
+	}
+	else {
+		frameNumber++;
+		return true;
+	}
 }

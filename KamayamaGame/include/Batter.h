@@ -1,11 +1,14 @@
 #pragma once
 
+#include "PictureObject.h"
+
 #include <string>
 #include <Windows.h>
 
-class Batter
+class Batter :
+	public PictureObject
 {
-private:
+protected:
 	std::wstring name;
 	int power;
 	float speed;
@@ -14,7 +17,7 @@ public:
 	const std::wstring path;
 	const SIZE frameSize;
 
-	Batter(const std::wstring& batterName, int power, float speed, int meet, const std::wstring& path, const SIZE& frameSize);
+	Batter(const std::wstring& batterName, int power, float speed, float meet, const std::wstring& path, const SIZE& frameSize);
 	virtual ~Batter() = default;
 
 	//

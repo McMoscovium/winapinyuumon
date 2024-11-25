@@ -4,15 +4,28 @@
 #include "KamayamaBatter.h"
 #include "TheHundredAcreWoodStadium.h"
 
+using namespace std;
+
 SasakiStage::SasakiStage():
 	Stage(L"SasakiStage",
-		new SasakiPitcher(),
-		new KamayamaBatter(),
-		new TheHundredAcreWoodStadium(),
+		L"²X–Ø˜NŠó",
 		3,
-		5,
-		L".//assets//²X–Ø˜NŠó.bmp",
-		L".//assets//‘ÅÒ.bmp"
+		5
 	)
 {
+}
+
+std::unique_ptr<Pitcher> SasakiStage::createPitcher()
+{
+	return make_unique<SasakiPitcher>();
+}
+
+std::unique_ptr<Batter> SasakiStage::createBatter()
+{
+	return make_unique<KamayamaBatter>();
+}
+
+std::unique_ptr<Stadium> SasakiStage::createStadium()
+{
+	return make_unique<TheHundredAcreWoodStadium>();
 }

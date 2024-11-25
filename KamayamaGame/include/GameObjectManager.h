@@ -40,6 +40,19 @@ public:
 		return getObject<T>(name);
 	}
 
+	//右辺値参照を受け取って直接追加
+	template <typename T>
+	T& addFrontDirect(const std::string& name, std::unique_ptr<T>&& object) {
+		static_assert(std::is_base_of<GameObject, T>::value, "T must derive from GameObject");
+		if (objects.find(name) != objects.end()) {
+			//すでにnameと同じ名前のオブジェクトをもつ
+			throw std::runtime_error("同じ名前のオブジェクトが既にあります: " + name);
+		}
+		objects.emplace(name, ObjectEntry{ std::move(object),std::type_index(typeid(T)) });
+		drawOrder.push_back(name);
+		return getObject<T>(name);
+	}
+	
 	//描画順に並べたGameObject&型参照のリストを返す
 	std::vector<std::reference_wrapper<GameObject>> getDrawOrder()const {
 		std::vector<std::reference_wrapper<GameObject>> result;
