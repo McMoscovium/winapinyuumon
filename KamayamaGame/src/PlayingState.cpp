@@ -27,6 +27,7 @@
 PlayingState::PlayingState(Game& game, Stage* stage) :
     GameState(game),
     stage(stage),
+    stadium(stage->createStadium()),
     result(Result(stage->getNorm())),
     restBalls(stage->getTrials())
 {
