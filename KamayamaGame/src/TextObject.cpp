@@ -1,6 +1,6 @@
 #include "TextObject.h"
 
-TextObject::TextObject(std::string objectName, std::wstring text):
+TextObject::TextObject(const std::string& objectName, const std::wstring& text):
 	GameObject(objectName),
 	text(text),
 	hFont(CreateFontW(60, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,

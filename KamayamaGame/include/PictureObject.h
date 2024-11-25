@@ -5,7 +5,7 @@
 class PictureObject :
     public GameObject
 {
-private:
+protected:
     int length;//フレームの個数
     const SIZE frameSize;//オブジェクト1フレームの縦横サイズ
     HBITMAP hSpriteImage;//スプライトシートのビットマップイメージ
@@ -16,8 +16,8 @@ private:
     void setObjectImage(HBITMAP img);
     bool loadImage(LPCWSTR path);//pathの画像をビットマップイメージとしてhSpriteImageに格納する。
 public:
-    PictureObject(const std::string objectName, const LPCTSTR& path, const SIZE& frameSize);
-    ~PictureObject();
+    PictureObject(const std::string& objectName, const LPCTSTR& path, const SIZE& frameSize);
+    virtual ~PictureObject();
 
     
     //lengthを取得

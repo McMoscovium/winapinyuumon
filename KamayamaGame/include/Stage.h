@@ -1,40 +1,35 @@
 #pragma once
 
 #include <string>
+#include <memory>
+#include "Pitcher.h"
+#include "Batter.h"
+#include "Stadium.h"
 
-class Pitcher;
-class Stadium;
-class Batter;
+
 
 class Stage
 {
-private:
-	std::wstring stageName;
+protected:
 	int norm;//ƒmƒ‹ƒ}
 	int trials;//‹…”
-	Pitcher* pitcher;//‘Šè“Šè
-	Batter* batter;
-	Stadium* stadium;//‹…ê
 	
 public:
+	const std::wstring stageName;
+	const std::wstring pitcherName;
+
 	Stage(
-		std::wstring name,
-		Pitcher* pitcher,
-		Batter* batter,
-		Stadium* stadium,
+		const std::wstring& name,
+		const std::wstring& pitcherName,
 		int norm,
-		int trials,
-		const std::wstring& pitcherPath,
-		const std::wstring& batterPath
+		int trials
 	);
 	virtual ~Stage();
-
+	
 	const int getNorm()const;
 	const int getTrials()const;
-	Pitcher* getPitcher();
-	Batter* getBatter();
-	Stadium* getStadium();
-	const std::wstring pitcherPath;
-	const std::wstring batterPath;
-};
 
+	virtual std::unique_ptr<Pitcher> createPitcher() = 0;
+	virtual std::unique_ptr<Batter> createBatter() = 0;
+	virtual std::unique_ptr<Stadium> createStadium() = 0;
+};

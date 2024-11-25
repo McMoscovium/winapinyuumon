@@ -4,16 +4,30 @@
 #include "KamayamaBatter.h"
 #include "TheHundredAcreWoodStadium.h"
 
+
+using namespace std;
+
 TintinStage::TintinStage() :
 	Stage(L"TintinStage",
-		new TintinPitcher(),
-		new KamayamaBatter(),
-		new TheHundredAcreWoodStadium(),
+		L"tintin",
 		3,
-		5,
-		L".//assets//投手スプライトシート.bmp",
-		L".//assets//打者.bmp"
+		5
 		)
 {
 	
+}
+
+std::unique_ptr<Pitcher> TintinStage::createPitcher()
+{
+	return make_unique<TintinPitcher>();
+}
+
+std::unique_ptr<Batter> TintinStage::createBatter()
+{
+	return make_unique<KamayamaBatter>();
+}
+
+std::unique_ptr<Stadium> TintinStage::createStadium()
+{
+	return make_unique<TheHundredAcreWoodStadium>();
 }

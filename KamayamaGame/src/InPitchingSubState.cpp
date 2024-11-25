@@ -15,6 +15,9 @@
 #include "BattingResultSubState.h"
 #include <random>
 #include "PictureObject.h"
+#include "Pitcher.h"
+
+#include <typeinfo>
 
 void InPitchingSubState::updatePitchingMotion()
 {
@@ -28,10 +31,10 @@ void InPitchingSubState::updatePitchingMotion()
 
 void InPitchingSubState::updateBall()
 {
-    Pitcher* pitcher = owner.getPitcher();
+    Pitcher& pitcher = owner.getGameObjectManager().getObject<Pitcher>("PITCHER");
     Ball& ball = owner.getBall();
     
-    POINT nextPos = ball.updatePitch(pitcher);
+    POINT nextPos = ball.updatePitch(&pitcher);
 
     //見た目の更新
     GameObject& ballObject = gameObjectManager.getObject<PictureObject>("BALL");
@@ -85,18 +88,18 @@ bool InPitchingSubState::calculateMeet(GameObject& ballObject, Ball& ball)
     efficiency = (50 - abs(ballPos.x + ball.getRadius() * ballObject.getSizeRate() - cursorPos.x)) / 40;
 
     //上向きの早さを設定
-    Batter* batter = owner.getBatter();
+    Batter& batter = owner.getGameObjectManager().getObject<Batter>("BATTER");
     std::random_device rd;
     std::mt19937 gen(rd());
     std::normal_distribution<float> dis(0.6f,0.1f);
     float hVelocity = (
-        batter->getPower() * efficiency +
+        batter.getPower() * efficiency +
         (1 - efficiency) * ball.getVelocity()
         ) * std::max<float>(dis(gen), 0.1f);
     ball.sethVelocity(hVelocity);
 
     //速さの水平成分    
-    int speed = (int)(batter->getPower() * efficiency);
+    int speed = (int)(batter.getPower() * efficiency);
     ball.setVelocity(speed);
     
     //最後にtrueを返す
@@ -108,7 +111,7 @@ void InPitchingSubState::update(Game& game)
     Ball& ball = owner.getBall();
     PictureObject& ballObject = gameObjectManager.getObject<PictureObject>("BALL");
     GameObject& shadow = gameObjectManager.getObject<PictureObject>("BALLSHADOW");
-    PictureObject& pitcherObject = gameObjectManager.getObject<PictureObject>("PITCHER");
+    Pitcher& pitcherObject = gameObjectManager.getObject<Pitcher>("PITCHER");
     
     
     //投げたボールが画面下まで行ったらchangeState
@@ -135,10 +138,10 @@ void InPitchingSubState::update(Game& game)
         updateBall();
     }
 
-    Pitcher* pitcher = owner.getPitcher();
+    Pitcher& pitcher = owner.getGameObjectManager().getObject<Pitcher>("PITCHER");
     //ボール見た目の更新
     int frame = pitcherObject.getCurrentFrameNumber();
-    if (frame == pitcher->releaseFrame) {//ボールをリリース
+    if (frame == pitcher.releaseFrame) {//ボールをリリース
         POINT ballPos = ball.getPosition();
         ball.resetFrame();
         float sizeRate = (float)(1440 - (720 - ball.getY())) / (float)1440;
@@ -195,13 +198,13 @@ void InPitchingSubState::enter(Game& game)
     ball.setVelocity(0);
 
     //次の球種を決定
-    Pitcher* pitcher = owner.getPitcher();
-    pitcher->decideNextPitch();
+    Pitcher& pitcher = owner.getGameObjectManager().getObject<Pitcher>("PITCHER");
+    pitcher.decideNextPitch();
 
     //決定した球種に従いボールの初期速度を設定
     
-    ball.setVelocity(pitcher->getPitchingSpeed());
-    ball.setAngle(pitcher->getPitchingAngle() + 180.0f);
+    ball.setVelocity(pitcher.getPitchingSpeed());
+    ball.setAngle(pitcher.getPitchingAngle() + 180.0f);
 
     //残り球数を減らす
     owner.getRestBalls()--;

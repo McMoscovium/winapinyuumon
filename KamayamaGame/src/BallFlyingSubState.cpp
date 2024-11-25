@@ -104,7 +104,7 @@ PlayingState::FlyBallResult BallFlyingSubState::determineResult(POINT ball)
 		ball.x - origin.x,
 		ball.y - origin.y
 	};
-	return owner.getStadium()->result(vector);
+	return owner.getStadium().result(vector);
 }
 
 BallFlyingSubState::BallFlyingSubState(PlayingState& owner):
