@@ -13,7 +13,7 @@ public:
         Pitcher(
             L"²X–Ø˜NŠó",
             30,
-            25,
+            27,
             L".//assets//²X–Ø˜NŠó.bmp",
             SIZE{200,266}
             ) {}
