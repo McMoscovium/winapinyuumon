@@ -17,7 +17,7 @@ private:
 
     //ボールの当たりを調べ、ボールの速度を設定。
     // 当たっていたらtrue、当たっていなかったらfalse
-    bool calculateMeet(GameObject& ballObject, Ball& ball);
+    bool isMeet(GameObject& ballObject, Ball& ball, int& hitStopTime);
 public:
     InPitchingSubState(PlayingState& ownerState) :GameSubState(ownerState)
     {}

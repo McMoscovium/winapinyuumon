@@ -17,6 +17,12 @@ void AfterMeetSubState::update(Game& game)
     Ball& ball = owner.getBall();
     PictureObject& shadow = gameObjectManager.getObject<PictureObject>("BALLSHADOW");
 
+    timer.update();
+    //justMeet=trueならhitStopTime[ms]まつ
+    if (hitStopTime>timer.span()) {
+        return;
+    }
+
     //ボールが画面外に出たらchangeSubState
     if (!ballObject.isIntersectsWithClientRect(window)) {
         translateBall(ball);
@@ -43,6 +49,9 @@ void AfterMeetSubState::update(Game& game)
 
 void AfterMeetSubState::enter(Game& game)
 {
+    
+    timer.update();
+    timer.setRecord();
 }
 
 void AfterMeetSubState::exit(Game& game)

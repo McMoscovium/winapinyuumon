@@ -63,7 +63,7 @@ void InPitchingSubState::updateBall()
     ballObject.setObjectPosition(objectPos);   
 }
 
-bool InPitchingSubState::calculateMeet(GameObject& ballObject, Ball& ball)
+bool InPitchingSubState::isMeet(GameObject& ballObject, Ball& ball, int& hitStopTime)
 {
     POINT cursorPos = owner.getCursorPos();
     POINT ballPos = ballObject.getPosition();
@@ -71,12 +71,20 @@ bool InPitchingSubState::calculateMeet(GameObject& ballObject, Ball& ball)
         //カーソルとボールのY座標が遠い
         return false;
     }
-    if (abs(ballPos.x - cursorPos.x) > 50) {
+    if (abs(ballPos.x+ball.getRadius() - cursorPos.x) > 50) {
         //カーソルとボールのX座標が遠い
         return false;
     }
     //以下、ボールとバットが当たった
     
+    int gap = abs(ballPos.x+ball.getRadius() - cursorPos.x);//ボールとカーソルのずれ具合
+    std::wstring gapmsg = L"gap: " + std::to_wstring(gap) + L"\n";
+    OutputDebugString(gapmsg.c_str());
+    hitStopTime = 150 - 30 * gap;
+    if (hitStopTime < 50) { hitStopTime = 0; }
+    std::wstring msg = L"hitStopTime: "+std::to_wstring(hitStopTime) + L"\n";
+    OutputDebugString(msg.c_str());
+
     //ボールの速度データを計算
     
     //左右の角度
@@ -100,8 +108,12 @@ bool InPitchingSubState::calculateMeet(GameObject& ballObject, Ball& ball)
 
     //速さの水平成分    
     int speed = (int)(batter.getPower() * efficiency);
+    if (hitStopTime > 0) {
+        speed += 5;
+    }
     ball.setVelocity(speed);
     
+
     //最後にtrueを返す
     return true;
 }
@@ -175,8 +187,12 @@ void InPitchingSubState::update(Game& game)
         //当たり判定が登場
         owner.updateBatFrame(currentBatterFrame);
         //ボールが当たったかどうかで分けて処理
-        if (calculateMeet(ballObject, owner.getBall())) {
-            owner.changeSubState(new AfterMeetSubState(owner));
+        int hitStopTime = 0;
+        if (isMeet(ballObject, owner.getBall(), hitStopTime)) {
+            //ミート音を鳴らす
+            PlaySound(TEXT(".//assets//ジャストミート.wav"), NULL, SND_FILENAME | SND_ASYNC);
+            //changeSubState
+            owner.changeSubState(new AfterMeetSubState(owner, hitStopTime));
             return;
         }
         return;

@@ -11,7 +11,7 @@ TintinStage::TintinStage() :
 	Stage(L"TintinStage",
 		L"tintin",
 		3,
-		5
+		10
 		)
 {
 	

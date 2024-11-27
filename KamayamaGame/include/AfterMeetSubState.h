@@ -10,9 +10,12 @@ class AfterMeetSubState :
     public GameSubState<PlayingState>
 {
 private:
+    const int hitStopTime;
 public:
-    AfterMeetSubState(PlayingState& owner) :
-        GameSubState(owner) {}
+    AfterMeetSubState(PlayingState& owner, int& hitStopTime) :
+        GameSubState(owner),
+        hitStopTime(hitStopTime)
+    {}
     void update(Game& game)override;
     void enter(Game& game)override;
     void exit(Game& game)override;
