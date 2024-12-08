@@ -155,45 +155,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Media Include="assets\bgm1.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="assets\busan2.dds" />
-    <Image Include="assets\image.dds" />
-    <Image Include="assets\kamayama.bmp" />
-    <Image Include="assets\kamayama.dds" />
-    <Image Include="assets\おわる.bmp" />
-    <Image Include="assets\おわるpointed.bmp" />
-    <Image Include="assets\はじめる.bmp" />
-    <Image Include="assets\はじめるpointed.bmp" />
-    <Image Include="assets\アイコン.ico" />
-    <Image Include="assets\ガチャ.bmp" />
-    <Image Include="assets\ガチャpointed.bmp" />
-    <Image Include="assets\クマの釜山.bmp" />
-    <Image Include="assets\クマの釜山.png" />
-    <Image Include="assets\システムアイコン.ico" />
-    <Image Include="assets\ステータス.bmp" />
-    <Image Include="assets\ステータスpointed.bmp" />
-    <Image Include="assets\タイトル画面.bmp" />
-    <Image Include="assets\タイトル画面2.bmp" />
-    <Image Include="assets\フィールド.bmp" />
-    <Image Include="assets\打者.bmp" />
-    <Image Include="設計図\Gameの更新処理.png" />
-    <Image Include="設計図\タイトル画面作成.png" />
-    <Image Include="設計図\メインループ.png" />
-    <Image Include="設計図\初期化パート.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\image.xcf" />
-    <None Include="assets\カーソル.cur" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="設計図\Gameの更新処理.txt" />
-    <Text Include="設計図\タイトル画面作成.txt" />
-    <Text Include="設計図\メインループ.txt" />
-    <Text Include="設計図\初期化パート.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="src\AfterMeetSubState.cpp" />
     <ClCompile Include="src\Ball.cpp" />
     <ClCompile Include="src\BallFlyingSubState.cpp" />
@@ -287,6 +248,64 @@
     <ClInclude Include="include\VirtualWindow.h" />
     <ClInclude Include="include\WaitingPitchingSubState.h" />
     <ClInclude Include="include\Window.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="KamayamaGame.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\batHitBox.bmp" />
+    <Image Include="assets\kamayama.bmp" />
+    <Image Include="assets\Stage1.bmp" />
+    <Image Include="assets\Stage2.bmp" />
+    <Image Include="assets\tintin選択.bmp" />
+    <Image Include="assets\おわる.bmp" />
+    <Image Include="assets\おわるpointed.bmp" />
+    <Image Include="assets\しっぱい.bmp" />
+    <Image Include="assets\はじめる.bmp" />
+    <Image Include="assets\はじめるpointed.bmp" />
+    <Image Include="assets\はちみつ.bmp" />
+    <Image Include="assets\アイコン.ico" />
+    <Image Include="assets\ガチャ.bmp" />
+    <Image Include="assets\ガチャpointed.bmp" />
+    <Image Include="assets\クマの釜山.bmp" />
+    <Image Include="assets\クリア.bmp" />
+    <Image Include="assets\ゲーム終了.bmp" />
+    <Image Include="assets\システムアイコン.ico" />
+    <Image Include="assets\ステージセレクト.bmp" />
+    <Image Include="assets\ステージ選択へ.bmp" />
+    <Image Include="assets\ステータス.bmp" />
+    <Image Include="assets\ステータスpointed.bmp" />
+    <Image Include="assets\タイトルヘ.bmp" />
+    <Image Include="assets\タイトル画面2.bmp" />
+    <Image Include="assets\チート.bmp" />
+    <Image Include="assets\フィールド-10.bmp" />
+    <Image Include="assets\フィールド-11.bmp" />
+    <Image Include="assets\フィールド-12.bmp" />
+    <Image Include="assets\フィールド.bmp" />
+    <Image Include="assets\フィールド00.bmp" />
+    <Image Include="assets\フィールド01.bmp" />
+    <Image Include="assets\フィールド02.bmp" />
+    <Image Include="assets\フィールド10.bmp" />
+    <Image Include="assets\フィールド11.bmp" />
+    <Image Include="assets\フィールド12.bmp" />
+    <Image Include="assets\ボール.bmp" />
+    <Image Include="assets\ボールの影.bmp" />
+    <Image Include="assets\佐々木朗希.bmp" />
+    <Image Include="assets\打者.bmp" />
+    <Image Include="assets\投手.bmp" />
+    <Image Include="assets\投手スプライトシート.bmp" />
+    <Image Include="assets\次へ.bmp" />
+    <Image Include="assets\結果発表.bmp" />
+    <Image Include="assets\結果発表2.bmp" />
+    <Image Include="assets\草原背景.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\カーソル.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="assets\bgm1.wav" />
+    <Media Include="assets\ジャストミート.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
