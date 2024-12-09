@@ -538,5 +538,8 @@
     <Media Include="assets\ジャストミート.wav">
       <Filter>リソース ファイル</Filter>
     </Media>
+    <Media Include="assets\baseballLegend.wav">
+      <Filter>リソース ファイル</Filter>
+    </Media>
   </ItemGroup>
 </Project>

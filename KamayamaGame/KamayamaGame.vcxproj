@@ -310,6 +310,7 @@
     <None Include="assets\カーソル.cur" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="assets\baseballLegend.wav" />
     <Media Include="assets\bgm1.wav" />
     <Media Include="assets\ジャストミート.wav" />
   </ItemGroup>
