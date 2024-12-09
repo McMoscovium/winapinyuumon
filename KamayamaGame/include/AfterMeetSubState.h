@@ -12,10 +12,11 @@ class AfterMeetSubState :
 private:
     const int hitStopTime;
 public:
-    AfterMeetSubState(PlayingState& owner, int& hitStopTime) :
+    AfterMeetSubState(PlayingState& owner, const int& hitStopTime) :
         GameSubState(owner),
         hitStopTime(hitStopTime)
     {}
+
     void update(Game& game)override;
     void enter(Game& game)override;
     void exit(Game& game)override;
@@ -24,4 +25,3 @@ public:
     //AfterMeetSubStateからBallFlyingSubStateに移るにあたって、背景が変わるのでボールのデータを計算しなおす
     void translateBall(Ball& ball);
 };
-

@@ -72,19 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame;C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame;C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame;C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame;C:\Users\M.Endo\source\repos\winapinyuumon\KamayamaGame\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -162,6 +162,7 @@
     <ClCompile Include="src\BattingResultSubState.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\CompareNormSubState.cpp" />
+    <ClCompile Include="src\CutIn.cpp" />
     <ClCompile Include="src\DetailResultSubState.cpp" />
     <ClCompile Include="src\EndPlayingSubState.cpp" />
     <ClCompile Include="src\Game.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="include\BattingResultSubState.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\CompareNormSubState.h" />
+    <ClInclude Include="include\CutIn.h" />
     <ClInclude Include="include\DetailResultSubState.h" />
     <ClInclude Include="include\EndPlayingSubState.h" />
     <ClInclude Include="include\Game.h" />
@@ -235,6 +237,8 @@
     <ClInclude Include="include\Stadium.h" />
     <ClInclude Include="include\Stage.h" />
     <ClInclude Include="include\StageListState.h" />
+    <ClInclude Include="include\StateBase.h" />
+    <ClInclude Include="include\StateMachine.h" />
     <ClInclude Include="include\StatusState.h" />
     <ClInclude Include="include\Straight.h" />
     <ClInclude Include="include\TextObject.h" />
@@ -298,7 +302,9 @@
     <Image Include="assets\次へ.bmp" />
     <Image Include="assets\結果発表.bmp" />
     <Image Include="assets\結果発表2.bmp" />
+    <Image Include="assets\絶対に負けない.bmp" />
     <Image Include="assets\草原背景.bmp" />
+    <Image Include="assets\釜山カットイン.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\カーソル.cur" />

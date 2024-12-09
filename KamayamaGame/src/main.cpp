@@ -24,7 +24,7 @@ int WINAPI WinMain(
 
 	InputManager inputManager;
 	
-	Game game = Game(inputManager);
+	Game game = Game(inputManager, hInstance);
 	Window window(hInstance, nShowCmd, &inputManager, game);
 	//
 	game.registerWindow(&window);

@@ -60,6 +60,7 @@ public:
     Stadium& getStadium();
 
 private:
+    //
     
     //ƒ{[ƒ‹
     Ball ball;

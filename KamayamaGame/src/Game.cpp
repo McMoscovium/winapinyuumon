@@ -4,10 +4,11 @@
 #include "GameState.h"
 #include "IGameState.h"
 
-Game::Game(InputManager& inputManager) :
+Game::Game(InputManager& inputManager, const HINSTANCE& hInstance) :
 	currentState(nullptr),
 	inputManager(inputManager),
-	window(nullptr)
+	window(nullptr),
+	hInstance(hInstance)
 {}
 
 Game::~Game() {
@@ -46,4 +47,9 @@ void Game::changeState(IGameState* newState) {
 IGameState* Game::getCurrentState() const
 {
 	return currentState;
+}
+
+const HINSTANCE& Game::getHInstance()
+{
+	return hInstance;
 }

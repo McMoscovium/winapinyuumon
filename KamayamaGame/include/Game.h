@@ -19,10 +19,11 @@ private:
 	Window* window;
 	Camera camera;
 	int money = 0;
+	const HINSTANCE& hInstance;//アプリケーションのインスタンスはンドル。リソースを使うのにいる。
 
 	
 public:
-	Game(InputManager& inputManager);
+	Game(InputManager& inputManager, const HINSTANCE& hInstance);
 	~Game();
 
 
@@ -40,4 +41,5 @@ public:
 	Window* getWindow() {
 		return window;
 	}
+	const HINSTANCE& getHInstance();
 };

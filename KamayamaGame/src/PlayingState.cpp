@@ -11,6 +11,7 @@
 #include "TextObject.h"
 #include "Batter.h"
 #include "Stadium.h"
+#include "./resource.h"
 
 #include "Stage.h"
 
@@ -70,6 +71,10 @@ PlayingState::PlayingState(Game& game, Stage* stage) :
     TextObject& restText = gameObjectManager.addFront<TextObject>("REST", std::to_wstring(stage->getTrials()));
     gameObjectManager.addFront<TextObject>("DISTANCE", L"");
     gameObjectManager.addFront<TextObject>("RESULT", L"");
+
+    //カットイン用画像
+    gameObjectManager.addFront<PictureObject>("CUTIN", IDB_BITMAP44, game.getHInstance(), SIZE{ 2000,365 });
+    gameObjectManager.addFront<PictureObject>("CUTIN_STRING", IDB_BITMAP45, game.getHInstance(), SIZE{ 1289,200 });
 
     //各GameObjectの描画位置を設定
     gameObjectManager.getObject<PictureObject>("FIELD").setObjectPosition({0,0});

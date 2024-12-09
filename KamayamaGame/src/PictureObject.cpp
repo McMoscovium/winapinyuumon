@@ -30,7 +30,20 @@ PictureObject::PictureObject(const std::string& objectName, const LPCTSTR& path,
 	frameSize(frameSize)
 {
 	if (!loadImage(path)) {
-		std::string message = "オブジェクト: " + objectName + " はロードできませんでした\n";
+		std::string message = "オブジェクト: " + objectName + " はファイルからロードできませんでした\n";
+		OutputDebugStringA(message.c_str());
+		return;
+	}
+	setLength(static_cast<int>(getSpriteSize().cx / frameSize.cx));//スプライトのコマ数を設定
+}
+
+PictureObject::PictureObject(const std::string& objectName, const int resourceId,const HINSTANCE& hInstance, const SIZE& frameSize):
+	GameObject(objectName),
+	frameSize(frameSize)
+{
+	setObjectImage((HBITMAP)LoadImage(hInstance, MAKEINTRESOURCE(resourceId), IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR));
+	if (hSpriteImage == NULL) {
+		std::string message = "オブジェクト: " + objectName + " はリソースからロードできませんでした\n";
 		OutputDebugStringA(message.c_str());
 		return;
 	}

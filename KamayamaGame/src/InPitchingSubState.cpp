@@ -16,6 +16,7 @@
 #include <random>
 #include "PictureObject.h"
 #include "Pitcher.h"
+#include "CutIn.h"
 
 #include <typeinfo>
 
@@ -189,9 +190,14 @@ void InPitchingSubState::update(Game& game)
         //ボールが当たったかどうかで分けて処理
         int hitStopTime = 0;
         if (isMeet(ballObject, owner.getBall(), hitStopTime)) {
-            //ミート音を鳴らす
-            PlaySound(TEXT(".//assets//ジャストミート.wav"), NULL, SND_FILENAME | SND_ASYNC);
-            //changeSubState
+            if (hitStopTime) {
+                //ミート音を鳴らす
+                PlaySound(TEXT(".//assets//ジャストミート.wav"), NULL, SND_FILENAME | SND_ASYNC);
+                //ジャストミート
+                owner.changeSubState(new CutIn(owner, hitStopTime));
+                return;
+            }
+            //じゃすとみーとじゃない
             owner.changeSubState(new AfterMeetSubState(owner, hitStopTime));
             return;
         }
