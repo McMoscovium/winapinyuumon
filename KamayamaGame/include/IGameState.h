@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include <vector>
 #include "GameObjectManager.h"
+#include "AudioManager.h"
 
 class Game;
 
@@ -12,6 +13,7 @@ class IGameState
 protected:
     Game& game;//êeã 
     GameObjectManager gameObjectManager;
+    AudioManager audioManager;
 public:
     IGameState(Game& game);
     virtual ~IGameState();
@@ -21,4 +23,5 @@ public:
     Game& getGame();
 
     GameObjectManager& getGameObjectManager();
+    AudioManager& getAudioManager();
 };
