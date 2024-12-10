@@ -254,6 +254,7 @@
     <ClInclude Include="include\WaitingPitchingSubState.h" />
     <ClInclude Include="include\Window.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SaveData.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="KamayamaGame.rc" />

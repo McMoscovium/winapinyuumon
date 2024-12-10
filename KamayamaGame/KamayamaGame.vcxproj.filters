@@ -380,6 +380,9 @@
     <ClInclude Include="include\CutIn.h">
       <Filter>ヘッダー ファイル\GameState\PlayingState</Filter>
     </ClInclude>
+    <ClInclude Include="SaveData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="KamayamaGame.rc">
