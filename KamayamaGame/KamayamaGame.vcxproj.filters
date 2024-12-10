@@ -225,6 +225,9 @@
     <ClCompile Include="src\CutIn.cpp">
       <Filter>ソース ファイル\GameState\PlayingState</Filter>
     </ClCompile>
+    <ClCompile Include="include\AudioManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\IGameState.h">
@@ -536,6 +539,9 @@
       <Filter>リソース ファイル</Filter>
     </Media>
     <Media Include="assets\ジャストミート.wav">
+      <Filter>リソース ファイル</Filter>
+    </Media>
+    <Media Include="assets\baseballLegend.wav">
       <Filter>リソース ファイル</Filter>
     </Media>
   </ItemGroup>

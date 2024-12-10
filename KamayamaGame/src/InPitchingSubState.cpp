@@ -192,7 +192,7 @@ void InPitchingSubState::update(Game& game)
         if (isMeet(ballObject, owner.getBall(), hitStopTime)) {
             if (hitStopTime) {
                 //ミート音を鳴らす
-                PlaySound(TEXT(".//assets//ジャストミート.wav"), NULL, SND_FILENAME | SND_ASYNC);
+                owner.getAudioManager().play("JUST");
                 //ジャストミート
                 owner.changeSubState(new CutIn(owner, hitStopTime));
                 return;

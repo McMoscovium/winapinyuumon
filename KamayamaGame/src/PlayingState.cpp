@@ -95,6 +95,13 @@ PlayingState::PlayingState(Game& game, Stage* stage) :
     gameObjectManager.getObject<TextObject>("REST").setText(restString);
     gameObjectManager.getObject<TextObject>("REST").setObjectPosition({ 229,272 });
 
+    //オーディオファイルの読み込み
+    HINSTANCE hInstance = game.getHInstance();
+    audioManager.addWav("BGM1", hInstance, IDR_WAVE3);
+    audioManager.addWav("JUST", hInstance, IDR_WAVE2);
+
+    audioManager.play("BGM1", true);
+
     changeSubState(new WaitingPitchingSubState(*this));
 }
 

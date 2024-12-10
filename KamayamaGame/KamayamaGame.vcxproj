@@ -98,7 +98,7 @@
       <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>WinMain</EntryPointSymbol>
-      <AdditionalDependencies>Msimg32.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Msimg32.lib;Winmm.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -117,7 +117,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>WinMain</EntryPointSymbol>
-      <AdditionalDependencies>Msimg32.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Msimg32.lib;Winmm.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -132,7 +132,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Msimg32.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Msimg32.lib;Winmm.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -151,10 +151,11 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Msimg32.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Msimg32.lib;Winmm.lib;xaudio2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\AudioManager.cpp" />
     <ClCompile Include="src\AfterMeetSubState.cpp" />
     <ClCompile Include="src\Ball.cpp" />
     <ClCompile Include="src\BallFlyingSubState.cpp" />
@@ -310,6 +311,7 @@
     <None Include="assets\カーソル.cur" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="assets\baseballLegend.wav" />
     <Media Include="assets\bgm1.wav" />
     <Media Include="assets\ジャストミート.wav" />
   </ItemGroup>
