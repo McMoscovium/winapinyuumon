@@ -60,8 +60,6 @@ public:
     Stadium& getStadium();
 
 private:
-    //
-    
     //ボール
     Ball ball;
     //ステージデータ
