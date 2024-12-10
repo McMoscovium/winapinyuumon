@@ -27,3 +27,8 @@ GameObjectManager& IGameState::getGameObjectManager()
 {
     return gameObjectManager;
 }
+
+AudioManager& IGameState::getAudioManager()
+{
+    return audioManager;
+}

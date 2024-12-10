@@ -23,4 +23,5 @@ public:
     Game& getGame();
 
     GameObjectManager& getGameObjectManager();
+    AudioManager& getAudioManager();
 };
