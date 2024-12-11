@@ -1,11 +1,11 @@
-#include "WaitingPitchingSubState.h"
+#include "GameState/PlayingState/WaitingPitchingSubState.h"
 
-#include "InputManager.h"
-#include "Game.h"
-#include "GameState.h"
-#include "InPitchingSubState.h"
-#include "TitleScreenState.h"
-#include "PlayingState.h"
+#include "Game/InputManager.h"
+#include "Game/Game.h"
+#include "GameState/GameState.h"
+#include "GameState/PlayingState/InPitchingSubState.h"
+#include "GameState/TitleScreenState/TitleScreenState.h"
+#include "GameState/PlayingState/PlayingState.h"
 #include <Windows.h>
 
 WaitingPitchingSubState::WaitingPitchingSubState(PlayingState& gameState) :

@@ -1,11 +1,11 @@
-#include "BallFlyingSubState.h"
+#include "GameState/PlayingState/BallFlyingSubState.h"
 
-#include "Game.h"
+#include "Game/Game.h"
 #include <cmath>
 #include <numbers>
-#include "WaitingPitchingSubState.h"
-#include "BattingResultSubState.h"
-#include "Stadium.h"
+#include "GameState/PlayingState/WaitingPitchingSubState.h"
+#include "GameState/PlayingState/BattingResultSubState.h"
+#include "GameObject/Stadium/Stadium.h"
 
 void BallFlyingSubState::updateBall(Ball& ball)
 {

@@ -1,8 +1,8 @@
-#include "Stage.h"
+#include "Stage/Stage.h"
 
-#include "Pitcher.h"
-#include "Batter.h"
-#include "Stadium.h"
+#include "GameObject/Pitcher/Pitcher.h"
+#include "GameObject/Batter/Batter.h"
+#include "GameObject/Stadium/Stadium.h"
 
 Stage::Stage(
 	const std::wstring& name, const std::wstring& pitcherName, int norm, int trials

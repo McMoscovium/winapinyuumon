@@ -1,8 +1,8 @@
-#include "DetailResultSubState.h"
+#include "GameState/PlayResultState/DetailResultSubState.h"
 
-#include "Game.h"
-#include "InputManager.h"
-#include "StageListState.h"
+#include "Game/Game.h"
+#include "Game/InputManager.h"
+#include "GameState/StageListState/StageListState.h"
 
 void DetailResultSubState::update(Game& game)
 {
@@ -29,7 +29,7 @@ void DetailResultSubState::enter(Game& game)
 	runStreak.setObjectPosition({ 803,298 });
 	maxDist.setObjectPosition({ 788,378 });
 	distanceSum.setObjectPosition({ 720,456 });
-	bonus.setObjectPosition({ 867,553 });
+	bonus.setObjectPosition({ 500,553 });
 
 	back.appear();
 	toStageList.appear();

@@ -1,4 +1,4 @@
-#include "HatimituMeter.h"
+#include "util/HatimituMeter.h"
 
 void HatimituMeter::setValue(HatimituMeterObject& obj, int v)
 {

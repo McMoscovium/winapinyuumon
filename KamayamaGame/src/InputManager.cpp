@@ -1,10 +1,10 @@
-#include "InputManager.h"
+#include "Game/InputManager.h"
 
-#include "GameObject.h"
-#include "Window.h"
+#include "GameObject/GameObject.h"
+#include "Game/Window.h"
 #include <string>
 
-#include "PictureObject.h"
+#include "GameObject/PictureObject.h"
 
 InputManager::InputManager() :mousePosition{ 0,0 }
 {

@@ -1,6 +1,6 @@
-#include "PictureObject.h"
+#include "GameObject/PictureObject.h"
 
-#include "Window.h"
+#include "Game/Window.h"
 #include <cmath>
 
 void PictureObject::setLength(int l)
@@ -125,6 +125,12 @@ void PictureObject::deleteHBITMAP()
 void PictureObject::render(HDC hdc) const
 {
 	HDC hdcMem = CreateCompatibleDC(hdc);//スプライトシートに紐付けるHDC
+
+	if (!getSpriteImage()) {
+		std::string msg = "オブジェクト: " + objectName + "のスプライトイメージはnullptrです。\n";
+		OutputDebugStringA(msg.c_str());
+	}
+
 	HBITMAP oldMemBitmap = (HBITMAP)SelectObject(hdcMem, getSpriteImage());
 	//透過色を考慮してHDCの選択するデバイスに描画
 	if (TransparentBlt(
@@ -144,7 +150,8 @@ void PictureObject::render(HDC hdc) const
 	}
 	else {
 		//描画失敗
-		OutputDebugString(L"仮想画面に描画失敗\n");
+		std::string msg = "オブジェクト: " + objectName + "を仮想画面に描画失敗\n";
+		OutputDebugStringA(msg.c_str());
 	}
 	SelectObject(hdcMem, oldMemBitmap);
 	DeleteDC(hdcMem);//HDC解放

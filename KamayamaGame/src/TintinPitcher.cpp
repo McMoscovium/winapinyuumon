@@ -1,4 +1,4 @@
-#include "TintinPitcher.h"
+#include "GameObject/Pitcher/TintinPitcher.h"
 #include <random>
 
 void TintinPitcher::decideNextPitch()

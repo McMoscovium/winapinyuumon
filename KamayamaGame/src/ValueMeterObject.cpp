@@ -1,7 +1,7 @@
-#include "ValueMeterObject.h"
+#include "GameObject/ValueMeterObject.h"
 
-ValueMeterObject::ValueMeterObject(LPCTSTR path, std::string objectName, SIZE frameSize,int maxValue) :
-	PictureObject(objectName, path, frameSize),
+ValueMeterObject::ValueMeterObject(std::string objectName, int resourceId, HINSTANCE hInstance, SIZE frameSize, int maxValue) :
+	PictureObject(objectName, resourceId, hInstance, frameSize), 
 	maxValue(maxValue)
 {
 }

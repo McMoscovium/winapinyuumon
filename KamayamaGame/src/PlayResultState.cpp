@@ -1,21 +1,23 @@
-#include "PlayResultState.h"
+#include "GameState/PlayResultState/PlayResultState.h"
 
-#include "CompareNormSubState.h"
-#include "TextObject.h"
-#include "Stage.h"
-#include "Pitcher.h"
+#include "GameState/PlayResultState/CompareNormSubState.h"
+#include "GameObject/TextObject.h"
+#include "Stage/Stage.h"
+#include "Game/Game.h"
+#include "GameObject/Pitcher/Pitcher.h"
 #include <string>
+#include "include/Game/SaveData/SaveData.h"
+#include "resource.h"
 
 
 PlayResultState::PlayResultState(Game& game, Result& result, Stage* stage) :
 	GameState(game),
 	result(result)
 {
-	OutputDebugString(L"Entering PlayResultState\n");
-
+	HINSTANCE hInstance = game.getHInstance();
 	//GameObjectよみこみ
-	gameObjectManager.addFront<PictureObject>("KEKKAHAPPYOU", L".//assets//結果発表.bmp", SIZE{ 1152,720 });
-	gameObjectManager.addFront<PictureObject>("KEKKAHAPPYOU2", L".//assets//結果発表2.bmp", SIZE{ 1152,720 });
+	gameObjectManager.addFront<PictureObject>("KEKKAHAPPYOU", IDB_BITMAP36, hInstance, SIZE{ 1152,720 });
+	gameObjectManager.addFront<PictureObject>("KEKKAHAPPYOU2", IDB_BITMAP37, hInstance, SIZE{ 1152,720 });
 	
 	//appendObject({バッター画像オブジェクトへのポインター});//バッター画像
 
@@ -26,11 +28,11 @@ PlayResultState::PlayResultState(Game& game, Result& result, Stage* stage) :
 	gameObjectManager.addFront<TextObject>("RUNSTREAK", std::to_wstring(result.getMaxSuccessiveRuns()));
 	gameObjectManager.addFront<TextObject>("MAX_DISTANCE", std::to_wstring(result.getMaxDistance()));
 	gameObjectManager.addFront<TextObject>("DISTANCE_SUM", std::to_wstring(result.getDistanceSum()));
-	gameObjectManager.addFront<TextObject>("BONUS_POINT", L"0");
-	gameObjectManager.addFront<PictureObject>("CLEAR", L".//assets//クリア.bmp", SIZE{ 273,78 });
-	gameObjectManager.addFront<PictureObject>("FAILURE", L".//assets//しっぱい.bmp", SIZE{ 273,78 });
-	gameObjectManager.addFront<PictureObject>("NEXT", L".//assets//次へ.bmp", SIZE{ 115,49 });
-	PictureObject& toStageList = gameObjectManager.addFront<PictureObject>("TO_STAGELIST", L".//assets//ステージ選択へ.bmp", SIZE{ 401,66 });
+	TextObject& point = gameObjectManager.addFront<TextObject>("BONUS_POINT", L"0");
+	gameObjectManager.addFront<PictureObject>("CLEAR", IDB_BITMAP11, hInstance, SIZE{ 273,78 });
+	gameObjectManager.addFront<PictureObject>("FAILURE", IDB_BITMAP13, hInstance, SIZE{ 273,78 });
+	gameObjectManager.addFront<PictureObject>("NEXT", IDB_BITMAP39, hInstance, SIZE{ 115,49 });
+	PictureObject& toStageList = gameObjectManager.addFront<PictureObject>("TO_STAGELIST", IDB_BITMAP15, hInstance, SIZE{ 401,66 });
 
 	//位置設定
 	gameObjectManager.getObject<PictureObject>("PITCHERNAME").setObjectPosition({ 312,224 });
@@ -39,6 +41,21 @@ PlayResultState::PlayResultState(Game& game, Result& result, Stage* stage) :
 	gameObjectManager.getObject<TextObject>("RUNS").setObjectPosition({ 741,514 });
 	gameObjectManager.getObject<PictureObject>("NEXT").setObjectPosition({ 920,623 });
 	toStageList.setObjectPosition({ 718,643 });
+
+	//スコアデータ更新処理
+	//データ読み込み
+	SaveDataManager saveDataManager;
+	SaveData prevData;
+	saveDataManager.load(prevData);
+	//スコア加算
+	int score = result.getDistanceSum();
+	SaveData newData = prevData.addScore(score);
+	//セーブ
+	saveDataManager.save(newData);
+
+	//スコア文字変更
+	std::wstring scorestr = std::to_wstring(prevData.getScore()) + L" + " + std::to_wstring(score) + L" = " + std::to_wstring(newData.getScore());
+	point.setText(scorestr);
 
 	//substate初期化
 	changeSubState(new CompareNormSubState(*this));

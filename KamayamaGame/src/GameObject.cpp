@@ -1,8 +1,8 @@
-#include "GameObject.h"
+#include "GameObject/GameObject.h"
 //ŠJ”­—p
 #include <iostream>
 #include <string>
-#include "Window.h"
+#include "Game/Window.h"
 #include <cmath>
 
 

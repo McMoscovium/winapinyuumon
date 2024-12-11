@@ -1,14 +1,14 @@
-#include "AfterMeetSubState.h"
+#include "GameState/PlayingState/AfterMeetSubState.h"
 
-#include "Game.h"
-#include "InputManager.h"
-#include "GameObject.h"
-#include "TitleScreenState.h"
-#include "WaitingPitchingSubState.h"
-#include "Ball.h"
+#include "Game/Game.h"
+#include "Game/InputManager.h"
+#include "GameObject/GameObject.h"
+#include "GameState/TitleScreenState/TitleScreenState.h"
+#include "GameState/PlayingState/WaitingPitchingSubState.h"
+#include "GameObject/Ball.h"
 #include <numbers>
 #include <cmath>
-#include "BallFlyingSubState.h"
+#include "GameState/PlayingState/BallFlyingSubState.h"
 
 void AfterMeetSubState::update(Game& game)
 {
@@ -49,7 +49,6 @@ void AfterMeetSubState::update(Game& game)
 
 void AfterMeetSubState::enter(Game& game)
 {
-    
     timer.update();
     timer.setRecord();
 }

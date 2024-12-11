@@ -1,4 +1,4 @@
-#include "TextObject.h"
+#include "GameObject/TextObject.h"
 
 TextObject::TextObject(const std::string& objectName, const std::wstring& text):
 	GameObject(objectName),

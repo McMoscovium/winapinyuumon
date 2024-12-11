@@ -1,8 +1,8 @@
-#include "GameOverState.h"
+#include "GameState/GameOverState/GameOverState.h"
 
-#include "Game.h"
-#include"TitleScreenState.h"
-#include"InputManager.h"
+#include "Game/Game.h"
+#include"GameState/TitleScreenState/TitleScreenState.h"
+#include"Game/InputManager.h"
 
 GameOverState::GameOverState(Game& game) :
     GameState<GameOverState,GameSubState<GameOverState>>(game)

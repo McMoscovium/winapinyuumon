@@ -1,19 +1,21 @@
-#include "TitleScreenState.h"
+#include "GameState/TitleScreenState/TitleScreenState.h"
 
 
 
-#include "Game.h"
-#include "InputManager.h"
+#include "Game/Game.h"
+#include "Game/InputManager.h"
 #include <Windows.h>
-#include "StageListState.h"
-#include "GameObject.h"
-#include "StatusState.h"
-#include "TextObject.h"
-#include "TintinPitcher.h"
-#include "KamayamaBatter.h"
-#include "TheHundredAcreWoodStadium.h"
-#include "TintinStage.h"
-#include "PictureObject.h"
+#include "GameState/StageListState/StageListState.h"
+#include "GameObject/GameObject.h"
+#include "GameState/StatusState/StatusState.h"
+#include "GameObject/TextObject.h"
+#include "GameObject/Pitcher/TintinPitcher.h"
+#include "GameObject/Batter/KamayamaBatter.h"
+#include "GameObject/Stadium/TheHundredAcreWoodStadium.h"
+#include "Stage/TintinStage.h"
+#include "GameObject/PictureObject.h"
+#include "resource.h"
+#include "include/Game/SaveData/SaveData.h"
 
 #include <string>
 
@@ -21,22 +23,34 @@
 TitleScreenState::TitleScreenState(Game& game) :
     GameState(game)
 {
-    gameObjectManager.addFront<PictureObject>("TITLE", L".//assets//タイトル画面2.bmp", SIZE{ 1152,720 });
-    gameObjectManager.addFront<PictureObject>("START", L".//assets//はじめる.bmp", SIZE{ 256,128 });
-    gameObjectManager.addFront<PictureObject>("STATUS", L".//assets//ステータス.bmp", SIZE{ 256,128 });
-    gameObjectManager.addFront<PictureObject>("GACHA", L".//assets//ガチャ.bmp", SIZE{ 256,128 });
-    gameObjectManager.addFront<PictureObject>("QUIT", L".//assets//おわる.bmp", SIZE{ 256,128 });
-    gameObjectManager.addFront<PictureObject>("KAMAYAMA", L".//assets//クマの釜山.bmp", SIZE{ 172,178 });
+    HINSTANCE hInstance = game.getHInstance();
+    gameObjectManager.addFront<PictureObject>("TITLE", IDB_BITMAP19,hInstance, SIZE{ 1152,720 });
+    gameObjectManager.addFront<PictureObject>("START", IDB_BITMAP21,hInstance, SIZE{ 256,128 });
+    gameObjectManager.addFront<PictureObject>("STATUS", IDB_BITMAP16,hInstance, SIZE{ 256,128 });
+    gameObjectManager.addFront<PictureObject>("GACHA", IDB_BITMAP8,hInstance, SIZE{ 256,128 });
+    gameObjectManager.addFront<PictureObject>("QUIT", IDB_BITMAP6, hInstance, SIZE{ 256,128 });
+    gameObjectManager.addFront<PictureObject>("KAMAYAMA", IDB_BITMAP10, hInstance, SIZE{ 172,178 });
+    TextObject& scoreText = gameObjectManager.addFront<TextObject>("SCORE", L"");
 
     showAll();
 
     //各GameObjectの描画位置を設定@TODO
     gameObjectManager.getObject<PictureObject>("TITLE").setObjectPosition({ 0,0 });
     gameObjectManager.getObject<PictureObject>("KAMAYAMA").setObjectPosition({ 32,48 });
-    gameObjectManager.getObject<PictureObject>("START").setObjectPosition({240,352});
-    gameObjectManager.getObject<PictureObject>("STATUS").setObjectPosition({ 576,352 });
-    gameObjectManager.getObject<PictureObject>("GACHA").setObjectPosition({ 240,528 });
-    gameObjectManager.getObject<PictureObject>("QUIT").setObjectPosition({ 576,528 });
+    gameObjectManager.getObject<PictureObject>("START").setObjectPosition({440,352});
+    gameObjectManager.getObject<PictureObject>("STATUS").setObjectPosition({ 776,352 });
+    gameObjectManager.getObject<PictureObject>("GACHA").setObjectPosition({ 440,528 });
+    gameObjectManager.getObject<PictureObject>("QUIT").setObjectPosition({ 776,528 });
+    scoreText.setObjectPosition({ 75,350 });
+
+    //セーブデータ読み込み
+    SaveData saveData;
+    SaveDataManager saveDataManager;
+    saveDataManager.load(saveData);
+    //スコア表示更新
+    int score = saveData.getScore();
+    std::wstring scorestr = L"スコア: " + std::to_wstring(score);
+    scoreText.setText(scorestr);
 }
 
 

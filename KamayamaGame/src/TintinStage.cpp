@@ -1,8 +1,8 @@
-#include "TintinStage.h"
+#include "Stage/TintinStage.h"
 
-#include "TintinPitcher.h"
-#include "KamayamaBatter.h"
-#include "TheHundredAcreWoodStadium.h"
+#include "GameObject/Pitcher/TintinPitcher.h"
+#include "GameObject/Batter/KamayamaBatter.h"
+#include "GameObject/Stadium/TheHundredAcreWoodStadium.h"
 
 
 using namespace std;
@@ -17,14 +17,14 @@ TintinStage::TintinStage() :
 	
 }
 
-std::unique_ptr<Pitcher> TintinStage::createPitcher()
+std::unique_ptr<Pitcher> TintinStage::createPitcher(HINSTANCE hInstance)
 {
-	return make_unique<TintinPitcher>();
+	return make_unique<TintinPitcher>(hInstance);
 }
 
-std::unique_ptr<Batter> TintinStage::createBatter()
+std::unique_ptr<Batter> TintinStage::createBatter(HINSTANCE hInstance)
 {
-	return make_unique<KamayamaBatter>();
+	return make_unique<KamayamaBatter>(hInstance);
 }
 
 std::unique_ptr<Stadium> TintinStage::createStadium()

@@ -1,8 +1,8 @@
-#include "SasakiStage.h"
+#include "Stage/SasakiStage.h"
 
-#include "SasakiPitcher.h"
-#include "KamayamaBatter.h"
-#include "TheHundredAcreWoodStadium.h"
+#include "GameObject/Pitcher/SasakiPitcher.h"
+#include "GameObject/Batter/KamayamaBatter.h"
+#include "GameObject/Stadium/TheHundredAcreWoodStadium.h"
 
 using namespace std;
 
@@ -15,14 +15,14 @@ SasakiStage::SasakiStage():
 {
 }
 
-std::unique_ptr<Pitcher> SasakiStage::createPitcher()
+std::unique_ptr<Pitcher> SasakiStage::createPitcher(HINSTANCE hInstance)
 {
-	return make_unique<SasakiPitcher>();
+	return make_unique<SasakiPitcher>(hInstance);
 }
 
-std::unique_ptr<Batter> SasakiStage::createBatter()
+std::unique_ptr<Batter> SasakiStage::createBatter(HINSTANCE hInstance)
 {
-	return make_unique<KamayamaBatter>();
+	return make_unique<KamayamaBatter>(hInstance);
 }
 
 std::unique_ptr<Stadium> SasakiStage::createStadium()

@@ -1,21 +1,24 @@
-#include "StageListState.h"
+#include "GameState/StageListState/StageListState.h"
 
-#include "Game.h"
-#include "PictureObject.h"
-#include "InputManager.h"
-#include "TitleScreenState.h"
-#include "PlayingState.h"
-#include "TintinStage.h"
-#include "SasakiStage.h"
+#include "Game/Game.h"
+#include "GameObject/PictureObject.h"
+#include "Game/InputManager.h"
+#include "GameState/TitleScreenState/TitleScreenState.h"
+#include "GameState/PlayingState/PlayingState.h"
+#include "Stage/TintinStage.h"
+#include "Stage/SasakiStage.h"
+#include "resource.h"
 
 StageListState::StageListState(Game& game):
 	GameState(game)
 {
-	PictureObject& back = gameObjectManager.addFront<PictureObject>("BACK", L".//assets//ステージセレクト.bmp", SIZE{ 1152,720 });
-	gameObjectManager.addFront<PictureObject>("TO_TITLE", L".//assets//タイトルヘ.bmp", SIZE{ 192,68 });
-	gameObjectManager.addFront<PictureObject>("TINTIN", L".//assets//tintin選択.bmp", SIZE{ 207,252 });
-	gameObjectManager.addFront<PictureObject>("STAGE1", L".//assets//Stage1.bmp", SIZE{ 162,41 });
-	gameObjectManager.addFront<PictureObject>("STAGE2", L".//assets//Stage2.bmp", SIZE{ 162,41 });
+	HINSTANCE hInstance = game.getHInstance();
+
+	PictureObject& back = gameObjectManager.addFront<PictureObject>("BACK", IDB_BITMAP14,hInstance, SIZE{ 1152,720 });
+	gameObjectManager.addFront<PictureObject>("TO_TITLE", IDB_BITMAP18, hInstance, SIZE{ 192,68 });
+	gameObjectManager.addFront<PictureObject>("TINTIN", IDB_BITMAP5, hInstance, SIZE{ 207,252 });
+	gameObjectManager.addFront<PictureObject>("STAGE1", IDB_BITMAP3, hInstance, SIZE{ 162,41 });
+	gameObjectManager.addFront<PictureObject>("STAGE2", IDB_BITMAP4, hInstance, SIZE{ 162,41 });
 
 	PictureObject& toTitleButton = gameObjectManager.getObject<PictureObject>("TO_TITLE");
 	toTitleButton.setObjectPosition({ 47,574 });

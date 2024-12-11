@@ -1,10 +1,10 @@
-#include "Window.h"
-#include "Game.h"
-#include "GameState.h"
+#include "Game/Window.h"
+#include "Game/Game.h"
+#include "GameState/GameState.h"
 #include <Windows.h>
-#include "GameObject.h"
+#include "GameObject/GameObject.h"
 #include <iostream>
-#include "InputManager.h"
+#include "Game/InputManager.h"
 
 const UINT fps = 60;
 

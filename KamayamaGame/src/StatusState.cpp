@@ -1,24 +1,28 @@
-#include "StatusState.h"
+#include "GameState/StatusState/StatusState.h"
 
-#include "GameState.h"
-#include "Game.h"
-#include "InputManager.h"
-#include "GameObject.h"
-#include "HatimituMeterObject.h"
-#include "GameObjectManager.h"
+#include "GameState/GameState.h"
+#include "Game/Game.h"
+#include "Game/InputManager.h"
+#include "GameObject/GameObject.h"
+#include "GameObject/HatimituMeterObject.h"
+#include "GameObject/GameObjectManager.h"
 
-#include "TitleScreenState.h"
-#include "PlayingState.h"
+#include "GameState/TitleScreenState/TitleScreenState.h"
+#include "GameState/PlayingState/PlayingState.h"
 #include <Windows.h>
-#include "PictureObject.h"
+#include "GameObject/PictureObject.h"
+
+#include "resource.h"
 
 StatusState::StatusState(Game& game) :
 	GameState<StatusState, GameSubState<StatusState>>(game)
 {
+	HINSTANCE hInstance = game.getHInstance();
+
 	//インスタンス生成
-	gameObjectManager.addFront<PictureObject>("CHEAT", L".//assets//チート.bmp", SIZE{ 256,128 });
-	gameObjectManager.addFront<PictureObject>("START", L".//assets//はじめる.bmp", SIZE{ 256,128 });
-	gameObjectManager.addFront<HatimituMeterObject>("HATIMITUMETER", L".//assets//はちみつ.bmp", SIZE{ 49,45 });
+	gameObjectManager.addFront<PictureObject>("CHEAT", IDB_BITMAP20, hInstance, SIZE{ 256,128 });
+	gameObjectManager.addFront<PictureObject>("START", IDB_BITMAP21, hInstance, SIZE{ 256,128 });
+	gameObjectManager.addFront<HatimituMeterObject>("HATIMITUMETER", IDB_BITMAP23, hInstance,  SIZE{ 49,45 });
 
 	//位置設定
 	gameObjectManager.getObject<HatimituMeterObject>("HATIMITUMETER").setObjectPosition({ 200,200 });

@@ -1,6 +1,6 @@
-#include "IGameState.h"
+#include "GameState/IGameState.h"
 
-#include "PictureObject.h"
+#include "GameObject/PictureObject.h"
 
 IGameState::IGameState(Game& game):
     game(game)
