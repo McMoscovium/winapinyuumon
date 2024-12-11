@@ -1,8 +1,7 @@
-#include "Game.h"
-#include "VirtualWindow.h"
-#include "TitleScreenState.h"
-#include "GameState.h"
-#include "IGameState.h"
+#include "Game/Game.h"
+#include "GameState/TitleScreenState/TitleScreenState.h"
+#include "GameState/GameState.h"
+#include "GameState/IGameState.h"
 
 Game::Game(InputManager& inputManager, const HINSTANCE& hInstance) :
 	currentState(nullptr),

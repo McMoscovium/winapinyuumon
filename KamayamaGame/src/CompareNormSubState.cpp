@@ -1,8 +1,8 @@
-#include "CompareNormSubState.h"
+#include "GameState/PlayResultState/CompareNormSubState.h"
 
-#include "Game.h"
-#include "InputManager.h"
-#include "DetailResultSubState.h"
+#include "Game/Game.h"
+#include "Game/InputManager.h"
+#include "GameState/PlayResultState/DetailResultSubState.h"
 
 void CompareNormSubState::update(Game& game)
 {

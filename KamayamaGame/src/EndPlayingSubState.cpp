@@ -1,7 +1,7 @@
-#include "EndPlayingSubState.h"
+#include "GameState/PlayingState/EndPlayingSubState.h"
 
-#include "Game.h"
-#include "PlayResultState.h"
+#include "Game/Game.h"
+#include "GameState/PlayResultState/PlayResultState.h"
 
 void EndPlayingSubState::update(Game& game)
 {

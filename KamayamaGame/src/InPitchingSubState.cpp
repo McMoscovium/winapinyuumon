@@ -1,22 +1,26 @@
-#include "InPitchingSubState.h"
+#include "GameState/PlayingState/InPitchingSubState.h"
 
-#include "Game.h"
-#include "InputManager.h"
-#include "GameObject.h"
-#include "TitleScreenState.h"
-#include "WaitingPitchingSubState.h"
-#include "AfterMeetSubState.h"
-#include "Vector2D.h"
-#include <cmath>
-#include "Ball.h"
+
 #include <Windows.h>
-#include "Batter.h"
-#include "EndPlayingSubState.h"
-#include "BattingResultSubState.h"
+
+#include "Game/Game.h"
+#include "Game/InputManager.h"
+#include "GameObject/GameObject.h"
+#include "GameObject/PictureObject.h"
+
+#include "GameState/TitleScreenState/TitleScreenState.h"
+#include "GameState/PlayingState/WaitingPitchingSubState.h"
+#include "GameState/PlayingState/AfterMeetSubState.h"
+#include "GameState/PlayingState/CutIn.h"
+#include "GameState/PlayingState/BattingResultSubState.h"
+
+#include "util/Vector2D.h"
+#include <cmath>
 #include <random>
-#include "PictureObject.h"
-#include "Pitcher.h"
-#include "CutIn.h"
+#include "GameObject/Ball.h"
+#include "GameObject/Batter/Batter.h"
+#include "GameObject/Pitcher/Pitcher.h"
+
 
 #include <typeinfo>
 

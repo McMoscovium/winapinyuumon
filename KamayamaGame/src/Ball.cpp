@@ -1,7 +1,7 @@
-#include "Ball.h"
-#include "Vector2D.h"
+#include "GameObject/Ball.h"
+#include "util/Vector2D.h"
 #include <Windows.h>
-#include "Window.h"
+#include "Game/Window.h"
 #include <cmath>
 #include <numbers>
 

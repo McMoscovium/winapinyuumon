@@ -1,23 +1,23 @@
-#include "PlayingState.h"
+#include "GameState/PlayingState/PlayingState.h"
 
-#include "Game.h"
-#include "GameSubState.h"
-#include "GameOverState.h"
-#include "InputManager.h"
-#include "InPitchingSubState.h"
-#include "WaitingPitchingSubState.h"
-#include "Vector2D.h"
-#include "TintinPitcher.h"
-#include "TextObject.h"
-#include "Batter.h"
-#include "Stadium.h"
+#include "Game/Game.h"
+#include "GameState/GameSubState.h"
+#include "GameState/GameOverState/GameOverState.h"
+#include "Game/InputManager.h"
+#include "GameState/PlayingState/InPitchingSubState.h"
+#include "GameState/PlayingState/WaitingPitchingSubState.h"
+#include "util/Vector2D.h"
+#include "GameObject/Pitcher/TintinPitcher.h"
+#include "GameObject/TextObject.h"
+#include "GameObject/Batter/Batter.h"
+#include "GameObject/Stadium/Stadium.h"
 #include "./resource.h"
 
-#include "Stage.h"
+#include "Stage/Stage.h"
 
 #include <algorithm>
 
-#include"TitleScreenState.h"
+#include"GameState/TitleScreenState/TitleScreenState.h"
 
 #include <typeinfo>
 
@@ -32,14 +32,17 @@ PlayingState::PlayingState(Game& game, Stage* stage) :
     result(Result(stage->getNorm())),
     restBalls(stage->getTrials())
 {
+    HINSTANCE hInstance = game.getHInstance();
     //フィールド画像読み込み
-    gameObjectManager.addFront<PictureObject>("FIELD00", L".//assets//フィールド00.bmp", SIZE{ 1920,1200 });
-    gameObjectManager.addFront<PictureObject>("FIELD01", L".//assets//フィールド01.bmp", SIZE{ 1920,1200 });
-    gameObjectManager.addFront<PictureObject>("FIELD02", L".//assets//フィールド02.bmp", SIZE{ 1920,1200 });
-    gameObjectManager.addFront<PictureObject>("FIELD10", L".//assets//フィールド10.bmp", SIZE{ 1920,1200 }); gameObjectManager.addFront<PictureObject>("FIELD11", L".//assets//フィールド11.bmp", SIZE{ 1920,1200 }); gameObjectManager.addFront<PictureObject>("FIELD12", L".//assets//フィールド12.bmp", SIZE{ 1920,1200 });
-    gameObjectManager.addFront<PictureObject>("FIELD-10", L".//assets//フィールド-10.bmp", SIZE{ 1920,1200 });
-    gameObjectManager.addFront<PictureObject>("FIELD-11", L".//assets//フィールド-11.bmp", SIZE{ 1920,1200 });
-    gameObjectManager.addFront<PictureObject>("FIELD-12", L".//assets//フィールド-12.bmp", SIZE{ 1920,1200 });
+    gameObjectManager.addFront<PictureObject>("FIELD00", IDB_BITMAP25,hInstance, SIZE{ 1920,1200 });
+    gameObjectManager.addFront<PictureObject>("FIELD01", IDB_BITMAP26, hInstance, SIZE{ 1920,1200 });
+    gameObjectManager.addFront<PictureObject>("FIELD02", IDB_BITMAP27, hInstance, SIZE{ 1920,1200 });
+    gameObjectManager.addFront<PictureObject>("FIELD10", IDB_BITMAP28, hInstance, SIZE{ 1920,1200 });
+    gameObjectManager.addFront<PictureObject>("FIELD11", IDB_BITMAP30, hInstance, SIZE{ 1920,1200 });
+    gameObjectManager.addFront<PictureObject>("FIELD12", IDB_BITMAP32, hInstance, SIZE{ 1920,1200 });
+    gameObjectManager.addFront<PictureObject>("FIELD-10", IDB_BITMAP29, hInstance, SIZE{ 1920,1200 });
+    gameObjectManager.addFront<PictureObject>("FIELD-11", IDB_BITMAP31, hInstance, SIZE{ 1920,1200 });
+    gameObjectManager.addFront<PictureObject>("FIELD-12", IDB_BITMAP33, hInstance, SIZE{ 1920,1200 });
 
     //フィールド画像だけ別のコンテナにも入れる
     fieldImages.emplace("FIELD00", gameObjectManager.getObject<PictureObject>("FIELD00"));
@@ -55,15 +58,15 @@ PlayingState::PlayingState(Game& game, Stage* stage) :
 
 
     //他の画像も読み込み
-    gameObjectManager.addFront<PictureObject>("FIELD", L".//assets//フィールド.bmp", SIZE{ 1152,720 });
+    gameObjectManager.addFront<PictureObject>("FIELD", IDB_BITMAP24, hInstance, SIZE{ 1152,720 });
 
-    gameObjectManager.addFrontDirect<Pitcher>("PITCHER", stage->createPitcher());
-    gameObjectManager.addFrontDirect<Batter>("BATTER", stage->createBatter());
-    gameObjectManager.addFront<PictureObject>("EXIT", L".//assets//おわる.bmp", SIZE{ 256,128 });
-    gameObjectManager.addFront<PictureObject>("BALL", L".//assets//ボール.bmp", SIZE{ 41,50 });
-    gameObjectManager.addFront<PictureObject>("BALLSHADOW", L".//assets//ボールの影.bmp", SIZE{ 33,37 });
+    gameObjectManager.addFrontDirect<Pitcher>("PITCHER", stage->createPitcher(hInstance));
+    gameObjectManager.addFrontDirect<Batter>("BATTER", stage->createBatter(hInstance));
+    gameObjectManager.addFront<PictureObject>("EXIT", IDB_BITMAP6,hInstance, SIZE{ 256,128 });
+    gameObjectManager.addFront<PictureObject>("BALL", IDB_BITMAP34, hInstance, SIZE{ 41,50 });
+    gameObjectManager.addFront<PictureObject>("BALLSHADOW", IDB_BITMAP35, hInstance, SIZE{ 33,37 });
     gameObjectManager.addFront<PictureObject>("BAT_HITBOX", L".//assets//batHitBox.bmp", SIZE{ 50,50 });
-    gameObjectManager.addFront<PictureObject>("FINISH", L".//assets//ゲーム終了.bmp", SIZE{ 680,158 });
+    gameObjectManager.addFront<PictureObject>("FINISH", IDB_BITMAP12, hInstance, SIZE{ 680,158 });
 
     //ここでテキストオブジェクトいっときますか
     TextObject& normText = gameObjectManager.addFront<TextObject>("NORM", std::to_wstring(stage->getNorm()));
@@ -96,7 +99,6 @@ PlayingState::PlayingState(Game& game, Stage* stage) :
     gameObjectManager.getObject<TextObject>("REST").setObjectPosition({ 229,272 });
 
     //オーディオファイルの読み込み
-    HINSTANCE hInstance = game.getHInstance();
     audioManager.addWav("BGM1", hInstance, IDR_WAVE3);
     audioManager.addWav("JUST", hInstance, IDR_WAVE2);
 

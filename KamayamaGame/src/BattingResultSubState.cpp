@@ -1,10 +1,10 @@
-﻿#include "BattingResultSubState.h"
+﻿#include "GameState/PlayingState/BattingResultSubState.h"
 
-#include "WaitingPitchingSubState.h"
-#include "TextObject.h"
-#include "EndPlayingSubState.h"
-#include "Game.h"
-#include "Result.h"
+#include "GameState/PlayingState/WaitingPitchingSubState.h"
+#include "GameObject/TextObject.h"
+#include "GameState/PlayingState/EndPlayingSubState.h"
+#include "Game/Game.h"
+#include "util/Result.h"
 
 std::wstring BattingResultSubState::resultString() const
 {

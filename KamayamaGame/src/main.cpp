@@ -1,8 +1,8 @@
 #include <Windows.h>
-#include "Window.h"
-#include "Game.h"
-#include "InputManager.h"
-#include "TitleScreenState.h"
+#include "Game/Window.h"
+#include "Game/Game.h"
+#include "Game/InputManager.h"
+#include "GameState/TitleScreenState/TitleScreenState.h"
 
 
 //ŠJ”­—p

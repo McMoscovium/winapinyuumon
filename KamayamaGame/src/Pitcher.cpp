@@ -1,6 +1,6 @@
-#include "Pitcher.h"
+#include "GameObject/Pitcher/Pitcher.h"
 
-#include "Straight.h"
+#include "PitchType/Straight.h"
 
 Pitcher::Pitcher(
 	const std::wstring& pitcherName,
@@ -9,6 +9,17 @@ Pitcher::Pitcher(
 	const std::wstring& path,
 	SIZE frameSize) :
 	PictureObject("PITCHER",path.c_str(), frameSize),
+	pitcherName(pitcherName),
+	armStrength(armStrength),
+	releaseFrame(releaseFrame),
+	path(path),
+	frameSize(frameSize)
+{
+	pitchTypes.push_back(new Straight());
+}
+
+Pitcher::Pitcher(const std::wstring& pitcherName, int armStrength, int releaseFrame, const int resourceId, HINSTANCE hInstance, SIZE frameSize) :
+	PictureObject("PITCHER", resourceId, hInstance, frameSize), 
 	pitcherName(pitcherName),
 	armStrength(armStrength),
 	releaseFrame(releaseFrame),

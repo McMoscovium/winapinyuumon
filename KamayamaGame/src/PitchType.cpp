@@ -1,3 +1,3 @@
-#include "PitchType.h"
-#include "Ball.h"
+#include "PitchType/PitchType.h"
+#include "GameObject/Ball.h"
 

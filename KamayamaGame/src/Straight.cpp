@@ -1,6 +1,6 @@
-#include "Straight.h"
+#include "PitchType/Straight.h"
 
-#include "Ball.h"
+#include "GameObject/Ball.h"
 
 void Straight::setBallVelocity(Ball& ball, int frame)
 {
