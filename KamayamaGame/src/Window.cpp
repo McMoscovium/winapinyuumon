@@ -5,6 +5,7 @@
 #include "GameObject/GameObject.h"
 #include <iostream>
 #include "Game/InputManager.h"
+#include "resource.h"
 
 const UINT fps = 60;
 
@@ -37,17 +38,11 @@ void Window::registerClass() {
 	wc.cbWndExtra = NULL;
 	wc.hInstance = hInstance;
 	wc.lpszClassName = className;
-	wc.hIcon = (HICON)LoadImage(
-		NULL, L".\\assets\\アイコン.ico",
-		IMAGE_ICON, NULL, NULL,
-		LR_DEFAULTSIZE | LR_LOADFROMFILE);
+	wc.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON1));
 	wc.hCursor = (HCURSOR)LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = CreateSolidBrush(RGB(100, 100, 100));  // 黒色で塗りつぶし
 	wc.lpszMenuName = NULL;
-	wc.hIconSm = (HICON)LoadImage(
-		NULL, L".\\assets\\システムアイコン.ico",
-		IMAGE_ICON, NULL, NULL,
-		LR_DEFAULTSIZE | LR_LOADFROMFILE);
+	wc.hIconSm = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_ICON2));
 	::RegisterClassExW(&wc);//ウィンドウクラスの登録
 }
 
@@ -63,7 +58,7 @@ void Window::create(Game& game) {
 	hwnd = CreateWindowEx(
 		0,
 		className,
-		L"Sample Window",
+		L"クマの釜山のホームランダービー！",
 		dwStyle,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
@@ -93,7 +88,7 @@ RECT Window::getClientRect() const
 
 
 
-bool Window::getClientRect(RECT* rect)
+bool Window::getClientRect(RECT* rect)const
 {
 	if (GetClientRect(hwnd, rect)) {
 		return true;
@@ -220,10 +215,6 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 		InputManager& inputManager = userData->game->getInputManager();
 		POINT cursor = { LOWORD(lParam),HIWORD(lParam) };
 		inputManager.setCursorPosition(cursor);
-
-		// マウス座標をウィンドウのタイトルに表示
-		std::wstring title = L"Mouse Position: (" + std::to_wstring(mouseX) + L", " + std::to_wstring(mouseY) + L")";
-		SetWindowTextW(hwnd, title.c_str());
 		return 0;
 	}
 	case WM_LBUTTONDOWN: {

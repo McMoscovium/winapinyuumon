@@ -170,6 +170,7 @@
     <Image Include="assets\はじめるpointed.bmp" />
     <Image Include="assets\はちみつ.bmp" />
     <Image Include="assets\アイコン.ico" />
+    <Image Include="assets\アプリアイコン.ico" />
     <Image Include="assets\ガチャ.bmp" />
     <Image Include="assets\ガチャpointed.bmp" />
     <Image Include="assets\クマの釜山.bmp" />
@@ -311,6 +312,7 @@
     <ClInclude Include="include\util\StateMachine\StateMachine.h" />
     <ClInclude Include="include\util\Timer.h" />
     <ClInclude Include="include\util\Vector2D.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

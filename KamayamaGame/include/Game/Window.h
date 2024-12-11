@@ -73,6 +73,6 @@ private:
 	//クライアント領域の四角形の寸法（ピクセル）を取得
 	
 
-	bool getClientRect(RECT* rect);
+	bool getClientRect(RECT* rect)const;
 	
 };

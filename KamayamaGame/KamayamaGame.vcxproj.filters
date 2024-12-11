@@ -15,11 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="KamayamaGame.rc">
-      <Filter>リソース ファイル</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="assets\batHitBox.bmp">
       <Filter>リソース ファイル</Filter>
     </Image>
@@ -159,6 +154,9 @@
       <Filter>リソース ファイル</Filter>
     </Image>
     <Image Include="assets\絶対に負けない.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="assets\アプリアイコン.ico">
       <Filter>リソース ファイル</Filter>
     </Image>
   </ItemGroup>
@@ -463,5 +461,11 @@
     <ClInclude Include="include\util\StateMachine\StateMachine.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="KamayamaGame.rc" />
   </ItemGroup>
 </Project>
