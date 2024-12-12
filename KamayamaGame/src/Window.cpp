@@ -7,11 +7,14 @@
 #include "Game/InputManager.h"
 #include "resource.h"
 
-const UINT fps = 60;
 
 
 //コンストラクタ
-Window::Window(HINSTANCE hInstance, int nCmdShow, InputManager* inputManager,Game& game) :hInstance(hInstance), msg({}) {
+Window::Window(HINSTANCE hInstance, int nCmdShow, InputManager* inputManager,Game& game) :
+	hInstance(hInstance), 
+	msg({})
+{
+	//ウィンドウ作成
 	registerClass();
 	create(game);
 	registerUserData(&game);
@@ -114,9 +117,9 @@ void Window::render(const GameObjectManager& gameObjectManager)
 
 
 	// バックバッファを薄い灰色で塗りつぶす
+	HBRUSH hBrush = CreateSolidBrush(RGB(100, 100, 100)); // 薄い灰色 (RGB)
 	RECT rect;
 	GetClientRect(hwnd, &rect);
-	HBRUSH hBrush = CreateSolidBrush(RGB(100, 100, 100)); // 薄い灰色 (RGB)
 	FillRect(hdcBackBuffer, &rect, hBrush);  // バックバッファに塗りつぶし
 	DeleteObject(hBrush);  // ブラシを解放
 	
@@ -133,9 +136,9 @@ void Window::render(const GameObjectManager& gameObjectManager)
 		obj.render(hdcBackBuffer);
 	}
 	//出来上がったバックバッファを本来のデバイスコンテキストに描画
-	RECT clientRect;
-	getClientRect(&clientRect);
-	if (BitBlt(hdc, 0, 0, clientRect.right, clientRect.bottom, hdcBackBuffer, 0, 0, SRCCOPY)) {
+	if (
+		BitBlt(hdc, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, hdcBackBuffer, 0, 0, SRCCOPY)
+		) {
 		//描画成功
 	}
 	else {
@@ -162,24 +165,21 @@ UINT Window::getFps() const
 
 bool Window::update(Game* game)
 {
-	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {//msgにメッセージを格納
+	//メッセージがなくなるまでメッセージを処理
+	if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {//msgにメッセージを格納
 		if (msg.message == WM_QUIT) {
 			return false;//ループ終了
 		}
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);//ウィンドウプロシージャを実行
-		return true;
-	}
-	else {//メッセージがない場合
-		return true;//ループ続行
-	}
+	}	
+	return true;//ループ続行
 }
 
 //ウィンドウプロシージャ
 LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	switch (uMsg) {
 	case WM_CREATE: {
-		SetTimer(hwnd, 1, 1000 / ::fps, NULL);
 		break;
 	}
 	case WM_CLOSE://×ボタンが押された
@@ -188,16 +188,6 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 	case WM_DESTROY://ウィンドウ破棄メッセージを受信
 		PostQuitMessage(0);//メッセージループ終了
 		break;
-	case WM_TIMER: {
-		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-		Game* game = userData->game;
-		InputManager& inputManager = game->getInputManager();
-		inputManager.update();
-		game->update();
-
-		InvalidateRect(hwnd, NULL, FALSE);  //ウィンドウ全体を無効化し、システムにWM_PAINTをポストさせる
-		return 0;
-	}
 	case WM_PAINT: {
 		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
 		Game* game = userData->game;
@@ -231,6 +221,26 @@ LRESULT CALLBACK Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM 
 		inputManager.setKeyState(VK_LBUTTON, InputManager::KeyState::KEY_RELEASED);
 		return 0;
 	}
+	case WM_KEYDOWN: {
+		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		//inputManagerを更新
+		InputManager& inputManager = userData->game->getInputManager();
+		if (wParam == 0x4D) {
+			inputManager.setKeyState(0x4D, InputManager::KeyState::KEY_PRESSED);
+		}
+		return 0;
+	}
+	case WM_KEYUP: {
+		UserData* userData = (UserData*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		//inputManagerを更新
+		InputManager& inputManager = userData->game->getInputManager();
+		if (wParam == 0x4D) {
+			inputManager.setKeyState(0x4D, InputManager::KeyState::KEY_RELEASED);
+		}
+		return 0;
+	}
+	case WM_ERASEBKGND:
+		return 1; // 背景を消去しない
 	}
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);//デフォルトの処理を呼び出す
 }

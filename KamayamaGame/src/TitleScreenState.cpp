@@ -44,9 +44,9 @@ TitleScreenState::TitleScreenState(Game& game) :
     scoreText.setObjectPosition({ 75,350 });
 
     //セーブデータ読み込み
-    SaveData saveData;
+    SaveData saveData(game.getCurrentVersion());
     SaveDataManager saveDataManager;
-    saveDataManager.load(saveData);
+    saveDataManager.load(saveData, game.getCurrentVersion());
     //スコア表示更新
     int score = saveData.getScore();
     std::wstring scorestr = L"スコア: " + std::to_wstring(score);

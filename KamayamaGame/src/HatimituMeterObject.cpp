@@ -1,6 +1,6 @@
 #include "GameObject/HatimituMeterObject.h"
 
-const int gap = 5;//各はちみつのすき間は5ピクセル開ける
+
 
 void HatimituMeterObject::render(HDC hdc)const
 {
@@ -9,17 +9,22 @@ void HatimituMeterObject::render(HDC hdc)const
 	//2段に並べる
 	//1段目
 	int originX;//描画する絵の原点のX座標
-	for (int i = 0; i < 10; i++) {
+	for (char i = 0; i < width; i++) {
 		if (i < getValue()) {
-			//色付きのはちみつを描画
+			//枠付き色付きのはちみつを描画
 			originX = 0;
+		}
+		else if(i<getFilledValue()){
+			//枠無し色付きのはちみつを描画
+			originX = getWidth();
 		}
 		else {
 			//白黒のはちみつを描画
-			originX = getWidth();
-		}if (TransparentBlt(
+			originX = 2 * getWidth();
+		}
+		if (TransparentBlt(
 			hdc,
-			getPositionX() + i * (getWidth() + ::gap),
+			getPositionX() + i * (getWidth() + gap),
 			getPositionY(),
 			getWidthOnWindow(),
 			getHeightOnWindow(),
@@ -32,9 +37,40 @@ void HatimituMeterObject::render(HDC hdc)const
 		)) {
 		}
 		else {
-			OutputDebugStringW(L"はちみつ描画しｐっぱい\n");
+			OutputDebugStringW(L"はちみつ1段目描画しｐっぱい\n");
 		}
-		
+	}
+	//2段目
+	for (char i = 0; i < width; i++) {
+		if (i+width < getValue()) {
+			//枠付き色付きのはちみつを描画
+			originX = 0;
+		}
+		else if (i+width < getFilledValue()) {
+			//枠無し色付きのはちみつを描画
+			originX = getWidth();
+		}
+		else {
+			//白黒のはちみつを描画
+			originX = 2 * getWidth();
+		}
+		if (TransparentBlt(
+			hdc,
+			getPositionX() + i * (getWidth() + gap),
+			getPositionY()+getHeight(),
+			getWidthOnWindow(),
+			getHeightOnWindow(),
+			hdcMem,
+			originX,
+			0,
+			getWidth(),
+			getHeight(),
+			RGB(255, 0, 255)
+		)) {
+		}
+		else {
+			OutputDebugStringW(L"はちみつ1段目描画しｐっぱい\n");
+		}
 	}
 	SelectObject(hdcMem, oldMemBitmap);
 	DeleteDC(hdcMem);
