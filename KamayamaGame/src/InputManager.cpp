@@ -19,6 +19,7 @@ InputManager::~InputManager()
 
 void InputManager::initializeKeys() {//@TODO
 	keyStates.insert({ VK_LBUTTON,InputManager::KeyState::KEY_UP });
+	keyStates.insert({ 0x4D,KeyState::KEY_UP });//0x4d=ÅuMÅv
 }
 
 

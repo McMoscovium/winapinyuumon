@@ -45,8 +45,8 @@ PlayResultState::PlayResultState(Game& game, Result& result, Stage* stage) :
 	//スコアデータ更新処理
 	//データ読み込み
 	SaveDataManager saveDataManager;
-	SaveData prevData;
-	saveDataManager.load(prevData);
+	SaveData prevData(game.getCurrentVersion());
+	saveDataManager.load(prevData, game.getCurrentVersion());
 	//スコア加算
 	int score = result.getDistanceSum();
 	SaveData newData = prevData.addScore(score);

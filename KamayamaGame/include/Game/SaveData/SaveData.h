@@ -3,35 +3,91 @@
 #include <Windows.h>
 #include <iostream>
 #include <fstream>
+#include "cereal/archives/binary.hpp"
+#include "cereal/types/string.hpp"
+#include "cereal/types/vector.hpp"
 #include <stdexcept>
 #include <bcrypt.h>
 #include <vector>
+#include <string>
 
 #include "./util.h"
+#include "Game/Version.h"
+#include "Skill/Skill.h"
+
 
 class SaveData
 {
 private:
+    Version version;//現在のバージョン
+
+    char power;
+    char powerFilled;
+    char meet;
+    char meetFilled;
+    char speed;
+    char speedFilled;
+    Skill skill;
     int score;
     bool cheated;
 public:
-    SaveData(int score = 100, bool cheated = false) :
-        score(score), cheated(cheated) {
+    SaveData(const Version& version):
+        version(Version(0,0,0)),
+        power(1),
+        powerFilled(1),
+        meet(1),
+        meetFilled(1),
+        speed(1),
+        speedFilled(1),
+        score(0),
+        cheated(false)
+    {
     }
+    void setPower(const char pow) {
+        power = pow;
+    }
+    void setPowerFilled(const char powF) { powerFilled = powF; }
+    void setMeet(const char m) {
+        meet = m;
+    }
+    void setMeetFilled(const char meetF) { meetFilled = meetF; }
+    void setSpeed(const char s) {
+        speed = s;
+    }
+    void setSpeedFilled(const char spdF) { speedFilled = spdF; }
+    void setSkill(const Skill& s) { skill = s; }
     void setScore(const int s) {
         score = s;
     }
     void setCheated(const bool c) {
         cheated = c;
     }
-    SaveData addScore(const int s){
-        return SaveData(score + s, cheated);
-    }
+
+    char getPower()const { return power; }
+    char& getPowerRef() { return power; }
+    char getPowerFilled()const { return powerFilled; }
+    char& getPowerFilledRef() { return powerFilled; }
+    char getMeet()const { return meet; }
+    char& getMeetRef() { return meet; }
+    char getMeetFilled()const { return meetFilled; }
+    char& getMeetFilledRef() { return meetFilled; }
+    char getSpeed()const { return speed; }
+    char& getSpeedRef() { return speed; }
+    char getSpeedFilled()const { return speedFilled; }
+    char& getSpeedFilledRef() { return speedFilled; }
+    
     const int getScore()const {
         return score;
     }
+    int& getScoreRef() { return score; }
     const bool isCheated()const {
         return cheated;
+    }
+    Skill getSkill()const { return skill; }
+    SaveData addScore(const int s)const {
+        SaveData res = *this;
+        res.setScore(this->getScore() + s);
+        return res;
     }
 
 
@@ -43,37 +99,43 @@ public:
 
     //データサイズを返す
     const int size()const {
-        return sizeof(score) + sizeof(cheated);
+        return
+            sizeof(*this);
     }
 
     //データをシリアル化
-    const std::vector<BYTE> plainData()const {
-        std::vector<BYTE> plainData(size());
+    std::vector<BYTE> serialize()const {
+        std::ostringstream oss(std::ios::binary);
+        cereal::BinaryOutputArchive archive(oss);
+        archive(*this);
 
-        int it = 0;
-
-        std::memcpy(plainData.data()+it, &score, sizeof(score));
-        it += sizeof(score);
-        std::memcpy(plainData.data()+it, &cheated, sizeof(cheated));
-        it += sizeof(cheated);
-
-        return plainData;
+        const std::string& str = oss.str();
+        return std::vector<BYTE>(str.begin(), str.end());
     }
 
     //生データ列を受け取り、メンバ変数に順番に格納していく
-    void deSerialize(const std::vector<BYTE>& plainText) {
-        if (plainText.size() < size()) {
-            std::cout << "plainText.size()=: " << plainText.size() << std::endl;
-            throw std::runtime_error("Invalid plainText.");
+    void deSerialize(const std::vector<BYTE>& data, const Version& currentVersion) {
+        std::istringstream iss(std::string(data.begin(), data.end()), std::ios::binary);
+        cereal::BinaryInputArchive archive(iss);
+
+
+        try {
+            archive(*this);
+            // バージョンに応じたデータ補正
+            if (this->version < currentVersion) {
+                if (this->version > Version(0,0,1)) {
+                    // バージョン1以上にしかないメンバ変数を補正
+                    //this->playerName = "Unknown"; // 既定値
+                    //this->inventory = {};         // 空のインベントリ
+                }
+                if (this->version > Version(0, 0, 2)) {
+                    //バージョン0.0.2以上にしかないメンバ変数を補正
+                }
+            }
         }
-
-        int it = 0;
-
-        std::memcpy(&score, plainText.data() + it, sizeof(score));
-        it += sizeof(score);
-
-        std::memcpy(&cheated, plainText.data() + it, sizeof(cheated));
-        it += sizeof(cheated);
+        catch (...) {
+            throw std::runtime_error("Failed to deserialize SaveData: data is incomplete or corrupted.");
+        }
     }
 
     //
@@ -81,6 +143,17 @@ public:
         std::cout << std::dec;
         std::cout << "score: " << score << std::endl;
         std::cout << "cheated: " << cheated << std::endl;
+    }
+    
+    // cereal用serialize関数
+    //
+    // /////////////////////////////////////////
+    // ここはSaveDataのメンバ変数を増やしたらちゃんと増やす
+    // //////////////////////////////////////////
+    //
+    template<class Archive>
+    void serialize(Archive& archive) {
+        archive(version, power, powerFilled, meet, meetFilled, speed, speedFilled, skill, score, cheated);
     }
 };
 
@@ -304,7 +377,7 @@ public:
 
 
         //データを取得
-        const std::vector<BYTE>& data = saveData.plainData();
+        const std::vector<BYTE> data = saveData.serialize();
 
         
 
@@ -336,7 +409,7 @@ public:
     }
 
     //外部ファイルを読み込み、SaveDataに書き込む
-    void load(SaveData& saveData) {
+    void load(SaveData& saveData, const Version& currentVersion) {
         std::ifstream inFile(filename, std::ios::binary);
         if (!inFile) {
             //ファイルがなくて読み込めない
@@ -358,6 +431,6 @@ public:
         const std::vector<BYTE> plainText = decrypt(cipherText, key, iv);
 
         //復号したデータをパースしメンバ変数に設定
-        saveData.deSerialize(plainText);
+        saveData.deSerialize(plainText, currentVersion);
     }
 };

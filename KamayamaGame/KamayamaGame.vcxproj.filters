@@ -159,6 +159,24 @@
     <Image Include="assets\アプリアイコン.ico">
       <Filter>リソース ファイル</Filter>
     </Image>
+    <Image Include="assets\ステータスガメン.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="assets\DOWN.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="assets\tairoruhe.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="assets\UP.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="assets\変更.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="assets\決定.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\カーソル.cur">
@@ -422,9 +440,6 @@
     <ClInclude Include="include\GameState\StageListState\StageListState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="include\GameState\StatusState\StatusState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="include\GameState\TitleScreenState\TitleScreenState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -462,6 +477,18 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game\Version.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameState\StageListState\LoadResourceSubState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameState\StageListState\ChoiceSubState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameState\StatusState\StatusState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

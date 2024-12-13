@@ -159,10 +159,13 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\batHitBox.bmp" />
+    <Image Include="assets\DOWN.bmp" />
     <Image Include="assets\kamayama.bmp" />
     <Image Include="assets\Stage1.bmp" />
     <Image Include="assets\Stage2.bmp" />
+    <Image Include="assets\tairoruhe.bmp" />
     <Image Include="assets\tintin選択.bmp" />
+    <Image Include="assets\UP.bmp" />
     <Image Include="assets\おわる.bmp" />
     <Image Include="assets\おわるpointed.bmp" />
     <Image Include="assets\しっぱい.bmp" />
@@ -181,6 +184,7 @@
     <Image Include="assets\ステージ選択へ.bmp" />
     <Image Include="assets\ステータス.bmp" />
     <Image Include="assets\ステータスpointed.bmp" />
+    <Image Include="assets\ステータスガメン.bmp" />
     <Image Include="assets\タイトルヘ.bmp" />
     <Image Include="assets\タイトル画面2.bmp" />
     <Image Include="assets\チート.bmp" />
@@ -197,10 +201,12 @@
     <Image Include="assets\ボール.bmp" />
     <Image Include="assets\ボールの影.bmp" />
     <Image Include="assets\佐々木朗希.bmp" />
+    <Image Include="assets\変更.bmp" />
     <Image Include="assets\打者.bmp" />
     <Image Include="assets\投手.bmp" />
     <Image Include="assets\投手スプライトシート.bmp" />
     <Image Include="assets\次へ.bmp" />
+    <Image Include="assets\決定.bmp" />
     <Image Include="assets\結果発表.bmp" />
     <Image Include="assets\結果発表2.bmp" />
     <Image Include="assets\絶対に負けない.bmp" />
@@ -247,7 +253,12 @@
     <ClCompile Include="src\SasakiPitcher.cpp" />
     <ClCompile Include="src\SasakiStage.cpp" />
     <ClCompile Include="src\Stage.cpp" />
-    <ClCompile Include="src\StageListState.cpp" />
+    <ClCompile Include="src\StageListState.cpp">
+      <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</GenerateSourceDependencies>
+      <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</GenerateSourceDependencies>
+      <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GenerateSourceDependencies>
+      <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</GenerateSourceDependencies>
+    </ClCompile>
     <ClCompile Include="src\StatusState.cpp" />
     <ClCompile Include="src\Straight.cpp" />
     <ClCompile Include="src\TextObject.cpp" />
@@ -290,6 +301,8 @@
     <ClInclude Include="include\GameState\PlayResultState\CompareNormSubState.h" />
     <ClInclude Include="include\GameState\PlayResultState\DetailResultSubState.h" />
     <ClInclude Include="include\GameState\PlayResultState\PlayResultState.h" />
+    <ClInclude Include="include\GameState\StageListState\ChoiceSubState.h" />
+    <ClInclude Include="include\GameState\StageListState\LoadResourceSubState.h" />
     <ClInclude Include="include\GameState\StageListState\StageListState.h" />
     <ClInclude Include="include\GameState\StatusState\StatusState.h" />
     <ClInclude Include="include\GameState\TitleScreenState\TitleScreenState.h" />
@@ -299,6 +312,7 @@
     <ClInclude Include="include\Game\InputManager.h" />
     <ClInclude Include="include\Game\SaveData\SaveData.h" />
     <ClInclude Include="include\Game\SaveData\util.h" />
+    <ClInclude Include="include\Game\Version.h" />
     <ClInclude Include="include\Game\VirtualWindow.h" />
     <ClInclude Include="include\Game\Window.h" />
     <ClInclude Include="include\PitchType\PitchType.h" />

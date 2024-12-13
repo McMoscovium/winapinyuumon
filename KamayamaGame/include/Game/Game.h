@@ -7,6 +7,7 @@ PC内部でのゲームの進行を管理するクラス。
 #include <unordered_map>
 #include "GameState/IGameState.h"
 #include "Camera.h"
+#include "Version.h"
 
 class Window;
 class InputManager;
@@ -14,6 +15,7 @@ class InputManager;
 class Game
 {
 private:
+	Version version = Version(0, 0, 1);
 	IGameState* currentState = nullptr;
 	InputManager& inputManager;
 	Window* window;
@@ -42,4 +44,5 @@ public:
 		return window;
 	}
 	const HINSTANCE& getHInstance();
+	const Version& getCurrentVersion()const { return version; }
 };
