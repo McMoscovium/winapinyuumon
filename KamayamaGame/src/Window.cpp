@@ -166,7 +166,7 @@ UINT Window::getFps() const
 bool Window::update(Game* game)
 {
 	//メッセージがなくなるまでメッセージを処理
-	if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {//msgにメッセージを格納
+	while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {//msgにメッセージを格納
 		if (msg.message == WM_QUIT) {
 			return false;//ループ終了
 		}

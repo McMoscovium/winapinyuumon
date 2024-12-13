@@ -253,7 +253,12 @@
     <ClCompile Include="src\SasakiPitcher.cpp" />
     <ClCompile Include="src\SasakiStage.cpp" />
     <ClCompile Include="src\Stage.cpp" />
-    <ClCompile Include="src\StageListState.cpp" />
+    <ClCompile Include="src\StageListState.cpp">
+      <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</GenerateSourceDependencies>
+      <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</GenerateSourceDependencies>
+      <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GenerateSourceDependencies>
+      <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</GenerateSourceDependencies>
+    </ClCompile>
     <ClCompile Include="src\StatusState.cpp" />
     <ClCompile Include="src\Straight.cpp" />
     <ClCompile Include="src\TextObject.cpp" />
@@ -296,6 +301,8 @@
     <ClInclude Include="include\GameState\PlayResultState\CompareNormSubState.h" />
     <ClInclude Include="include\GameState\PlayResultState\DetailResultSubState.h" />
     <ClInclude Include="include\GameState\PlayResultState\PlayResultState.h" />
+    <ClInclude Include="include\GameState\StageListState\ChoiceSubState.h" />
+    <ClInclude Include="include\GameState\StageListState\LoadResourceSubState.h" />
     <ClInclude Include="include\GameState\StageListState\StageListState.h" />
     <ClInclude Include="include\GameState\StatusState\StatusState.h" />
     <ClInclude Include="include\GameState\TitleScreenState\TitleScreenState.h" />

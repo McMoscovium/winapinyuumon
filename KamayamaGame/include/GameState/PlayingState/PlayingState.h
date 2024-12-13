@@ -22,7 +22,10 @@ class PlayingState :
     public GameState<PlayingState,GameSubState<PlayingState>>
 {
 public:
+    //普通に作成する
     PlayingState(Game& game, Stage* stage);
+    //読み込んだリソースも受け戸って食器か
+    PlayingState(Game& game, Stage* stage, GameObjectManager&& gameObjectManager, AudioManager&& audioManager);
     ~PlayingState();
 
     enum FlyBallResult {

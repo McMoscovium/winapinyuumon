@@ -34,7 +34,7 @@ PlayingState::PlayingState(Game& game, Stage* stage) :
 {
     HINSTANCE hInstance = game.getHInstance();
     //フィールド画像読み込み
-    gameObjectManager.addFront<PictureObject>("FIELD00", IDB_BITMAP25,hInstance, SIZE{ 1920,1200 });
+    gameObjectManager.addFront<PictureObject>("FIELD00", IDB_BITMAP25, hInstance, SIZE{ 1920,1200 });
     gameObjectManager.addFront<PictureObject>("FIELD01", IDB_BITMAP26, hInstance, SIZE{ 1920,1200 });
     gameObjectManager.addFront<PictureObject>("FIELD02", IDB_BITMAP27, hInstance, SIZE{ 1920,1200 });
     gameObjectManager.addFront<PictureObject>("FIELD10", IDB_BITMAP28, hInstance, SIZE{ 1920,1200 });
@@ -104,6 +104,34 @@ PlayingState::PlayingState(Game& game, Stage* stage) :
 
     audioManager.play("BGM1", true);
 
+    changeSubState(new WaitingPitchingSubState(*this));
+}
+
+PlayingState::PlayingState(Game& game, Stage* stage, GameObjectManager&& gameObjectManager, AudioManager&& audioManager) :
+    GameState(game),
+    stage(stage),
+    stadium(stage->createStadium()),
+    result(Result(stage->getNorm())),
+    restBalls(stage->getTrials())
+{
+    gameObjectManager = std::move(gameObjectManager);
+    audioManager = std::move(audioManager);
+
+    //フィールド画像だけ別のコンテナにも入れる
+    fieldImages.emplace("FIELD00", gameObjectManager.getObject<PictureObject>("FIELD00"));
+    fieldImages.emplace("FIELD01", gameObjectManager.getObject<PictureObject>("FIELD01"));
+    fieldImages.emplace("FIELD02", gameObjectManager.getObject<PictureObject>("FIELD02"));
+    fieldImages.emplace("FIELD10", gameObjectManager.getObject<PictureObject>("FIELD10"));
+    fieldImages.emplace("FIELD11", gameObjectManager.getObject<PictureObject>("FIELD11"));
+    fieldImages.emplace("FIELD12", gameObjectManager.getObject<PictureObject>("FIELD12"));
+    fieldImages.emplace("FIELD-10", gameObjectManager.getObject<PictureObject>("FIELD-10"));
+    fieldImages.emplace("FIELD-11", gameObjectManager.getObject<PictureObject>("FIELD-11"));
+    fieldImages.emplace("FIELD-12", gameObjectManager.getObject<PictureObject>("FIELD-12"));
+
+    //音楽再生
+    audioManager.play("BGM1", true);
+
+    //最後にsubState設定
     changeSubState(new WaitingPitchingSubState(*this));
 }
 

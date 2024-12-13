@@ -25,6 +25,27 @@ private:
 
 public:
 	GameObjectManager() = default;
+	//ムーブコンストラクタ
+	GameObjectManager(GameObjectManager&& src) noexcept {
+		if (this != &src) {
+			objects = std::move(src.getObjects());
+			drawOrder = src.getDrawOrderDirect();
+		}
+	}
+
+	//コピー代入演算子（所有権を移動）
+	GameObjectManager& operator=(GameObjectManager&& src)noexcept {
+		if (this != &src) {
+			objects = std::move(src.getObjects());
+			drawOrder = src.getDrawOrderDirect();
+		}
+		return *this;
+	}
+
+	// コピーは許可しない
+	GameObjectManager(const GameObjectManager&) = delete;
+	GameObjectManager& operator=(const GameObjectManager&) = delete;
+
 	~GameObjectManager() = default;
 
 	//オブジェクトを手前に追加
@@ -61,6 +82,12 @@ public:
 		}
 		return result;
 	}
+
+	//描画順に並べたリストをそのまま返す
+	std::vector<std::string>& getDrawOrderDirect() {
+		return drawOrder;
+	}
+
 	//オブジェクト名でオブジェクトを取得
 	template<typename T>
 	T& getObject(const std::string& name) {
@@ -71,5 +98,9 @@ public:
 		}
 
 		return static_cast<T&>(*it->second.object);
+	}
+
+	std::unordered_map<std::string, ObjectEntry>& getObjects() {
+		return objects;
 	}
 };

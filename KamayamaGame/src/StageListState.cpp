@@ -2,11 +2,8 @@
 
 #include "Game/Game.h"
 #include "GameObject/PictureObject.h"
-#include "Game/InputManager.h"
-#include "GameState/TitleScreenState/TitleScreenState.h"
+#include "GameState/StageListState/ChoiceSubState.h"
 #include "GameState/PlayingState/PlayingState.h"
-#include "Stage/TintinStage.h"
-#include "Stage/SasakiStage.h"
 #include "resource.h"
 
 StageListState::StageListState(Game& game):
@@ -19,6 +16,7 @@ StageListState::StageListState(Game& game):
 	gameObjectManager.addFront<PictureObject>("TINTIN", IDB_BITMAP5, hInstance, SIZE{ 207,252 });
 	gameObjectManager.addFront<PictureObject>("STAGE1", IDB_BITMAP3, hInstance, SIZE{ 162,41 });
 	gameObjectManager.addFront<PictureObject>("STAGE2", IDB_BITMAP4, hInstance, SIZE{ 162,41 });
+	gameObjectManager.addFront<PictureObject>("LOAD_ANIMATION", IDB_BITMAP38, hInstance, SIZE{ 200,266 });
 
 	PictureObject& toTitleButton = gameObjectManager.getObject<PictureObject>("TO_TITLE");
 	toTitleButton.setObjectPosition({ 47,574 });
@@ -36,27 +34,11 @@ StageListState::StageListState(Game& game):
 	tintin.appear();
 	stage1Button.appear();
 	stage2Button.appear();
+
+	changeSubState(new ChoiceSubState(*this));
 }
 
 void StageListState::update(Game& game)
 {
-	InputManager& inputManager = game.getInputManager();
-	PictureObject& toTitleButton = gameObjectManager.getObject<PictureObject>("TO_TITLE");
-
-	//タイトルヘボタン処理
-	if (inputManager.isClicked(toTitleButton)) {
-		game.changeState(new TitleScreenState(game));
-		return;
-	}
-
-	PictureObject& stage1Button = gameObjectManager.getObject<PictureObject>("STAGE1");
-	PictureObject& stage2Button = gameObjectManager.getObject<PictureObject>("STAGE2");
-	//ステージ選択ボタン処理
-	if (inputManager.isClicked(stage1Button)) {
-		game.changeState(new PlayingState(game, new TintinStage()));
-	}
-
-	if (inputManager.isClicked(stage2Button)) {
-		game.changeState(new PlayingState(game, new SasakiStage()));
-	}
+	currentSubState->update(game);
 }

@@ -40,12 +40,21 @@ public:
 			OutputDebugStringA(msg.c_str());
 			throw std::runtime_error("Faied to create XAudio2" + std::to_string(hr));
 		}
+
 		if (FAILED(hr=xAudio->CreateMasteringVoice(&masteringVoice))) {
 			std::string msg = "マスタリングボイスを生成失敗: " + std::to_string(hr) + "\n";
 			OutputDebugStringA(msg.c_str());
 			throw std::runtime_error("Failed to create mastering voice: " + std::to_string(hr));
 		}
 	}
+
+	AudioManager& operator=(AudioManager&& src)noexcept {
+		xAudio = std::move(src.xAudio);
+		masteringVoice = std::move(src.masteringVoice);
+		wavList = std::move(src.wavList);
+		return *this;
+	}
+
 	~AudioManager() {
 		for (auto& [key, resource] : wavList) {
 			resource->sourceVoice->DestroyVoice();
