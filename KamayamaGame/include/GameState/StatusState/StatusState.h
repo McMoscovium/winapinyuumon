@@ -31,6 +31,32 @@ private:
         neededSpeedPoint = data.getSpeed() * 1000;
     }
 
+
+    //ステータスをアップさせる
+    //ステータスに変化あるならtrue
+    bool statusUp(char& status, char& filled, int& money,int & neededMoney, HatimituMeterObject& meter) {
+        if (status >= 30) {
+            //すでにステータスがMAX
+            return false;
+        }
+        if (status == filled && money < neededMoney) {
+            //新規購入したいがお金が足りない
+            return false;
+        }
+        if (status < filled) {
+            //新規購入無しでUP
+            meter.addValue();
+            status++;
+            return true;
+        }
+        //新規購入
+        meter.addValue();
+        status++;
+        filled++;
+        money -= neededMoney;
+        neededMoney = status * 1000;
+        return true;
+    }
 public:
     //コンストラクタ
     StatusState(Game& game);

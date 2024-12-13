@@ -440,9 +440,6 @@
     <ClInclude Include="include\GameState\StageListState\StageListState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="include\GameState\StatusState\StatusState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="include\GameState\TitleScreenState\TitleScreenState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -489,6 +486,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="include\GameState\StageListState\ChoiceSubState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameState\StatusState\StatusState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

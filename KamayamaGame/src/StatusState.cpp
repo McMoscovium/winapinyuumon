@@ -76,10 +76,6 @@ StatusState::StatusState(Game& game) :
 	neededMeetPointStr.setObjectPosition({ 767,293 });
 	neededSpeedPointStr.setObjectPosition({ 767,385 });
 
-
-	//はちみつメーター初期設定
-	powerMeter.setValue(5);
-
 	showAll();
 
 	OutputDebugString(L"StatusStateのインスタンスが作成されました\n");
@@ -89,17 +85,19 @@ void StatusState::update(Game& game)
 {
 	InputManager& inputManager = game.getInputManager();
 
-	
-	
+
+
 
 	//タイトルボタン処理
 	PictureObject& taitoruhe = gameObjectManager.getObject<PictureObject>("TAITORUHE");
 	if (inputManager.isClicked(taitoruhe)) {
+		SaveDataManager saveDataManager = SaveDataManager();
+		saveDataManager.save(data);
 		game.changeState(new TitleScreenState(game));
 		return;
 	}
 
-	
+
 	PictureObject& powerUp = gameObjectManager.getObject<PictureObject>("POWER_UP");
 	PictureObject& powerDown = gameObjectManager.getObject<PictureObject>("POWER_DOWN");
 	PictureObject& meetUp = gameObjectManager.getObject<PictureObject>("MEET_UP");
@@ -113,7 +111,7 @@ void StatusState::update(Game& game)
 	PictureObject& henkou = gameObjectManager.getObject<PictureObject>("KETTEI");
 
 
-	TextObject& pointText = gameObjectManager.getObject<TextObject>("POINTS"); 
+	TextObject& pointText = gameObjectManager.getObject<TextObject>("POINTS");
 	TextObject& neededPowerStr = gameObjectManager.getObject<TextObject>("NEEDED_POWER");
 	TextObject& neededMeetStr = gameObjectManager.getObject<TextObject>("NEEDED_MEET");
 	TextObject& neededSpeedStr = gameObjectManager.getObject<TextObject>("NEEDED_SPEED");
@@ -128,74 +126,54 @@ void StatusState::update(Game& game)
 
 	//ステータスボタンUP/DOWN処理
 	if (inputManager.isClicked(powerUp)) {
-		if (data.getScore() < neededPowerPoint) {
-
-		}
-		else{
-			if (data.getPower() < 30) {
-				//メーターに加算
-				powerMeter.addValue();
-				//セーブデータ用メンバ変数更新
-				if (data.getPower() == data.getPowerFilled()) {
-					data.setScore(data.getScore() - neededPowerPoint);
-				}
-				data.setPower(powerMeter.getValue());
-				data.setPowerFilled(powerMeter.getFilledValue());
-				data.setScore(data.getScore() - neededPowerPoint);
-				neededPowerPoint = data.getPower() * 1000;
-				//ポイント表示更新
-				pointText.setText(std::to_wstring(data.getScore()) + L"pt");
-				neededPowerStr.setText(std::to_wstring(neededPowerPoint));
-				//変更ボタンを押せるようにする
-				allowModify = true;
-
-			}
-			
-			OutputDebugString(L"power added.\n");
+		if (
+			statusUp(
+				data.getPowerRef(),
+				data.getPowerFilledRef(),
+				data.getScoreRef(),
+				neededPowerPoint,
+				powerMeter
+				)
+			)
+		{
+			neededPowerStr.setText(std::to_wstring(neededPowerPoint));
+			pointText.setText(std::to_wstring(data.getScore()) + L"pt");
+			//変更ボタンを押せるようにする
+			allowModify = true;
 		}
 	}
 	if (inputManager.isClicked(meetUp)) {
-		if (data.getScore() < neededMeetPoint) {
-
-		}
-		else {
-			if (data.getMeet() < 30) {
-				meetMeter.addValue();
-				if (data.getMeet() == data.getMeetFilled()) {
-					data.setScore(data.getScore() - neededMeetPoint);
-				}
-				data.setMeet(meetMeter.getValue());
-				data.setMeetFilled(meetMeter.getFilledValue());
-				neededMeetPoint = data.getMeet() * 1000;
-				pointText.setText(std::to_wstring(data.getScore()) + L"pt");
-				neededMeetStr.setText(std::to_wstring(neededMeetPoint));
-
-				//変更ボタンを押せるようにする
-				allowModify = true;
-			}
-			OutputDebugString(L"meet added.\n");
+		if (
+			statusUp(
+				data.getMeetRef(),
+				data.getMeetFilledRef(),
+				data.getScoreRef(),
+				neededMeetPoint,
+				meetMeter
+			)
+			)
+		{
+			neededMeetStr.setText(std::to_wstring(neededMeetPoint));
+			pointText.setText(std::to_wstring(data.getScore()) + L"pt");
+			//変更ボタンを押せるようにする
+			allowModify = true;
 		}
 	}
 	if (inputManager.isClicked(speedUp)) {
-		if (data.getScore() < neededSpeedPoint) {
-
-		}
-		else {
-			if (data.getSpeed() < 30) {
-				speedMeter.addValue();
-				if (data.getSpeed() == data.getSpeedFilled()) {
-					data.setScore(data.getScore() - neededSpeedPoint);
-				}
-				data.setSpeed(speedMeter.getValue());
-				data.setSpeedFilled(speedMeter.getFilledValue());
-				neededSpeedPoint = data.getSpeed() * 1000;
-				pointText.setText(std::to_wstring(data.getScore()) + L"pt");
-				neededSpeedStr.setText(std::to_wstring(neededSpeedPoint));
-
-				//変更ボタンを押せるようにする
-				allowModify = true;
-			}
-			OutputDebugString(L"speed added.\n");
+		if (
+			statusUp(
+				data.getSpeedRef(),
+				data.getSpeedFilledRef(),
+				data.getScoreRef(),
+				neededSpeedPoint,
+				speedMeter
+			)
+			)
+		{
+			neededSpeedStr.setText(std::to_wstring(neededSpeedPoint));
+			pointText.setText(std::to_wstring(data.getScore()) + L"pt");
+			//変更ボタンを押せるようにする
+			allowModify = true;
 		}
 	}
 	if (inputManager.isClicked(powerDown)) {
@@ -224,7 +202,7 @@ void StatusState::update(Game& game)
 	}
 
 	//変更ボタンが押されたら、SaveDataに記録する
-	
+
 	if (inputManager.isClicked(henkou) && allowModify) {
 		SaveDataManager saveDataManager;
 		saveDataManager.save(data);

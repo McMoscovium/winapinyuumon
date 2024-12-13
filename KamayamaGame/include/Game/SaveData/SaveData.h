@@ -64,14 +64,22 @@ public:
     }
 
     char getPower()const { return power; }
+    char& getPowerRef() { return power; }
     char getPowerFilled()const { return powerFilled; }
+    char& getPowerFilledRef() { return powerFilled; }
     char getMeet()const { return meet; }
+    char& getMeetRef() { return meet; }
     char getMeetFilled()const { return meetFilled; }
+    char& getMeetFilledRef() { return meetFilled; }
     char getSpeed()const { return speed; }
+    char& getSpeedRef() { return speed; }
     char getSpeedFilled()const { return speedFilled; }
+    char& getSpeedFilledRef() { return speedFilled; }
+    
     const int getScore()const {
         return score;
     }
+    int& getScoreRef() { return score; }
     const bool isCheated()const {
         return cheated;
     }
