@@ -1,9 +1,12 @@
 #pragma once
 
 #include "GameObject/PictureObject.h"
+#include "Skill/Skill.h"
 
 #include <string>
 #include <Windows.h>
+
+class Skill;
 
 class Batter :
 	public PictureObject
@@ -13,6 +16,7 @@ protected:
 	int power;
 	float speed;
 	float meet;
+	Skill skill;
 public:
 	const std::wstring path;
 	const SIZE frameSize;

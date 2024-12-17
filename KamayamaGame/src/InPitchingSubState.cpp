@@ -68,7 +68,7 @@ void InPitchingSubState::updateBall()
     ballObject.setObjectPosition(objectPos);   
 }
 
-bool InPitchingSubState::isMeet(GameObject& ballObject, Ball& ball, int& hitStopTime)
+bool InPitchingSubState::isMeet(GameObject& ballObject, Ball& ball, Batter& batter, int& hitStopTime)
 {
     POINT cursorPos = owner.getCursorPos();
     POINT ballPos = ballObject.getPosition();
@@ -83,15 +83,10 @@ bool InPitchingSubState::isMeet(GameObject& ballObject, Ball& ball, int& hitStop
     //以下、ボールとバットが当たった
     
     int gap = abs(ballPos.x+ball.getRadius() - cursorPos.x);//ボールとカーソルのずれ具合
-    std::wstring gapmsg = L"gap: " + std::to_wstring(gap) + L"\n";
-    OutputDebugString(gapmsg.c_str());
     hitStopTime = 150 - 30 * gap;
     if (hitStopTime < 50) { hitStopTime = 0; }
-    std::wstring msg = L"hitStopTime: "+std::to_wstring(hitStopTime) + L"\n";
-    OutputDebugString(msg.c_str());
 
     //ボールの速度データを計算
-    
     //左右の角度
     float angle = (float)std::round((cursorPos.y - ballPos.y) * 1.8f);
     ball.setAngle(angle);
@@ -101,7 +96,6 @@ bool InPitchingSubState::isMeet(GameObject& ballObject, Ball& ball, int& hitStop
     efficiency = (50 - abs(ballPos.x + ball.getRadius() * ballObject.getSizeRate() - cursorPos.x)) / 40;
 
     //上向きの早さを設定
-    Batter& batter = owner.getGameObjectManager().getObject<Batter>("BATTER");
     std::random_device rd;
     std::mt19937 gen(rd());
     std::normal_distribution<float> dis(0.6f,0.1f);
@@ -111,7 +105,7 @@ bool InPitchingSubState::isMeet(GameObject& ballObject, Ball& ball, int& hitStop
         ) * std::max<float>(dis(gen), 0.1f);
     ball.sethVelocity(hVelocity);
 
-    //速さの水平成分    
+    //水平の速さを設定    
     int speed = (int)(batter.getPower() * efficiency);
     if (hitStopTime > 0) {
         speed += 5;
@@ -193,7 +187,8 @@ void InPitchingSubState::update(Game& game)
         owner.updateBatFrame(currentBatterFrame);
         //ボールが当たったかどうかで分けて処理
         int hitStopTime = 0;
-        if (isMeet(ballObject, owner.getBall(), hitStopTime)) {
+        Batter& batter = owner.getGameObjectManager().getObject<Batter>("BATTER");
+        if (isMeet(ballObject, owner.getBall(), batter, hitStopTime)) {
             if (hitStopTime) {
                 //ミート音を鳴らす
                 owner.getAudioManager().play("JUST");

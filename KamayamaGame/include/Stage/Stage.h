@@ -6,7 +6,7 @@
 #include "GameObject/Batter/Batter.h"
 #include "GameObject/Stadium/Stadium.h"
 
-
+class SaveData;
 
 class Stage
 {
@@ -30,6 +30,6 @@ public:
 	const int getTrials()const;
 
 	virtual std::unique_ptr<Pitcher> createPitcher(HINSTANCE) = 0;
-	virtual std::unique_ptr<Batter> createBatter(HINSTANCE) = 0;
+	virtual std::unique_ptr<Batter> createBatter(HINSTANCE, const SaveData&) = 0;
 	virtual std::unique_ptr<Stadium> createStadium() = 0;
 };

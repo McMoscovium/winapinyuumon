@@ -10,6 +10,7 @@
 #include "GameObject/PictureObject.h"
 #include "GameObject/Pitcher/Pitcher.h"
 #include "GameObject/Batter/Batter.h"
+#include "Game/SaveData/SaveData.h"
 
 #include <atomic>
 #include <thread>
@@ -41,7 +42,10 @@ public:
 	void update(Game& game)override {
 		//ロードとアニメーションの両方が終わったらPlayingStateへ
 		if (loadingComplete && animationComplete) {
-			game.changeState(new PlayingState(game, stage));
+			SaveData saveData(game.getCurrentVersion());
+			SaveDataManager saveDataManager;
+			saveDataManager.load(saveData, game.getCurrentVersion());
+			game.changeState(new PlayingState(game, stage, saveData));
 			return;
 		}
 
@@ -54,9 +58,17 @@ public:
 	}
 	void enter(Game& game)override {
 		//ロード処理を別スレッドで開始
+		
+		//別スレッドを開き、ロード開始
 		loadingThread = std::thread(
 			[this]() {
-				loadResources();
+				Game& game = this->getOwner().getGame();
+				//まず、ステータスが格納されているセーブデータをロード
+				Version version = game.getCurrentVersion();
+				SaveDataManager saveDataManager;
+				SaveData saveData(version);
+				saveDataManager.load(saveData, version);
+				loadResources(saveData);
 				loadingComplete = true; // ロード完了を通知
 			}
 		);
@@ -68,7 +80,7 @@ public:
 	void exit(Game& game)override {}
 
 	//PlayingStateのリソースを読み込む
-	void loadResources(){
+	void loadResources(const SaveData& saveData){
 		HINSTANCE hInstance = owner.getGame().getHInstance();
 		GameObjectManager& gameObjectManager = owner.getGameObjectManager();
 		AudioManager& audioManager = owner.getAudioManager();
@@ -89,7 +101,7 @@ public:
 		gameObjectManager.addFront<PictureObject>("FIELD", IDB_BITMAP24, hInstance, SIZE{ 1152,720 });
 
 		gameObjectManager.addFrontDirect<Pitcher>("PITCHER", stage->createPitcher(hInstance));
-		gameObjectManager.addFrontDirect<Batter>("BATTER", stage->createBatter(hInstance));
+		gameObjectManager.addFrontDirect<Batter>("BATTER", stage->createBatter(hInstance, saveData));
 		gameObjectManager.addFront<PictureObject>("EXIT", IDB_BITMAP6, hInstance, SIZE{ 256,128 });
 		gameObjectManager.addFront<PictureObject>("BALL", IDB_BITMAP34, hInstance, SIZE{ 41,50 });
 		gameObjectManager.addFront<PictureObject>("BALLSHADOW", IDB_BITMAP35, hInstance, SIZE{ 33,37 });

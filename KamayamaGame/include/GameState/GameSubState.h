@@ -25,6 +25,7 @@ public:
     virtual void enter(Game& game) = 0;
     //changeSubState‚Å©“®“I‚ÉŒÄ‚Î‚ê‚é
     virtual void exit(Game& game) = 0;
+    StateType& getOwner() { return owner; }
 protected:
     StateType& owner; // Š‘®‚·‚éStateType‚Ö‚ÌQÆ
     Timer timer;

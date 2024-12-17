@@ -12,6 +12,7 @@
 #include "GameObject/Batter/Batter.h"
 #include "GameObject/Stadium/Stadium.h"
 #include "./resource.h"
+#include "Game/SaveData/SaveData.h"
 
 #include "Stage/Stage.h"
 
@@ -25,7 +26,7 @@
 
 
 
-PlayingState::PlayingState(Game& game, Stage* stage) :
+PlayingState::PlayingState(Game& game, Stage* stage, const SaveData& saveData) :
     GameState(game),
     stage(stage),
     stadium(stage->createStadium()),
@@ -61,7 +62,7 @@ PlayingState::PlayingState(Game& game, Stage* stage) :
     gameObjectManager.addFront<PictureObject>("FIELD", IDB_BITMAP24, hInstance, SIZE{ 1152,720 });
 
     gameObjectManager.addFrontDirect<Pitcher>("PITCHER", stage->createPitcher(hInstance));
-    gameObjectManager.addFrontDirect<Batter>("BATTER", stage->createBatter(hInstance));
+    gameObjectManager.addFrontDirect<Batter>("BATTER", stage->createBatter(hInstance, saveData));
     gameObjectManager.addFront<PictureObject>("EXIT", IDB_BITMAP6,hInstance, SIZE{ 256,128 });
     gameObjectManager.addFront<PictureObject>("BALL", IDB_BITMAP34, hInstance, SIZE{ 41,50 });
     gameObjectManager.addFront<PictureObject>("BALLSHADOW", IDB_BITMAP35, hInstance, SIZE{ 33,37 });

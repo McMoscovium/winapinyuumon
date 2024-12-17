@@ -22,9 +22,9 @@ std::unique_ptr<Pitcher> TintinStage::createPitcher(HINSTANCE hInstance)
 	return make_unique<TintinPitcher>(hInstance);
 }
 
-std::unique_ptr<Batter> TintinStage::createBatter(HINSTANCE hInstance)
+std::unique_ptr<Batter> TintinStage::createBatter(HINSTANCE hInstance, const SaveData& saveData)
 {
-	return make_unique<KamayamaBatter>(hInstance);
+	return make_unique<KamayamaBatter>(hInstance, saveData);
 }
 
 std::unique_ptr<Stadium> TintinStage::createStadium()

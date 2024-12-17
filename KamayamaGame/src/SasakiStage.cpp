@@ -3,6 +3,7 @@
 #include "GameObject/Pitcher/SasakiPitcher.h"
 #include "GameObject/Batter/KamayamaBatter.h"
 #include "GameObject/Stadium/TheHundredAcreWoodStadium.h"
+#include "Game/SaveData/SaveData.h"
 
 using namespace std;
 
@@ -20,10 +21,11 @@ std::unique_ptr<Pitcher> SasakiStage::createPitcher(HINSTANCE hInstance)
 	return make_unique<SasakiPitcher>(hInstance);
 }
 
-std::unique_ptr<Batter> SasakiStage::createBatter(HINSTANCE hInstance)
+std::unique_ptr<Batter> SasakiStage::createBatter(HINSTANCE hInstance, const SaveData& saveData)
 {
-	return make_unique<KamayamaBatter>(hInstance);
+	return std::make_unique<KamayamaBatter>(hInstance, saveData);
 }
+
 
 std::unique_ptr<Stadium> SasakiStage::createStadium()
 {
