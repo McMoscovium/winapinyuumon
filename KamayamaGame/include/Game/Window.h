@@ -33,7 +33,7 @@ public:
 	void show() const;
 
 	//Gameクラスの情報に従いウィンドウを描画しなおす。
-	void render(const GameObjectManager& gameObjectManager);
+	void render(const GameObjectManager& gameObjectManager)const;
 
 	//ウィンドウハンドルを取得
 	HWND getHandle()const { return hwnd; }
