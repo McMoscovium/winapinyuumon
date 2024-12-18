@@ -76,7 +76,23 @@ public:
 		addWavInternal(wavData, wavName);
 	}
 
-	//再生
+	//ループ区間を指定して再生
+	void play(const std::string& wavName, UINT32 loopBegin = 0, UINT32 loopLength = 0) {
+		if (wavList.find(wavName) == wavList.end()) {
+			std::string msg = "名前: " + wavName + " のデータは存在しません。";
+			throw std::out_of_range(msg.c_str());
+		}
+		auto& resource = wavList.at(wavName);
+
+		if (FAILED(resource->sourceVoice->SubmitSourceBuffer(createBuffer(resource->data, true, loopBegin, loopLength)))) {
+			throw std::runtime_error("ソースバッファに提出失敗");
+		}
+		if (FAILED(resource->sourceVoice->Start())) {
+			throw std::runtime_error("プレイバックを開始失敗");
+		}
+	}
+
+	//ループ区間を指定せずに再生
 	void play(const std::string& wavName, bool loop = false) {
 		if (wavList.find(wavName) == wavList.end()) {
 			std::string msg = "名前: " + wavName + " のデータは存在しません。";
@@ -84,7 +100,7 @@ public:
 		}
 		auto& resource = wavList.at(wavName);
 
-		if (FAILED(resource->sourceVoice->SubmitSourceBuffer(createBuffer(resource->data, loop)))) {
+		if (FAILED(resource->sourceVoice->SubmitSourceBuffer(createBuffer(resource->data, loop, 0, 0)))) {
 			throw std::runtime_error("ソースバッファに提出失敗");
 		}
 		if (FAILED(resource->sourceVoice->Start())) {
@@ -101,6 +117,8 @@ public:
 		resource->sourceVoice->Stop();
 		resource->sourceVoice->FlushSourceBuffers();
 	}
+
+	
 
 private:
 	//wavDataをコンテナに追加
@@ -174,13 +192,39 @@ private:
 
 		return WavData{ waveFormat, audioData };
 	}
-	XAUDIO2_BUFFER* createBuffer(const WavData& wavData, bool loop) {
+	XAUDIO2_BUFFER* createBuffer(const WavData& wavData, bool loop, UINT32 loopBegin, UINT32 loopLength) {
 		auto buffer = new XAUDIO2_BUFFER();
 
 		buffer->AudioBytes = static_cast<UINT32>(wavData.audioData.size());
 		buffer->pAudioData = wavData.audioData.data();
 		buffer->Flags = XAUDIO2_END_OF_STREAM;
 		buffer->LoopCount = loop ? XAUDIO2_LOOP_INFINITE : 0;
+
+		if (!loop) {
+			return buffer;
+		}
+
+		if (loop) {
+			buffer->LoopBegin = loopBegin;
+		}
+		else {
+			buffer->LoopBegin = 0;
+		}
+		
+
+		if (buffer->LoopBegin + loopLength < buffer->PlayBegin) {
+			delete buffer;
+			buffer = nullptr;
+			throw std::runtime_error("LoopBegin + LoopLength must be larger than Playbegin.");
+		}
+		if (loop) {
+			buffer->LoopLength = loopLength;
+		}
+		else {
+			buffer->LoopLength = 0;
+		}
+		
+
 
 		return buffer;
 	}
