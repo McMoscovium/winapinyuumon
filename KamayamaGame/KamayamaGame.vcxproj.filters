@@ -193,6 +193,9 @@
     <Media Include="assets\baseballLegend.wav">
       <Filter>リソース ファイル</Filter>
     </Media>
+    <Media Include="assets\100エーカー.wav">
+      <Filter>リソース ファイル</Filter>
+    </Media>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AfterMeetSubState.cpp">

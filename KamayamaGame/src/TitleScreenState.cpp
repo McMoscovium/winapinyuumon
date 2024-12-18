@@ -51,6 +51,10 @@ TitleScreenState::TitleScreenState(Game& game) :
     int score = saveData.getScore();
     std::wstring scorestr = L"ÉXÉRÉA: " + std::to_wstring(score);
     scoreText.setText(scorestr);
+
+    //BGMÇÊÇ›Ç±Ç›
+    audioManager.addWav("BGM", hInstance, IDR_WAVE4);
+    audioManager.play("BGM", (UINT32)132300, (UINT32)(2381400 - 132300));
 }
 
 

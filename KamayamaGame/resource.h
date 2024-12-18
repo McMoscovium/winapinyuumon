@@ -60,12 +60,13 @@
 #define IDB_BITMAP49                    157
 #define IDB_BITMAP50                    158
 #define IDB_BITMAP51                    159
+#define IDR_WAVE4                       160
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        160
+#define _APS_NEXT_RESOURCE_VALUE        161
 #define _APS_NEXT_COMMAND_VALUE         40001
 #define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           101
