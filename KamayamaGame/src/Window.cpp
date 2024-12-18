@@ -104,7 +104,7 @@ void Window::show() const{
 	ShowWindow(hwnd, SW_SHOW);
 }
 
-void Window::render(const GameObjectManager& gameObjectManager)
+void Window::render(const GameObjectManager& gameObjectManager)const
 {
 	//HDC’B‚ðŠm•Û‚·‚é
 	PAINTSTRUCT ps;
