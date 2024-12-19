@@ -13,11 +13,14 @@ class IGameState
 protected:
     Game& game;//êeã 
     GameObjectManager gameObjectManager;
-    AudioManager audioManager;
+    AudioManager& audioManager;
 public:
-    IGameState(Game& game);
+    IGameState(Game& game, AudioManager& audioManager);
     virtual ~IGameState();
+
     virtual void update(Game& game) = 0;
+    virtual void enter(Game& game) = 0;
+	virtual void exit(Game& game) = 0;
 
     void showAll();
     Game& getGame();

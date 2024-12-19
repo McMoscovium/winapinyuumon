@@ -8,7 +8,7 @@ void EndPlayingSubState::update(Game& game)
 	timer.update();
 	//2000ms‚½‚Á‚½‚çchangeState
 	if (timer.span() > 2000) {
-		game.changeState(new PlayResultState(game, owner.getResult(), owner.getStage()));
+		game.changeState(new PlayResultState(game, owner.getAudioManager(), owner.getResult(), owner.getStage()));
 		return;
 	}
 }

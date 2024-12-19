@@ -76,6 +76,17 @@ public:
 		addWavInternal(wavData, wavName);
 	}
 
+	//
+	bool deleteWav(const std::string& wavName) {
+		if (wavList.find(wavName) == wavList.end()) {
+			return false;
+		}
+		auto& resource = wavList.at(wavName);
+		resource->sourceVoice->DestroyVoice();
+		wavList.erase(wavName);
+		return true;
+	}
+
 	//ループ区間を指定して再生
 	void play(const std::string& wavName, UINT32 loopBegin = 0, UINT32 loopLength = 0) {
 		if (wavList.find(wavName) == wavList.end()) {
@@ -117,7 +128,30 @@ public:
 		resource->sourceVoice->Stop();
 		resource->sourceVoice->FlushSourceBuffers();
 	}
+	//再生中なら再生継続、停止中なら再生
+	void continueLoop(const std::string& wavName, UINT32 loopBegin = 0, UINT32 loopLength = 0) {
+		if (wavList.find(wavName) == wavList.end()) {
+			return;
+		}
+		auto& resource = wavList.at(wavName);
+		XAUDIO2_VOICE_STATE state;
+		resource->sourceVoice->GetState(&state);
+		if (state.BuffersQueued == 0) {
+			play(wavName, loopBegin, loopLength);
+		}
+		else {
+			//何もしない（プレイ続行）
+		}
+	}
 
+
+	//全ての音楽を停止
+	void stopAll() {
+		for (auto& [key, resource] : wavList) {
+			resource->sourceVoice->Stop();
+			resource->sourceVoice->FlushSourceBuffers();
+		}
+	}
 	
 
 private:
@@ -131,6 +165,7 @@ private:
 		}
 		wavList.emplace(wavName, std::make_unique<AudioResource>(AudioResource{ wavData,sourceVoice }));
 	}
+	
 	//
 	WavData loadWavFromResource(HINSTANCE hInstance, int resourceId) {
 		//リソースをidから探す

@@ -223,7 +223,6 @@
     <Media Include="assets\ジャストミート.wav" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\Game\AudioManager.cpp" />
     <ClCompile Include="src\AfterMeetSubState.cpp" />
     <ClCompile Include="src\Ball.cpp" />
     <ClCompile Include="src\BallFlyingSubState.cpp" />

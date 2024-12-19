@@ -10,8 +10,8 @@
 #include "resource.h"
 
 
-PlayResultState::PlayResultState(Game& game, Result& result, Stage* stage) :
-	GameState(game),
+PlayResultState::PlayResultState(Game& game, AudioManager& audioManager, Result& result, Stage* stage) :
+	GameState(game, audioManager),
 	result(result)
 {
 	HINSTANCE hInstance = game.getHInstance();
@@ -57,6 +57,13 @@ PlayResultState::PlayResultState(Game& game, Result& result, Stage* stage) :
 	std::wstring scorestr = std::to_wstring(prevData.getScore()) + L" + " + std::to_wstring(score) + L" = " + std::to_wstring(newData.getScore());
 	point.setText(scorestr);
 
+	//全ての音楽を停止
+	audioManager.stopAll();
+	//プレイBGM削除
+	audioManager.deleteWav("BGM1");
+	audioManager.deleteWav("JUST");
+
+
 	//substate初期化
 	changeSubState(new CompareNormSubState(*this));
 }
@@ -69,6 +76,15 @@ PlayResultState::~PlayResultState()
 void PlayResultState::update(Game& game)
 {
 	if (currentSubState)currentSubState->update(game);
+}
+
+void PlayResultState::enter(Game& game)
+{
+	audioManager.stopAll();
+}
+
+void PlayResultState::exit(Game& game)
+{
 }
 
 const Result& PlayResultState::getResult() const

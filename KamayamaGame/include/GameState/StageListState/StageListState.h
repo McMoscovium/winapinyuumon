@@ -8,8 +8,10 @@ class StageListState :
 {
 private:
 public:
-    StageListState(Game& game);
+    StageListState(Game& game, AudioManager& audioManager);
 
     void update(Game& game)override;
+	void enter(Game& game)override;
+	void exit(Game& game)override;
 };
 

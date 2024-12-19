@@ -31,7 +31,7 @@ int WINAPI WinMain(
 	Window window(hInstance, nShowCmd, &inputManager, game);
 	//
 	game.registerWindow(&window);
-	game.changeState(new TitleScreenState(game));
+	game.changeState(new TitleScreenState(game, game.getAudioManager()));
 	//‰Šú‰æ–ÊƒŒƒ“ƒ_ƒŠƒ“ƒO
 	window.render(game.getCurrentState()->getGameObjectManager());
 	//‰Šú‰æ–Ê•\¦

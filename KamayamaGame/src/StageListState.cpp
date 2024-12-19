@@ -6,8 +6,8 @@
 #include "GameState/PlayingState/PlayingState.h"
 #include "resource.h"
 
-StageListState::StageListState(Game& game):
-	GameState(game)
+StageListState::StageListState(Game& game, AudioManager& audioManager):
+	GameState(game, audioManager)
 {
 	HINSTANCE hInstance = game.getHInstance();
 
@@ -41,4 +41,13 @@ StageListState::StageListState(Game& game):
 void StageListState::update(Game& game)
 {
 	currentSubState->update(game);
+}
+
+void StageListState::enter(Game& game)
+{
+	audioManager.continueLoop("100ACRE");
+}
+
+void StageListState::exit(Game& game)
+{
 }

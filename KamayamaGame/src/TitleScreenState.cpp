@@ -20,8 +20,8 @@
 #include <string>
 
 
-TitleScreenState::TitleScreenState(Game& game) :
-    GameState(game)
+TitleScreenState::TitleScreenState(Game& game, AudioManager& audioManager) :
+    GameState(game, audioManager)
 {
     HINSTANCE hInstance = game.getHInstance();
     gameObjectManager.addFront<PictureObject>("TITLE", IDB_BITMAP19,hInstance, SIZE{ 1152,720 });
@@ -53,8 +53,13 @@ TitleScreenState::TitleScreenState(Game& game) :
     scoreText.setText(scorestr);
 
     //BGMよみこみ
-    audioManager.addWav("BGM", hInstance, IDR_WAVE4);
-    audioManager.play("BGM", (UINT32)132300, (UINT32)(2381400 - 132300));
+    audioManager.addWav("100ACRE", hInstance, IDR_WAVE4);
+    
+    
+}
+
+TitleScreenState::~TitleScreenState()
+{
 }
 
 
@@ -70,14 +75,24 @@ void TitleScreenState::update(Game& game) {
     if (inputManager.isClicked(startButton)) {
         OutputDebugString(L"スタートボタンがクリックされた\n");
         Stage* tintinStage = new TintinStage();
-        game.changeState(new StageListState(game));
+        game.changeState(new StageListState(game, audioManager));
         return;
     }
     //ステータスボタンクリック時
     const PictureObject& statusButton = gameObjectManager.getObject<PictureObject>("STATUS");
     if (inputManager.isClicked(statusButton)) {
         OutputDebugString(L"ステータスボタンがクリックされた\n");
-        game.changeState(new StatusState(game));
+        game.changeState(new StatusState(game, audioManager));
         return;
     }
+}
+
+void TitleScreenState::enter(Game& game)
+{
+    //BGM再生
+    audioManager.continueLoop("100ACRE", (UINT32)132300, (UINT32)(2381400 - 132300));
+}
+
+void TitleScreenState::exit(Game& game)
+{
 }

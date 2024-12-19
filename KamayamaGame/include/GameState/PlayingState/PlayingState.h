@@ -24,9 +24,9 @@ class PlayingState :
 {
 public:
     //普通に作成する
-    PlayingState(Game& game, Stage* stage, const SaveData& saveData);
+    PlayingState(Game& game, AudioManager& audioManager, Stage* stage, const SaveData& saveData);
     //読み込んだリソースも受け戸って食器か
-    PlayingState(Game& game, Stage* stage, GameObjectManager&& gameObjectManager, AudioManager&& audioManager);
+    PlayingState(Game& game, Stage* stage, GameObjectManager&& gameObjectManager, AudioManager& audioManager);
     ~PlayingState();
 
     enum FlyBallResult {
@@ -40,6 +40,10 @@ public:
     //アップデート関数
     //ゲームが終了したらGameOverStateに遷移
     void update(Game& game)override;
+	void enter(Game& game)override;
+	void exit(Game& game)override;
+
+	//バッターのフレームを更新
     void updateBatFrame(int currentBatterFrame);
     //バッターのアニメーション更新
     void updateBatterAnimation(const InputManager& inputManager);

@@ -29,7 +29,7 @@ public:
 
 		//タイトルヘボタン処理
 		if (inputManager.isClicked(toTitleButton)) {
-			game.changeState(new TitleScreenState(game));
+			game.changeState(new TitleScreenState(game, owner.getAudioManager()));
 			return;
 		}
 

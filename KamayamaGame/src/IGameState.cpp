@@ -2,8 +2,9 @@
 
 #include "GameObject/PictureObject.h"
 
-IGameState::IGameState(Game& game):
-    game(game)
+IGameState::IGameState(Game& game, AudioManager& audioManager):
+    game(game),
+	audioManager(audioManager)
 {
 }
 

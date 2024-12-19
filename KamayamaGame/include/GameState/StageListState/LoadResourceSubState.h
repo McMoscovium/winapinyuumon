@@ -25,6 +25,7 @@ private:
 	std::atomic<bool> loadingComplete;
 	std::thread loadingThread;
 	Stage* stage;
+	GameObjectManager nextGameObjectManager;
 public:
 	LoadResourceSubState(StageListState& owner, Stage* stage) :
 		GameSubState(owner),
@@ -45,7 +46,7 @@ public:
 			SaveData saveData(game.getCurrentVersion());
 			SaveDataManager saveDataManager;
 			saveDataManager.load(saveData, game.getCurrentVersion());
-			game.changeState(new PlayingState(game, stage, saveData));
+			game.changeState(new PlayingState(game, stage, std::move(nextGameObjectManager), owner.getAudioManager()));
 			return;
 		}
 
@@ -68,7 +69,8 @@ public:
 				SaveDataManager saveDataManager;
 				SaveData saveData(version);
 				saveDataManager.load(saveData, version);
-				loadResources(saveData);
+
+				loadResources(saveData, nextGameObjectManager);
 				loadingComplete = true; // ロード完了を通知
 			}
 		);
@@ -77,12 +79,14 @@ public:
 		PictureObject& loadAnimation = gameObjectManager.getObject<PictureObject>("LOAD_ANIMATION");
 		loadAnimation.appear();
 	}
-	void exit(Game& game)override {}
+	void exit(Game& game)override {
+		owner.getAudioManager().stopAll();
+		owner.getAudioManager().deleteWav("100ACRE");
+	}
 
 	//PlayingStateのリソースを読み込む
-	void loadResources(const SaveData& saveData){
+	void loadResources(const SaveData& saveData, GameObjectManager& gameObjectManager){
 		HINSTANCE hInstance = owner.getGame().getHInstance();
-		GameObjectManager& gameObjectManager = owner.getGameObjectManager();
 		AudioManager& audioManager = owner.getAudioManager();
 		Game& game = owner.getGame();
 

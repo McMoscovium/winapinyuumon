@@ -37,9 +37,11 @@ void Game::update() {
 
 void Game::changeState(IGameState* newState) {
 	if (currentState) {
+		currentState->exit(*this);
 		delete currentState;
-	}	
+	}
 	currentState = newState;
+	currentState->enter(*this);
 }
 
 

@@ -12,8 +12,12 @@ class TitleScreenState :
 {
 private:
 public:
-    TitleScreenState(Game& game);
+    TitleScreenState(Game& game, AudioManager& audioManager);
+	~TitleScreenState();
     //状態を更新
     //スタートボタンが押されたらPlayingStateに遷移
     void update(Game& game)override;
+
+	void enter(Game& game)override;
+	void exit(Game& game)override;
 };

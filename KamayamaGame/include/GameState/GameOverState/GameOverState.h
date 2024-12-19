@@ -13,7 +13,7 @@ class GameOverState :
     public GameState<GameOverState,GameSubState<GameOverState>>
 {
 public:
-    GameOverState(Game& game);
+    GameOverState(Game& game, AudioManager& audioManager);
     void update(Game& game)override;
 private:
 };

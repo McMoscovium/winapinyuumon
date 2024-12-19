@@ -17,7 +17,9 @@ class GameState:
 protected:
 	SubState* currentSubState = nullptr;//サブステートへのポインタ
 public:
-	GameState(Game& game) :IGameState(game) {}
+	GameState(Game& game, AudioManager& audioManager) :
+		IGameState(game, audioManager)
+	{}
 	virtual ~GameState() {
 		if (currentSubState) {
 			delete currentSubState;

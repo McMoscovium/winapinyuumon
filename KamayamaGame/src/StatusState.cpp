@@ -16,9 +16,8 @@
 
 #include "resource.h"
 
-StatusState::StatusState(Game& game) :
-	GameState<StatusState,
-	GameSubState<StatusState>>(game),
+StatusState::StatusState(Game& game, AudioManager& audioManager) :
+	GameState<StatusState, GameSubState<StatusState>>(game, audioManager),
 	data(SaveData(game.getCurrentVersion())),
 	neededPowerPoint(0),
 	neededMeetPoint(0),
@@ -93,7 +92,7 @@ void StatusState::update(Game& game)
 	if (inputManager.isClicked(taitoruhe)) {
 		SaveDataManager saveDataManager = SaveDataManager();
 		saveDataManager.save(data);
-		game.changeState(new TitleScreenState(game));
+		game.changeState(new TitleScreenState(game, audioManager));
 		return;
 	}
 
@@ -208,4 +207,13 @@ void StatusState::update(Game& game)
 		saveDataManager.save(data);
 		allowModify = false;
 	}
+}
+
+void StatusState::enter(Game& game)
+{
+	audioManager.continueLoop("100ACRE");
+}
+
+void StatusState::exit(Game& game)
+{
 }

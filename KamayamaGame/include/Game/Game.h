@@ -19,10 +19,9 @@ private:
 	IGameState* currentState = nullptr;
 	InputManager& inputManager;
 	Window* window;
-	Camera camera;
+	AudioManager audioManager;
 	int money = 0;
 	const HINSTANCE& hInstance;//アプリケーションのインスタンスはンドル。リソースを使うのにいる。
-
 	
 public:
 	Game(InputManager& inputManager, const HINSTANCE& hInstance);
@@ -45,4 +44,5 @@ public:
 	}
 	const HINSTANCE& getHInstance();
 	const Version& getCurrentVersion()const { return version; }
+	AudioManager& getAudioManager() { return audioManager; }
 };

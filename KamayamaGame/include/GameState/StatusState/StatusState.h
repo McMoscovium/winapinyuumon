@@ -59,8 +59,10 @@ private:
     }
 public:
     //コンストラクタ
-    StatusState(Game& game);
+    StatusState(Game& game, AudioManager& audioManager);
 
     void update(Game& game)override;
+	void enter(Game& game)override;
+	void exit(Game& game)override;
 };
 

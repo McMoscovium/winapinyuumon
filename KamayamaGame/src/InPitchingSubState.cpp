@@ -140,7 +140,7 @@ void InPitchingSubState::update(Game& game)
     PictureObject& exitButton = gameObjectManager.getObject<PictureObject>("EXIT");
     if (inputManager.isClicked(exitButton)) {
         exit(game);//I—¹ˆ—
-        game.changeState(new TitleScreenState(game));
+        game.changeState(new TitleScreenState(game, owner.getAudioManager()));
         return;
     }
 

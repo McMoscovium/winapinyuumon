@@ -28,7 +28,7 @@ void WaitingPitchingSubState::update(Game & game)
 	//I—¹ƒ{ƒ^ƒ“ˆ—
 	PictureObject& exitButton = gameObjectManager.getObject<PictureObject>("EXIT");
 	if (inputManager.isClicked(exitButton)) {
-		game.changeState(new TitleScreenState(game));
+		game.changeState(new TitleScreenState(game, owner.getAudioManager()));
 		return;
 	}
 

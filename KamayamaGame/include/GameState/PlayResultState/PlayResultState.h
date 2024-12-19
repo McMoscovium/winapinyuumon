@@ -14,10 +14,12 @@ private:
     Result& result;
 
 public:
-    PlayResultState(Game& game, Result& result,Stage* stage);
+    PlayResultState(Game& game, AudioManager& audioManager, Result& result,Stage* stage);
     ~PlayResultState();
 
     void update(Game& game)override;
+	void enter(Game& game)override;
+	void exit(Game& game)override;
 
     const Result& getResult()const;
 };

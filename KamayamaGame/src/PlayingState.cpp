@@ -23,11 +23,8 @@
 #include <typeinfo>
 
 
-
-
-
-PlayingState::PlayingState(Game& game, Stage* stage, const SaveData& saveData) :
-    GameState(game),
+PlayingState::PlayingState(Game& game, AudioManager& audioManager, Stage* stage, const SaveData& saveData) :
+    GameState(game, audioManager),
     stage(stage),
     stadium(stage->createStadium()),
     result(Result(stage->getNorm())),
@@ -108,15 +105,16 @@ PlayingState::PlayingState(Game& game, Stage* stage, const SaveData& saveData) :
     changeSubState(new WaitingPitchingSubState(*this));
 }
 
-PlayingState::PlayingState(Game& game, Stage* stage, GameObjectManager&& gameObjectManager, AudioManager&& audioManager) :
-    GameState(game),
+PlayingState::PlayingState(Game& game, Stage* stage, GameObjectManager&& srcGameObjectManager, AudioManager& audioManager) :
+    GameState(game, audioManager),
     stage(stage),
     stadium(stage->createStadium()),
     result(Result(stage->getNorm())),
     restBalls(stage->getTrials())
 {
-    gameObjectManager = std::move(gameObjectManager);
-    audioManager = std::move(audioManager);
+    PlayingState::gameObjectManager = std::move(srcGameObjectManager);
+
+
 
     //フィールド画像だけ別のコンテナにも入れる
     fieldImages.emplace("FIELD00", gameObjectManager.getObject<PictureObject>("FIELD00"));
@@ -129,8 +127,8 @@ PlayingState::PlayingState(Game& game, Stage* stage, GameObjectManager&& gameObj
     fieldImages.emplace("FIELD-11", gameObjectManager.getObject<PictureObject>("FIELD-11"));
     fieldImages.emplace("FIELD-12", gameObjectManager.getObject<PictureObject>("FIELD-12"));
 
-    //音楽再生
-    audioManager.play("BGM1", true);
+
+    
 
     //最後にsubState設定
     changeSubState(new WaitingPitchingSubState(*this));
@@ -142,10 +140,30 @@ PlayingState::~PlayingState()
         delete stage;
         stage = nullptr;
     }
+    
 }
 
 void PlayingState::update(Game& game) {
     if (currentSubState)currentSubState->update(game);
+}
+
+void PlayingState::enter(Game& game)
+{
+    //他の音楽を停止
+    audioManager.stopAll();
+    //タイトルBGM削除
+    audioManager.deleteWav("100ACRE");
+    //音楽再生
+    audioManager.play("BGM1", true);
+}
+
+void PlayingState::exit(Game& game)
+{
+    //音楽停止
+    audioManager.stopAll();
+    //BGM削除
+    audioManager.deleteWav("BGM1");
+    audioManager.deleteWav("JUST");
 }
 
 void PlayingState::updateBatFrame(int currentBatterFrame)
@@ -204,7 +222,8 @@ void PlayingState::updateBatterPos(const InputManager& inputManager)
     Batter& batter = gameObjectManager.getObject<Batter> ("BATTER");
 
     if (velocityAngle.norm() < batter.getSpeed()) {//ポインターとバッティングカーソルが近い
-        nextKamayamaPos = { mouse.x - 302,mouse.y - 197 };
+		setBatterInBox(mouse);
+        return;
     }
     else {
         velocityAngle.normalize();
