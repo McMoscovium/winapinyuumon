@@ -7,6 +7,7 @@
 #include "Game/InputManager.h"
 #include "GameObject/GameObject.h"
 #include "GameObject/PictureObject.h"
+#include "Game/Window.h"
 
 #include "GameState/TitleScreenState/TitleScreenState.h"
 #include "GameState/PlayingState/WaitingPitchingSubState.h"
@@ -125,13 +126,12 @@ void InPitchingSubState::update(Game& game)
     Pitcher& pitcherObject = gameObjectManager.getObject<Pitcher>("PITCHER");
     
     
-    //投げたボールが画面下まで行ったらchangeState
-    if (ball.getY() > 700) {//画面下に外れた
-        
+    //投げたボールが画面外まで行ったらchangeState
+    if (!game.getWindow()->isInClientRect(ball.getPosition())) {
         ballObject.hide();
         shadow.hide();
         owner.changeSubState(new BattingResultSubState(owner, PlayingState::FlyBallResult::STRIKE));
-        
+
         return;
     }
 

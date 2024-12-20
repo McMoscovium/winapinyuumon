@@ -59,7 +59,7 @@ void Pitcher::setPitchingSpeed(int sp)
 	pitchingSpeed = sp;
 }
 
-void Pitcher::setPitchingCourse(float c)
+void Pitcher::setPitchingCourse(const float c)
 {
 	pitchingCourse = c;
 }

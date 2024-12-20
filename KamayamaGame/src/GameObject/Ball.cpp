@@ -8,7 +8,11 @@
 void Ball::updateByPitchType(Pitcher* pitcher)
 {
 	framesSinceReleased++;
-	pitcher->getPitchType()->update(*this, framesSinceReleased);
+	PitchType* pitchType = pitcher->getPitchType();
+	if (pitchType) {
+		pitchType->update(*this, framesSinceReleased);
+		return;
+	}
 }
 
 Ball::Ball() :

@@ -12,5 +12,7 @@ public:
         PitchType(L"Straight") {}
 
     void update(Ball& ball, int frame)override;
+
+    virtual float decideAngle()override;
 };
 

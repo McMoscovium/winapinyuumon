@@ -13,7 +13,6 @@ class Pitcher:
 protected:
 	std::wstring pitcherName;
 	std::vector<PitchType*> pitchTypes;
-	PitchType* nextPitch = nullptr;
 	int armStrength;
 	int pitchingSpeed = 0;
 	//Šp“x
@@ -59,7 +58,7 @@ public:
 	//
 	void setPitchingSpeed(int sp);
 	//
-	void setPitchingCourse(float c);
+	void setPitchingCourse(const float c);
 	//Œ»İ‚Ì‹…í‚ğæ“¾
 	PitchType* getPitchType();
 	//

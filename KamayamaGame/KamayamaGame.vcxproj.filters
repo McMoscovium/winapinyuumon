@@ -366,6 +366,9 @@
     <ClCompile Include="src\GameState\PlayingState\WaitingPitchingSubState.cpp">
       <Filter>ソース ファイル\GameState\PlayingState</Filter>
     </ClCompile>
+    <ClCompile Include="src\PitchType\Slider.cpp">
+      <Filter>ソース ファイル\PitchType</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game\AudioManager.h">

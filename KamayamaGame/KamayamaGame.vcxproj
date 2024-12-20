@@ -259,6 +259,7 @@
     <ClCompile Include="src\Game\Window.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\PitchType\PitchType.cpp" />
+    <ClCompile Include="src\PitchType\Slider.cpp" />
     <ClCompile Include="src\PitchType\Straight.cpp" />
     <ClCompile Include="src\Stage\SasakiStage.cpp" />
     <ClCompile Include="src\Stage\Stage.cpp" />

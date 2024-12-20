@@ -53,6 +53,21 @@ public:
 	//¶ã‹÷‚ÌÀ•W‚ª(0,0)‚Æ‚È‚é
 	RECT getClientRect()const;
 
+	//
+	bool isInClientRect(POINT point)const {
+		RECT rect = getClientRect();
+		if (point.x <= rect.right &&
+			point.x >= rect.left &&
+			point.y <= rect.bottom &&
+			point.y >= rect.top
+			) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 protected:
 	
 	
