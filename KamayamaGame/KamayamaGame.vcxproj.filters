@@ -196,6 +196,9 @@
     <Media Include="assets\100エーカー.wav">
       <Filter>リソース ファイル</Filter>
     </Media>
+    <Media Include="assets\結果発表\Audio Export\結果発表.wav">
+      <Filter>リソース ファイル</Filter>
+    </Media>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AfterMeetSubState.cpp">

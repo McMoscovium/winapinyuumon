@@ -221,6 +221,7 @@
     <Media Include="assets\baseballLegend.wav" />
     <Media Include="assets\bgm1.wav" />
     <Media Include="assets\ジャストミート.wav" />
+    <Media Include="assets\結果発表\Audio Export\結果発表.wav" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AfterMeetSubState.cpp" />

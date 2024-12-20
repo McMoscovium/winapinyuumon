@@ -45,7 +45,8 @@ void StageListState::update(Game& game)
 
 void StageListState::enter(Game& game)
 {
-	audioManager.continueLoop("100ACRE");
+	audioManager.addWav("100ACRE", game.getHInstance(), IDR_WAVE4);
+	audioManager.continueLoop("100ACRE", 132300, 2381400 - 132300);
 }
 
 void StageListState::exit(Game& game)

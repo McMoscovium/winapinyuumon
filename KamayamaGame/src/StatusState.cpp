@@ -211,7 +211,7 @@ void StatusState::update(Game& game)
 
 void StatusState::enter(Game& game)
 {
-	audioManager.continueLoop("100ACRE");
+	audioManager.continueLoop("100ACRE", 132300, 2381400 - 132300);
 }
 
 void StatusState::exit(Game& game)

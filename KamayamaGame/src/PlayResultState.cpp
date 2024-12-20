@@ -63,6 +63,8 @@ PlayResultState::PlayResultState(Game& game, AudioManager& audioManager, Result&
 	audioManager.deleteWav("BGM1");
 	audioManager.deleteWav("JUST");
 
+	//åãâ î≠ï\bgmí«â¡
+	audioManager.addWav("RESULT", hInstance, IDR_WAVE5);
 
 	//substateèâä˙âª
 	changeSubState(new CompareNormSubState(*this));
@@ -81,10 +83,13 @@ void PlayResultState::update(Game& game)
 void PlayResultState::enter(Game& game)
 {
 	audioManager.stopAll();
+	audioManager.play("RESULT", true);
 }
 
 void PlayResultState::exit(Game& game)
 {
+	audioManager.stopAll();
+	audioManager.deleteWav("RESULT");
 }
 
 const Result& PlayResultState::getResult() const
