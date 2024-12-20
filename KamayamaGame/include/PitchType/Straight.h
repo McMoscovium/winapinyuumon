@@ -11,6 +11,6 @@ public:
     Straight() :
         PitchType(L"Straight") {}
 
-    void setBallVelocity(Ball& ball, int frame)override;
+    void update(Ball& ball, int frame)override;
 };
 
