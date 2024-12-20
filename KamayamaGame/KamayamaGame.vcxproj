@@ -224,53 +224,48 @@
     <Media Include="assets\結果発表\Audio Export\結果発表.wav" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AfterMeetSubState.cpp" />
-    <ClCompile Include="src\Ball.cpp" />
-    <ClCompile Include="src\BallFlyingSubState.cpp" />
-    <ClCompile Include="src\Batter.cpp" />
-    <ClCompile Include="src\BattingResultSubState.cpp" />
-    <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\CompareNormSubState.cpp" />
-    <ClCompile Include="src\CutIn.cpp" />
-    <ClCompile Include="src\DetailResultSubState.cpp" />
-    <ClCompile Include="src\EndPlayingSubState.cpp" />
-    <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\GameObject.cpp" />
-    <ClCompile Include="src\GameObjectManager.cpp" />
-    <ClCompile Include="src\GameOverState.cpp" />
-    <ClCompile Include="src\HatimituMeter.cpp" />
-    <ClCompile Include="src\HatimituMeterObject.cpp" />
-    <ClCompile Include="src\IGameState.cpp" />
-    <ClCompile Include="src\InPitchingSubState.cpp" />
-    <ClCompile Include="src\InputManager.cpp" />
-    <ClCompile Include="src\KamayamaBatter.cpp" />
+    <ClCompile Include="src\GameObject\Ball.cpp" />
+    <ClCompile Include="src\GameObject\Batter\Batter.cpp" />
+    <ClCompile Include="src\GameObject\Batter\KamayamaBatter.cpp" />
+    <ClCompile Include="src\GameObject\GameObject.cpp" />
+    <ClCompile Include="src\GameObject\GameObjectManager.cpp" />
+    <ClCompile Include="src\GameObject\HatimituMeterObject.cpp" />
+    <ClCompile Include="src\GameObject\PictureObject.cpp" />
+    <ClCompile Include="src\GameObject\Pitcher\Pitcher.cpp" />
+    <ClCompile Include="src\GameObject\Pitcher\SasakiPitcher.cpp" />
+    <ClCompile Include="src\GameObject\Pitcher\TintinPitcher.cpp" />
+    <ClCompile Include="src\GameObject\TextObject.cpp" />
+    <ClCompile Include="src\GameObject\TheHundredAcreWoodStadium.cpp" />
+    <ClCompile Include="src\GameObject\ValueMeterObject.cpp" />
+    <ClCompile Include="src\GameState\IGameState.cpp" />
+    <ClCompile Include="src\GameState\PlayingState\AfterMeetSubState.cpp" />
+    <ClCompile Include="src\GameState\PlayingState\BallFlyingSubState.cpp" />
+    <ClCompile Include="src\GameState\PlayingState\BattingResultSubState.cpp" />
+    <ClCompile Include="src\GameState\PlayingState\CutIn.cpp" />
+    <ClCompile Include="src\GameState\PlayingState\EndPlayingSubState.cpp" />
+    <ClCompile Include="src\GameState\PlayingState\GameOverState.cpp" />
+    <ClCompile Include="src\GameState\PlayingState\InPitchingSubState.cpp" />
+    <ClCompile Include="src\GameState\PlayingState\PlayingState.cpp" />
+    <ClCompile Include="src\GameState\PlayingState\WaitingPitchingSubState.cpp" />
+    <ClCompile Include="src\GameState\PlayResultState\CompareNormSubState.cpp" />
+    <ClCompile Include="src\GameState\PlayResultState\DetailResultSubState.cpp" />
+    <ClCompile Include="src\GameState\PlayResultState\PlayResultState.cpp" />
+    <ClCompile Include="src\GameState\StageListState\StageListState.cpp" />
+    <ClCompile Include="src\GameState\StatusState\StatusState.cpp" />
+    <ClCompile Include="src\GameState\TitleScreenState\TitleScreenState.cpp" />
+    <ClCompile Include="src\Game\Camera.cpp" />
+    <ClCompile Include="src\Game\Game.cpp" />
+    <ClCompile Include="src\Game\InputManager.cpp" />
+    <ClCompile Include="src\Game\Window.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\PictureObject.cpp" />
-    <ClCompile Include="src\Pitcher.cpp" />
-    <ClCompile Include="src\PitchType.cpp" />
-    <ClCompile Include="src\PlayingState.cpp" />
-    <ClCompile Include="src\PlayResultState.cpp" />
-    <ClCompile Include="src\Result.cpp" />
-    <ClCompile Include="src\SasakiPitcher.cpp" />
-    <ClCompile Include="src\SasakiStage.cpp" />
-    <ClCompile Include="src\Stage.cpp" />
-    <ClCompile Include="src\StageListState.cpp">
-      <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</GenerateSourceDependencies>
-      <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</GenerateSourceDependencies>
-      <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GenerateSourceDependencies>
-      <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</GenerateSourceDependencies>
-    </ClCompile>
-    <ClCompile Include="src\StatusState.cpp" />
-    <ClCompile Include="src\Straight.cpp" />
-    <ClCompile Include="src\TextObject.cpp" />
-    <ClCompile Include="src\TheHundredAcreWoodStadium.cpp" />
-    <ClCompile Include="src\Timer.cpp" />
-    <ClCompile Include="src\TintinPitcher.cpp" />
-    <ClCompile Include="src\TintinStage.cpp" />
-    <ClCompile Include="src\TitleScreenState.cpp" />
-    <ClCompile Include="src\ValueMeterObject.cpp" />
-    <ClCompile Include="src\WaitingPitchingSubState.cpp" />
-    <ClCompile Include="src\Window.cpp" />
+    <ClCompile Include="src\PitchType\PitchType.cpp" />
+    <ClCompile Include="src\PitchType\Straight.cpp" />
+    <ClCompile Include="src\Stage\SasakiStage.cpp" />
+    <ClCompile Include="src\Stage\Stage.cpp" />
+    <ClCompile Include="src\Stage\TintinStage.cpp" />
+    <ClCompile Include="src\util\HatimituMeter.cpp" />
+    <ClCompile Include="src\util\Result.cpp" />
+    <ClCompile Include="src\util\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GameObject\Ball.h" />

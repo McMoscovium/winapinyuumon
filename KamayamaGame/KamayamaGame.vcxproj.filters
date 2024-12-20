@@ -13,6 +13,45 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\Game">
+      <UniqueIdentifier>{eba9a23d-6d70-453b-a8ae-5fc135d8c152}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject">
+      <UniqueIdentifier>{1d3ea8f2-99d3-47d9-bd8f-a120c7fcf543}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\Batter">
+      <UniqueIdentifier>{57c7ef52-aa4b-4d75-9b8d-6e56e2c9beeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\Pitcher">
+      <UniqueIdentifier>{08786fc0-36c4-4d4e-b71d-e8b70bf2dc5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameState">
+      <UniqueIdentifier>{4247261b-742b-4686-b2dd-511068d5f29e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameState\TitleScreenState">
+      <UniqueIdentifier>{adc51093-29e6-4d44-a1b3-b3d310d6bcad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameState\StageListState">
+      <UniqueIdentifier>{7b7c8424-7de2-4145-9741-623a87c48b20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameState\StatusState">
+      <UniqueIdentifier>{fa121dca-d6c5-4307-929e-3da37a9c3307}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\PitchType">
+      <UniqueIdentifier>{0e408bc6-8cd2-4bd6-9752-1979b7aa096c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Stage">
+      <UniqueIdentifier>{4ac46284-cdf5-4168-93f3-24e7f90f74ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\util">
+      <UniqueIdentifier>{bd0b4628-0ffe-4eb2-aec4-9805410f8399}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameState\PlayResultState">
+      <UniqueIdentifier>{cc2c2f9f-9230-4039-8511-6932b3f7b448}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameState\PlayingState">
+      <UniqueIdentifier>{4b4868cd-5b30-4bc2-9137-b88596b94e75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\batHitBox.bmp">
@@ -201,131 +240,131 @@
     </Media>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AfterMeetSubState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Ball.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BallFlyingSubState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Batter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BattingResultSubState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Camera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CompareNormSubState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CutIn.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DetailResultSubState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\EndPlayingSubState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObject.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObjectManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameOverState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\HatimituMeter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\HatimituMeterObject.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IGameState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\InPitchingSubState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\InputManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="src\KamayamaBatter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="src\PictureObject.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\Game\Camera.cpp">
+      <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\Pitcher.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\Game\Game.cpp">
+      <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\PitchType.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\Game\InputManager.cpp">
+      <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\PlayingState.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\Game\Window.cpp">
+      <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\PlayResultState.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameObject\GameObject.cpp">
+      <Filter>ソース ファイル\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\Result.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameObject\GameObjectManager.cpp">
+      <Filter>ソース ファイル\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\SasakiPitcher.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameObject\HatimituMeterObject.cpp">
+      <Filter>ソース ファイル\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\SasakiStage.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameObject\PictureObject.cpp">
+      <Filter>ソース ファイル\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\Stage.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameObject\TextObject.cpp">
+      <Filter>ソース ファイル\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\StageListState.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameObject\ValueMeterObject.cpp">
+      <Filter>ソース ファイル\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\StatusState.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameObject\TheHundredAcreWoodStadium.cpp">
+      <Filter>ソース ファイル\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\Straight.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameObject\Ball.cpp">
+      <Filter>ソース ファイル\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="src\TextObject.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameObject\Batter\Batter.cpp">
+      <Filter>ソース ファイル\GameObject\Batter</Filter>
     </ClCompile>
-    <ClCompile Include="src\TheHundredAcreWoodStadium.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameObject\Batter\KamayamaBatter.cpp">
+      <Filter>ソース ファイル\GameObject\Batter</Filter>
     </ClCompile>
-    <ClCompile Include="src\Timer.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameObject\Pitcher\Pitcher.cpp">
+      <Filter>ソース ファイル\GameObject\Pitcher</Filter>
     </ClCompile>
-    <ClCompile Include="src\TintinPitcher.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameObject\Pitcher\SasakiPitcher.cpp">
+      <Filter>ソース ファイル\GameObject\Pitcher</Filter>
     </ClCompile>
-    <ClCompile Include="src\TintinStage.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameObject\Pitcher\TintinPitcher.cpp">
+      <Filter>ソース ファイル\GameObject\Pitcher</Filter>
     </ClCompile>
-    <ClCompile Include="src\TitleScreenState.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameState\IGameState.cpp">
+      <Filter>ソース ファイル\GameState</Filter>
     </ClCompile>
-    <ClCompile Include="src\ValueMeterObject.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameState\TitleScreenState\TitleScreenState.cpp">
+      <Filter>ソース ファイル\GameState\TitleScreenState</Filter>
     </ClCompile>
-    <ClCompile Include="src\WaitingPitchingSubState.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameState\PlayResultState\CompareNormSubState.cpp">
+      <Filter>ソース ファイル\GameState\PlayResultState</Filter>
     </ClCompile>
-    <ClCompile Include="src\Window.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="src\GameState\PlayResultState\DetailResultSubState.cpp">
+      <Filter>ソース ファイル\GameState\PlayResultState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameState\PlayResultState\PlayResultState.cpp">
+      <Filter>ソース ファイル\GameState\PlayResultState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameState\StageListState\StageListState.cpp">
+      <Filter>ソース ファイル\GameState\StageListState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameState\StatusState\StatusState.cpp">
+      <Filter>ソース ファイル\GameState\StatusState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PitchType\PitchType.cpp">
+      <Filter>ソース ファイル\PitchType</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PitchType\Straight.cpp">
+      <Filter>ソース ファイル\PitchType</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Stage\SasakiStage.cpp">
+      <Filter>ソース ファイル\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Stage\Stage.cpp">
+      <Filter>ソース ファイル\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Stage\TintinStage.cpp">
+      <Filter>ソース ファイル\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\HatimituMeter.cpp">
+      <Filter>ソース ファイル\util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\Result.cpp">
+      <Filter>ソース ファイル\util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\Timer.cpp">
+      <Filter>ソース ファイル\util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameState\PlayingState\AfterMeetSubState.cpp">
+      <Filter>ソース ファイル\GameState\PlayingState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameState\PlayingState\BallFlyingSubState.cpp">
+      <Filter>ソース ファイル\GameState\PlayingState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameState\PlayingState\BattingResultSubState.cpp">
+      <Filter>ソース ファイル\GameState\PlayingState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameState\PlayingState\CutIn.cpp">
+      <Filter>ソース ファイル\GameState\PlayingState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameState\PlayingState\EndPlayingSubState.cpp">
+      <Filter>ソース ファイル\GameState\PlayingState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameState\PlayingState\GameOverState.cpp">
+      <Filter>ソース ファイル\GameState\PlayingState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameState\PlayingState\InPitchingSubState.cpp">
+      <Filter>ソース ファイル\GameState\PlayingState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameState\PlayingState\PlayingState.cpp">
+      <Filter>ソース ファイル\GameState\PlayingState</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameState\PlayingState\WaitingPitchingSubState.cpp">
+      <Filter>ソース ファイル\GameState\PlayingState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
