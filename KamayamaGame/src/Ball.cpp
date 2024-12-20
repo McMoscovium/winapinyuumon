@@ -8,7 +8,7 @@
 void Ball::updateByPitchType(Pitcher* pitcher)
 {
 	framesSinceReleased++;
-	pitcher->getPitchType()->setBallVelocity(*this, framesSinceReleased);
+	pitcher->getPitchType()->update(*this, framesSinceReleased);
 }
 
 Ball::Ball() :

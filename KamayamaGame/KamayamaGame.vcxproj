@@ -317,6 +317,7 @@
     <ClInclude Include="include\Game\VirtualWindow.h" />
     <ClInclude Include="include\Game\Window.h" />
     <ClInclude Include="include\PitchType\PitchType.h" />
+    <ClInclude Include="include\PitchType\Slider.h" />
     <ClInclude Include="include\PitchType\Straight.h" />
     <ClInclude Include="include\Stage\SasakiStage.h" />
     <ClInclude Include="include\Stage\Stage.h" />

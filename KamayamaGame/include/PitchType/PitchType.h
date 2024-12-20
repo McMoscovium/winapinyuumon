@@ -15,6 +15,6 @@ public:
 	virtual ~PitchType() = default;
 
 	//現在の球種とリリースされてからのフレーム数に従いボールの速度を計算
-	virtual void setBallVelocity(Ball& ball, int frame) = 0;
+	virtual void update(Ball& ball, int frame) = 0;
 };
 

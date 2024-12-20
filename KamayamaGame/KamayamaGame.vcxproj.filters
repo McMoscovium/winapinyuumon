@@ -494,6 +494,9 @@
     <ClInclude Include="include\GameState\StatusState\StatusState.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="include\PitchType\Slider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="KamayamaGame.rc" />
