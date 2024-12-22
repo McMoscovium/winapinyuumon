@@ -6,7 +6,10 @@
 
 void Straight::update(Ball& ball, int frame)
 {
-	//ストレートなので何もしない
+	//若干加速する
+	int nextVelocity = ((acceleration - 1) * initialVelocity * ball.getY() + initialVelocity * (653 - acceleration * 122)) /
+		(653 - 122);
+	ball.setVelocity(nextVelocity);
 }
 
 float Straight::decideAngle()
