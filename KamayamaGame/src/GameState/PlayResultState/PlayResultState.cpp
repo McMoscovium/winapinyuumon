@@ -8,11 +8,15 @@
 #include <string>
 #include "include/Game/SaveData/SaveData.h"
 #include "resource.h"
+#include <sstream>
+#include <iomanip>
 
 
-PlayResultState::PlayResultState(Game& game, AudioManager& audioManager, Result& result, Stage* stage) :
+PlayResultState::PlayResultState(Game& game, AudioManager& audioManager, Result& result, const int trials, const int norm, const std::wstring& pitcherName, const char stageNumber, const float scoreFactor) :
 	GameState(game, audioManager),
-	result(result)
+	result(result),
+	saveData(SaveData(game.getCurrentVersion())),
+	openedStages(1)
 {
 	HINSTANCE hInstance = game.getHInstance();
 	//GameObjectよみこみ
@@ -20,10 +24,9 @@ PlayResultState::PlayResultState(Game& game, AudioManager& audioManager, Result&
 	gameObjectManager.addFront<PictureObject>("KEKKAHAPPYOU2", IDB_BITMAP37, hInstance, SIZE{ 1152,720 });
 	
 	//appendObject({バッター画像オブジェクトへのポインター});//バッター画像
-
-	gameObjectManager.addFront<TextObject>("PITCHERNAME", stage->pitcherName);
-	gameObjectManager.addFront<TextObject>("BALLS", std::to_wstring(stage->getTrials()));
-	gameObjectManager.addFront<TextObject>("NORM", std::to_wstring(stage->getNorm()));
+	gameObjectManager.addFront<TextObject>("PITCHERNAME", pitcherName);
+	gameObjectManager.addFront<TextObject>("BALLS", std::to_wstring(trials));
+	gameObjectManager.addFront<TextObject>("NORM", std::to_wstring(norm));
 	gameObjectManager.addFront<TextObject>("RUNS", std::to_wstring(result.getRuns()));
 	gameObjectManager.addFront<TextObject>("RUNSTREAK", std::to_wstring(result.getMaxSuccessiveRuns()));
 	gameObjectManager.addFront<TextObject>("MAX_DISTANCE", std::to_wstring(result.getMaxDistance()));
@@ -47,14 +50,25 @@ PlayResultState::PlayResultState(Game& game, AudioManager& audioManager, Result&
 	SaveDataManager saveDataManager;
 	SaveData prevData(game.getCurrentVersion());
 	saveDataManager.load(prevData, game.getCurrentVersion());
+	//新ステージ開放処理
+	if (
+		stageNumber >= prevData.getOpenedStages()&&//最新ステージをプレイ
+		result.getRuns() >= norm//ノルマクリア
+		) {
+		prevData.addOpenedStages();
+	}
 	//スコア加算
 	int score = result.getDistanceSum();
-	SaveData newData = prevData.addScore(score);
+	saveData = prevData.addScore((int)(score * scoreFactor));
+	openedStages = saveData.getOpenedStages();
 	//セーブ
-	saveDataManager.save(newData);
+	saveDataManager.save(saveData);
 
 	//スコア文字変更
-	std::wstring scorestr = std::to_wstring(prevData.getScore()) + L" + " + std::to_wstring(score) + L" = " + std::to_wstring(newData.getScore());
+	std::wstringstream wss;
+	wss << std::fixed << std::setprecision(1) << scoreFactor;
+	std::wstring scoreFactorStr = wss.str();
+	std::wstring scorestr = std::to_wstring(prevData.getScore()) + L" + " + std::to_wstring(score) + L" × " + scoreFactorStr + L" = " + std::to_wstring(saveData.getScore());
 	point.setText(scorestr);
 
 	//全ての音楽を停止

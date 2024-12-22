@@ -2,13 +2,24 @@
 
 #include "Game/Game.h"
 #include "GameState/PlayResultState/PlayResultState.h"
+#include "Stage/Stage.h"
 
 void EndPlayingSubState::update(Game& game)
 {
 	timer.update();
 	//2000ms‚½‚Á‚½‚çchangeState
 	if (timer.span() > 2000) {
-		game.changeState(new PlayResultState(game, owner.getAudioManager(), owner.getResult(), owner.getStage()));
+		Stage* stage = owner.getStage();
+		game.changeState(new PlayResultState(
+			game,
+			owner.getAudioManager(),
+			owner.getResult(), 
+			stage->getTrials(),
+			stage->getNorm(),
+			stage->pitcherName,
+			stage->stageNumber,
+			stage->scoreFactor
+			));
 		return;
 	}
 }

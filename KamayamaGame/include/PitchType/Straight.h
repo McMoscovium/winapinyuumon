@@ -2,6 +2,7 @@
 #include "PitchType.h"
 
 class Ball;
+class Pitcher;
 
 class Straight :
     public PitchType
@@ -21,5 +22,6 @@ public:
 
     virtual float decideAngle()override;
     float decideHVelocity()override { return 0; }
+    int decideVelocity(Pitcher& pitcher)override;
 };
 

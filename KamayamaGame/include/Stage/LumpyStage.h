@@ -10,7 +10,7 @@ class LumpyStage :
 {
 public:
 	LumpyStage():
-		Stage(L"LumpyStage", L"Lumpy", 3, 7)
+		Stage(L"LumpyStage", L"Lumpy", 3, 7, 2, 1.1f)
 	{
 	}
 	~LumpyStage() = default;

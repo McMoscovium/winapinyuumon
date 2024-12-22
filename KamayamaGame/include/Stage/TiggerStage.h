@@ -10,7 +10,7 @@ class TiggerStage :
 {
 public:
 	TiggerStage():
-		Stage(L"TiggerStage", L"Tigger", 3, 7)
+		Stage(L"TiggerStage", L"Tigger", 3, 7, 7, 2.3f)
 	{
 	}
 	~TiggerStage() = default;

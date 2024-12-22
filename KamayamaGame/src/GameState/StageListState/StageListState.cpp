@@ -6,12 +6,13 @@
 #include "GameState/PlayingState/PlayingState.h"
 #include "resource.h"
 
-StageListState::StageListState(Game& game, AudioManager& audioManager):
-	GameState(game, audioManager)
+StageListState::StageListState(Game& game, AudioManager& audioManager, char openedStages):
+	GameState(game, audioManager),
+	openedStages(openedStages)
 {
 	HINSTANCE hInstance = game.getHInstance();
 
-	PictureObject& back = gameObjectManager.addFront<PictureObject>("BACK", IDB_BITMAP14,hInstance, SIZE{ 1152,720 });
+	PictureObject& back = gameObjectManager.addFront<PictureObject>("BACK", IDB_BITMAP14, hInstance, SIZE{ 1152,720 });
 	gameObjectManager.addFront<PictureObject>("TO_TITLE", IDB_BITMAP18, hInstance, SIZE{ 192,68 });
 	gameObjectManager.addFront<PictureObject>("TINTIN", IDB_BITMAP5, hInstance, SIZE{ 207,252 });
 	gameObjectManager.addFront<PictureObject>("STAGE1", IDB_BITMAP3, hInstance, SIZE{ 162,41 });
@@ -21,7 +22,7 @@ StageListState::StageListState(Game& game, AudioManager& audioManager):
 	gameObjectManager.addFront<PictureObject>("STAGE5", IDB_BITMAP54, hInstance, SIZE{ 162,41 });
 	gameObjectManager.addFront<PictureObject>("STAGE6", IDB_BITMAP55, hInstance, SIZE{ 162,41 });
 	gameObjectManager.addFront<PictureObject>("STAGE7", IDB_BITMAP56, hInstance, SIZE{ 162,41 });
-	gameObjectManager.addFront<PictureObject>("STAGE8", IDB_BITMAP57, hInstance, SIZE{ 200,70 });
+	gameObjectManager.addFront<PictureObject>("STAGE8", IDB_BITMAP57, hInstance, SIZE{ 210,70 });
 	gameObjectManager.addFront<PictureObject>("LOAD_ANIMATION", IDB_BITMAP38, hInstance, SIZE{ 200,266 });
 
 	PictureObject& toTitleButton = gameObjectManager.getObject<PictureObject>("TO_TITLE");
@@ -50,14 +51,19 @@ StageListState::StageListState(Game& game, AudioManager& audioManager):
 	back.appear();
 	toTitleButton.appear();
 	tintin.appear();
-	stage1Button.appear();
-	stage2Button.appear();
-	stage3Button.appear();
-	stage4Button.appear();
-	stage5Button.appear();
-	stage6Button.appear();
-	stage7Button.appear();
-	stage8Button.appear();
+	std::vector<PictureObject*> stageButtons;
+	stageButtons.push_back(&stage1Button);
+	stageButtons.push_back(&stage2Button);
+	stageButtons.push_back(&stage3Button);
+	stageButtons.push_back(&stage4Button);
+	stageButtons.push_back(&stage5Button);
+	stageButtons.push_back(&stage6Button);
+	stageButtons.push_back(&stage7Button);
+	stageButtons.push_back(&stage8Button);
+
+	for (char i = 0; i < min(openedStages, MAX_STAGES); i++) {
+		stageButtons.at(i)->appear();
+	}
 
 	changeSubState(new ChoiceSubState(*this));
 }

@@ -11,7 +11,9 @@ SasakiStage::SasakiStage():
 	Stage(L"SasakiStage",
 		L"²X–Ø˜NŠó",
 		3,
-		5
+		5,
+		10,
+		1.0f
 	)
 {
 }

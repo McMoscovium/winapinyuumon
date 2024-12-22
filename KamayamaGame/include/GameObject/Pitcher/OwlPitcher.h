@@ -14,7 +14,7 @@ public:
 	OwlPitcher(HINSTANCE hInstance) :
 		Pitcher(
 			L"Owl",
-			35,
+			27,
 			27,
 			IDB_BITMAP38,
 			hInstance,

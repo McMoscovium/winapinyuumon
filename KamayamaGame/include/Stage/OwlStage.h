@@ -15,7 +15,9 @@ public:
 			L"OwlStage",
 			L"Owl",
 			5,
-			10
+			10,
+			6,
+			2.0f
 		)
 	{
 	}

@@ -112,17 +112,20 @@ bool InPitchingSubState::isMeet(GameObject& ballObject, Ball& ball, Batter& batt
     std::mt19937 gen(rd());
     std::normal_distribution<float> dis(0.6f,0.1f);
     float hVelocity = (
-        batter.getPower() * efficiency*0.8f +
-        (1.5-efficiency)*ball.getVelocity()
+        batter.getPower() * efficiency +
+        ball.getVelocity() * (1.5f - efficiency) * 0.3f
         ) * std::max<float>(dis(gen), 0.1f);
     ball.sethVelocity(hVelocity);
 
-    //êÖïΩÇÃë¨Ç≥Çê›íË    
-    int speed = (int)(batter.getPower() * efficiency);
+    //êÖïΩÇÃë¨Ç≥Çê›íË
+    int speed = (int)(batter.getPower() * ((efficiency + 0.6) / 2) * 1.08);
     if (hitStopTime > 0) {
-        speed *= 1.05f;
+        speed = (int)(speed * 1.3f);
     }
     ball.setVelocity(speed);
+
+    OutputDebugString((L"hVelocity: " + std::to_wstring(hVelocity) + L"\n").c_str());
+    OutputDebugString((L"velocity: " + std::to_wstring(speed) + L"\n").c_str());
     
     //ç≈å„Ç…trueÇï‘Ç∑
     return true;

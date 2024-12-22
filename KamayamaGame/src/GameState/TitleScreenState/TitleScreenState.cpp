@@ -22,7 +22,8 @@
 
 
 TitleScreenState::TitleScreenState(Game& game, AudioManager& audioManager) :
-    GameState(game, audioManager)
+    GameState(game, audioManager),
+    saveData(SaveData(game.getCurrentVersion()))
 {
     HINSTANCE hInstance = game.getHInstance();
     gameObjectManager.addFront<PictureObject>("TITLE", IDB_BITMAP19,hInstance, SIZE{ 1152,720 });
@@ -45,7 +46,6 @@ TitleScreenState::TitleScreenState(Game& game, AudioManager& audioManager) :
     scoreText.setObjectPosition({ 75,350 });
 
     //セーブデータ読み込み
-    SaveData saveData(game.getCurrentVersion());
     SaveDataManager saveDataManager;
     saveDataManager.load(saveData, game.getCurrentVersion());
     //スコア表示更新
@@ -54,9 +54,7 @@ TitleScreenState::TitleScreenState(Game& game, AudioManager& audioManager) :
     scoreText.setText(scorestr);
 
     //BGMよみこみ
-    audioManager.addWav("100ACRE", hInstance, IDR_WAVE4);
-    
-    
+    audioManager.addWav("100ACRE", hInstance, IDR_WAVE4);   
 }
 
 TitleScreenState::~TitleScreenState()
@@ -80,7 +78,7 @@ void TitleScreenState::update(Game& game) {
     if (inputManager.isClicked(startButton)) {
         OutputDebugString(L"スタートボタンがクリックされた\n");
         Stage* tintinStage = new TintinStage();
-        game.changeState(new StageListState(game, audioManager));
+        game.changeState(new StageListState(game, audioManager, saveData.getOpenedStages()));
         return;
     }
     //ステータスボタンクリック時

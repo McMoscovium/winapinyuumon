@@ -2,6 +2,8 @@
 
 #include "PitchType/PitchType.h"
 
+class Pitcher;
+
 class WhiteBall : public PitchType
 {
 private:
@@ -13,4 +15,5 @@ public:
 	void update(Ball& ball, int frame) override;
 	virtual float decideAngle() override;
 	virtual float decideHVelocity() override { return (float)depth; }
+	int decideVelocity(Pitcher& pitcher)override;
 };

@@ -32,8 +32,15 @@ float OwlBall::decideAngle()
 {
 	std::random_device rd;
 	std::mt19937 gen(rd()); // メルセンヌ・ツイスタ乱数生成器
-	float low = sharpness - 15, high = sharpness - 7;
+	float low = sharpness - 12, high = sharpness - 4;
 	std::uniform_real_distribution<float> dis(low, high);
 
 	return dis(gen);
+}
+
+int OwlBall::decideVelocity(Pitcher& pitcher) {
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> dis2(int(pitcher.getArmStrength() * 0.5f), pitcher.getArmStrength());//一様確率分布
+	return dis2(gen);
 }

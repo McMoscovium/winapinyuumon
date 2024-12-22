@@ -10,7 +10,7 @@ class PigletStage :
 {
 public:
 	PigletStage():
-		Stage(L"PigletStage", L"Piglet", 3, 7)
+		Stage(L"PigletStage", L"Piglet", 3, 7, 3, 1.4f)
 	{
 	}
 	~PigletStage() = default;
