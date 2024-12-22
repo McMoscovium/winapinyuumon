@@ -3,7 +3,8 @@
 
 void TintinPitcher::decideNextPitch()
 {
-	//球種は今はストレート固定
+	//球種決定
+	currentPitchNumber = 2;
 
 	//球速
 	std::random_device rd;
@@ -14,4 +15,7 @@ void TintinPitcher::decideNextPitch()
 	//コース
 	std::uniform_real_distribution<float> dis2(-10.0f, 5.0f);
 	setPitchingCourse(dis2(gen));
+
+	//上下方向の初速
+	setHVelocity(pitchTypes[currentPitchNumber]->decideHVelocity());
 }

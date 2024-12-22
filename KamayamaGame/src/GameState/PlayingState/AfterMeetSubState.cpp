@@ -18,13 +18,9 @@ void AfterMeetSubState::update(Game& game)
     PictureObject& shadow = gameObjectManager.getObject<PictureObject>("BALLSHADOW");
 
     timer.update();
-    //justMeet=trueならhitStopTime[ms]まつ
-    if (hitStopTime>timer.span()) {
-        return;
-    }
+    //ボールが画面外に出るか、600msたったらchangeSubState
 
-    //ボールが画面外に出たらchangeSubState
-    if (!ballObject.isIntersectsWithClientRect(window)) {
+    if (!ballObject.isIntersectsWithClientRect(window)||timer.span()>600) {
         translateBall(ball);
         owner.changeSubState(new BallFlyingSubState(owner));
         return;

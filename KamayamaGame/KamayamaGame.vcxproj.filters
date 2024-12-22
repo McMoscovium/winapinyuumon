@@ -216,6 +216,24 @@
     <Image Include="assets\決定.bmp">
       <Filter>リソース ファイル</Filter>
     </Image>
+    <Image Include="assets\Stage3.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="assets\Stage4.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="assets\Stage5.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="assets\Stage6.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="assets\Stage7.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="assets\Stage8.bmp">
+      <Filter>リソース ファイル</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\カーソル.cur">
@@ -367,6 +385,27 @@
       <Filter>ソース ファイル\GameState\PlayingState</Filter>
     </ClCompile>
     <ClCompile Include="src\PitchType\Slider.cpp">
+      <Filter>ソース ファイル\PitchType</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Stage\OwlStage.cpp">
+      <Filter>ソース ファイル\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PitchType\OwlBall.cpp">
+      <Filter>ソース ファイル\PitchType</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PitchType\ChangeUp.cpp">
+      <Filter>ソース ファイル\PitchType</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PitchType\AccelBall.cpp">
+      <Filter>ソース ファイル\PitchType</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PitchType\WhiteBall.cpp">
+      <Filter>ソース ファイル\PitchType</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Stage\EeyoreStage.cpp">
+      <Filter>ソース ファイル\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PitchType\VanishBall.cpp">
       <Filter>ソース ファイル\PitchType</Filter>
     </ClCompile>
   </ItemGroup>
@@ -537,6 +576,66 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="include\PitchType\Slider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Stage\OwlStage.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObject\Pitcher\OwlPitcher.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PitchType\OwlBall.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PitchType\ChangeUp.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PitchType\AccelBall.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PitchType\WhiteBall.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Stage\EeyoreStage.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObject\Pitcher\EeyorePitcher.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObject\Pitcher\Kanga&amp;Roo.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObject\Pitcher\Lumpy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObject\Pitcher\Piglet.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObject\Pitcher\Rabbit.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObject\Pitcher\Tigger.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Stage\Kanga&amp;RooStage.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Stage\LumpyStage.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Stage\PigletStage.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Stage\RabbitStage.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Stage\TiggerStage.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObject\Pitcher\Robin.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Stage\RobinStage.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

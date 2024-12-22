@@ -5,7 +5,7 @@
 void SasakiPitcher::decideNextPitch()
 {
 	//球種を選ぶ
-	currentPitchNumber = 1;
+	currentPitchNumber = 2;
 	//球速
 	std::random_device rd;
 	std::mt19937 gen(rd()); // メルセンヌ・ツイスタ乱数生成器
@@ -15,6 +15,10 @@ void SasakiPitcher::decideNextPitch()
 	//コース
 	float angle = pitchTypes.at(currentPitchNumber)->decideAngle();
 	setPitchingCourse(angle);
+
+	//上下の初速度
+	float hVelocity = pitchTypes.at(currentPitchNumber)->decideHVelocity();
+	setHVelocity(hVelocity);
 }
 
 bool SasakiPitcher::nextFrame()

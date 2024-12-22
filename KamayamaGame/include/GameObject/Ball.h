@@ -28,6 +28,8 @@ private:
 	void updateByPitchType(Pitcher* pitcher);
 	//リリースされてからのフレーム数
 	int framesSinceReleased = 0;
+	//
+	bool visible = true;//消えるボールの時に使う
 
 public:
 	Ball();
@@ -41,6 +43,7 @@ public:
 	LONG getY()const;
 	int getRadius()const;
 	float getGravity()const;
+	bool isVisible()const { return visible; }
 
 	void setAngle(const float);
 	void setVelocity(const int);
@@ -48,6 +51,8 @@ public:
 	void setPosition(POINT pos);
 	void setHeight(float h);
 	void resetFrame();
+	void vanish() { visible = false; }
+	void appear() { visible = true; }
 
 	//pitcherの球種に合わせてボールの位置を更新
 	POINT updatePitch(Pitcher* pitcher);

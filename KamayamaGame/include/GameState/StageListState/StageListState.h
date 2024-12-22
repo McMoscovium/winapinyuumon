@@ -14,4 +14,3 @@ public:
 	void enter(Game& game)override;
 	void exit(Game& game)override;
 };
-

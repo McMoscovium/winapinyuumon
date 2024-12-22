@@ -37,16 +37,25 @@ void InPitchingSubState::updatePitchingMotion()
 
 void InPitchingSubState::updateBall()
 {
+    //インスタンスの取得
     Pitcher& pitcher = owner.getGameObjectManager().getObject<Pitcher>("PITCHER");
     Ball& ball = owner.getBall();
     
+	//ボールの位置を更新
     POINT nextPos = ball.updatePitch(&pitcher);
 
     //見た目の更新
-    GameObject& ballObject = gameObjectManager.getObject<PictureObject>("BALL");
-    GameObject& shadow = gameObjectManager.getObject<PictureObject>("BALLSHADOW");
-    //以下、画面下に外れてない
-    // //ボールと影のサイズを更新
+    PictureObject& ballObject = gameObjectManager.getObject<PictureObject>("BALL");
+    PictureObject& shadow = gameObjectManager.getObject<PictureObject>("BALLSHADOW");
+    if (ball.isVisible()) {
+        ballObject.changeFrame(0);
+        shadow.changeFrame(0);
+    }
+    else {
+		ballObject.changeFrame(1);
+        shadow.changeFrame(1);
+    }
+    //ボールと影のサイズを更新
     ballObject.changeSizeRate(
         (float)(1440 - (720 - ball.getY())) / (float)1440
     );
@@ -66,54 +75,55 @@ void InPitchingSubState::updateBall()
         ),
         nextPos.y - (int)std::round(ball.getHeight()*ballObject.getSizeRate())
     };
-    ballObject.setObjectPosition(objectPos);   
+    ballObject.setObjectPosition(objectPos);
 }
 
 bool InPitchingSubState::isMeet(GameObject& ballObject, Ball& ball, Batter& batter, int& hitStopTime)
 {
     POINT cursorPos = owner.getCursorPos();
     POINT ballPos = ballObject.getPosition();
+
     if (abs(ballPos.y - cursorPos.y) > 50) {
         //カーソルとボールのY座標が遠い
         return false;
     }
-    if (abs(ballPos.x+ball.getRadius() - cursorPos.x) > 50) {
+    if (abs(ballPos.x+ball.getRadius() - cursorPos.x) > batter.getMeet()) {
         //カーソルとボールのX座標が遠い
         return false;
     }
     //以下、ボールとバットが当たった
-    
-    int gap = abs(ballPos.x+ball.getRadius() - cursorPos.x);//ボールとカーソルのずれ具合
-    hitStopTime = 150 - 30 * gap;
-    if (hitStopTime < 50) { hitStopTime = 0; }
 
     //ボールの速度データを計算
     //左右の角度
     float angle = (float)std::round((cursorPos.y - ballPos.y) * 1.8f);
     ball.setAngle(angle);
 
-    //efficiencyの計算
-    float efficiency = 0;//1に近いほどジャストミート
-    efficiency = (50 - abs(ballPos.x + ball.getRadius() * ballObject.getSizeRate() - cursorPos.x)) / 40;
+    //ジャストミートか計算
+    int gap = abs(ballPos.x+ball.getRadius() - cursorPos.x);//ボールとカーソルのずれ具合
+    hitStopTime = 150 - 30 * gap;
+    if (hitStopTime < 50) { hitStopTime = 0; }
 
+    //efficiencyの計算
+    float evaluation = 0;//1に近いほどジャストミート
+    evaluation = (batter.getMeet() - abs(ballPos.x + ball.getRadius() * ballObject.getSizeRate() - cursorPos.x)) / 60;
+    float efficiency = min(1.5f, max(0.0f, evaluation));
     //上向きの早さを設定
     std::random_device rd;
     std::mt19937 gen(rd());
     std::normal_distribution<float> dis(0.6f,0.1f);
     float hVelocity = (
-        batter.getPower() * efficiency +
-        (1 - efficiency) * ball.getVelocity()
+        batter.getPower() * efficiency*0.8f +
+        (1.5-efficiency)*ball.getVelocity()
         ) * std::max<float>(dis(gen), 0.1f);
     ball.sethVelocity(hVelocity);
 
     //水平の速さを設定    
     int speed = (int)(batter.getPower() * efficiency);
     if (hitStopTime > 0) {
-        speed += 5;
+        speed *= 1.05f;
     }
     ball.setVelocity(speed);
     
-
     //最後にtrueを返す
     return true;
 }
@@ -122,7 +132,7 @@ void InPitchingSubState::update(Game& game)
 {
     Ball& ball = owner.getBall();
     PictureObject& ballObject = gameObjectManager.getObject<PictureObject>("BALL");
-    GameObject& shadow = gameObjectManager.getObject<PictureObject>("BALLSHADOW");
+    PictureObject& shadow = gameObjectManager.getObject<PictureObject>("BALLSHADOW");
     Pitcher& pitcherObject = gameObjectManager.getObject<Pitcher>("PITCHER");
     
     
@@ -131,7 +141,6 @@ void InPitchingSubState::update(Game& game)
         ballObject.hide();
         shadow.hide();
         owner.changeSubState(new BattingResultSubState(owner, PlayingState::FlyBallResult::STRIKE));
-
         return;
     }
 
@@ -189,7 +198,11 @@ void InPitchingSubState::update(Game& game)
         int hitStopTime = 0;
         Batter& batter = owner.getGameObjectManager().getObject<Batter>("BATTER");
         if (isMeet(ballObject, owner.getBall(), batter, hitStopTime)) {
-            if (hitStopTime) {
+            //影とボールを表示
+            ballObject.changeFrame(0);
+            shadow.changeFrame(0);
+
+            if (hitStopTime&& abs(ball.getAngle()) < 44.9f) {
                 //ミート音を鳴らす
                 owner.getAudioManager().play("JUST", false);
                 //ジャストミート
@@ -218,6 +231,9 @@ void InPitchingSubState::enter(Game& game)
     ball.sethVelocity(0);
     ball.setVelocity(0);
 
+    //ボール出現
+    ball.appear();
+
     //次の球種を決定
     Pitcher& pitcher = owner.getGameObjectManager().getObject<Pitcher>("PITCHER");
     pitcher.decideNextPitch();
@@ -226,6 +242,7 @@ void InPitchingSubState::enter(Game& game)
     
     ball.setVelocity(pitcher.getPitchingSpeed());
     ball.setAngle(pitcher.getPitchingAngle() + 180.0f);
+    ball.sethVelocity(pitcher.getHVelocity());
 
     //残り球数を減らす
     owner.getRestBalls()--;

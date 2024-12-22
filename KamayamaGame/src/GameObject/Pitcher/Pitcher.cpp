@@ -26,7 +26,6 @@ Pitcher::Pitcher(const std::wstring& pitcherName, int armStrength, int releaseFr
 	path(path),
 	frameSize(frameSize)
 {
-	pitchTypes.push_back(new Straight());
 }
 
 Pitcher::~Pitcher()
@@ -57,6 +56,7 @@ float Pitcher::getPitchingAngle() const
 void Pitcher::setPitchingSpeed(int sp)
 {
 	pitchingSpeed = sp;
+	pitchTypes.at(currentPitchNumber)->setInitialVelocity(sp);
 }
 
 void Pitcher::setPitchingCourse(const float c)

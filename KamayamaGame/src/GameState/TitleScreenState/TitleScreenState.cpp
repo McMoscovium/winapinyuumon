@@ -4,6 +4,7 @@
 
 #include "Game/Game.h"
 #include "Game/InputManager.h"
+#include "Game/Window.h"
 #include <Windows.h>
 #include "GameState/StageListState/StageListState.h"
 #include "GameObject/GameObject.h"
@@ -64,11 +65,15 @@ TitleScreenState::~TitleScreenState()
 
 
 void TitleScreenState::update(Game& game) {
-    //タイトル画面の更新処理@TODO
-
-    //終わるボタンクリック時@TODO
-
     InputManager& inputManager = game.getInputManager();
+
+    //終わるボタンクリック時
+	PictureObject& quitButton = gameObjectManager.getObject<PictureObject>("QUIT");
+	if (inputManager.isClicked(quitButton)) {
+		OutputDebugString(L"終了ボタンがクリックされた\n");
+		DestroyWindow(game.getWindow()->getHandle());
+		return;
+	}
 
     //スタートボタンクリック時
     const PictureObject& startButton = gameObjectManager.getObject<PictureObject>("START");
