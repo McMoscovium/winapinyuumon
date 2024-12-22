@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject/Pitcher/Pitcher.h"
 #include "PitchType/Slider.h"
+#include "PitchType/OwlBall.h"
 #include "resource.h"
 
 using namespace std;
@@ -22,6 +23,7 @@ public:
             ) 
     {
 		pitchTypes.push_back(new Slider());
+        pitchTypes.push_back(new OwlBall());
         OutputDebugString(L"SasakiPitcherにスライダー追加\n");
     }
     void decideNextPitch()override;

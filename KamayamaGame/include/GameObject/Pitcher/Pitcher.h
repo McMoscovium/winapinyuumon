@@ -17,6 +17,8 @@ protected:
 	int pitchingSpeed = 0;
 	//Šp“x
 	float pitchingCourse = 0;
+	//ã‰º•ûŒü‚Ì‰‘¬“x
+	float hVelocity = 0;	
 	//Œ»İ‚Ì‹…í‚Ì”Ô†
 	int currentPitchNumber = 0;
 
@@ -55,10 +57,15 @@ public:
 	//
 	int getPitchingSpeed()const;
 	float getPitchingAngle()const;
+	float getHVelocity()const { return hVelocity; }
 	//
 	void setPitchingSpeed(int sp);
 	//
 	void setPitchingCourse(const float c);
+	//
+	void setHVelocity(const float v) {
+		hVelocity = v;
+	}
 	//Œ»İ‚Ì‹…í‚ğæ“¾
 	PitchType* getPitchType();
 	//
