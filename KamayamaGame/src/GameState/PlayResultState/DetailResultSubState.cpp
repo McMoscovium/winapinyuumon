@@ -10,7 +10,7 @@ void DetailResultSubState::update(Game& game)
 	//ステージ選択へボタン処理
 	PictureObject& toStageList = gameObjectManager.getObject<PictureObject>("TO_STAGELIST");
 	if (inputManager.isClicked(toStageList)) {
-		game.changeState(new StageListState(game, owner.getAudioManager()));
+		game.changeState(new StageListState(game, owner.getAudioManager(), owner.getOpenedStages()));
 		return;
 	}
 }

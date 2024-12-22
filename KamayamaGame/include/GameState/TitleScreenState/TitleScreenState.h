@@ -3,6 +3,7 @@
 #include "GameState/GameState.h"
 
 #include "GameObject/PictureObject.h"
+#include "Game/SaveData/SaveData.h"
 
 class InputManager;
 class Game;
@@ -11,6 +12,7 @@ class TitleScreenState :
     public GameState<TitleScreenState,GameSubState<TitleScreenState>>
 {
 private:
+    SaveData saveData;
 public:
     TitleScreenState(Game& game, AudioManager& audioManager);
 	~TitleScreenState();

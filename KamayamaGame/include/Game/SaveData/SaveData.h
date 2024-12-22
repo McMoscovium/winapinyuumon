@@ -29,6 +29,7 @@ private:
     char speedFilled;
     Skill skill;
     int score;
+    char openedStages;//解放したステージの数
     bool cheated;
 public:
     SaveData(const Version& version):
@@ -40,6 +41,7 @@ public:
         speed(1),
         speedFilled(1),
         score(0),
+        openedStages(1),
         cheated(false)
     {
     }
@@ -59,6 +61,7 @@ public:
     void setScore(const int s) {
         score = s;
     }
+    void addOpenedStages() { openedStages++; }
     void setCheated(const bool c) {
         cheated = c;
     }
@@ -75,11 +78,11 @@ public:
     char& getSpeedRef() { return speed; }
     char getSpeedFilled()const { return speedFilled; }
     char& getSpeedFilledRef() { return speedFilled; }
-    
     const int getScore()const {
         return score;
     }
     int& getScoreRef() { return score; }
+    char getOpenedStages()const { return openedStages; }
     const bool isCheated()const {
         return cheated;
     }
@@ -123,7 +126,7 @@ public:
             archive(*this);
             // バージョンに応じたデータ補正
             if (this->version < currentVersion) {
-                if (this->version > Version(0,0,1)) {
+                if (this->version > Version(0, 0, 1)) {
                     // バージョン1以上にしかないメンバ変数を補正
                     //this->playerName = "Unknown"; // 既定値
                     //this->inventory = {};         // 空のインベントリ
@@ -153,7 +156,7 @@ public:
     //
     template<class Archive>
     void serialize(Archive& archive) {
-        archive(version, power, powerFilled, meet, meetFilled, speed, speedFilled, skill, score, cheated);
+        archive(version, power, powerFilled, meet, meetFilled, speed, speedFilled, skill, score, openedStages, cheated);
     }
 };
 

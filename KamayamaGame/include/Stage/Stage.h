@@ -17,12 +17,16 @@ protected:
 public:
 	const std::wstring stageName;
 	const std::wstring pitcherName;
+	const char stageNumber;
+	const float scoreFactor;//ÉXÉRÉAâ¡éZî{ó¶
 
 	Stage(
 		const std::wstring& name,
 		const std::wstring& pitcherName,
 		int norm,
-		int trials
+		int trials,
+		char stageNumber,
+		float scoreFactor
 	);
 	virtual ~Stage();
 	

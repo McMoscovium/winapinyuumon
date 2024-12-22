@@ -20,7 +20,7 @@ void WaitingPitchingSubState::update(Game & game)
 	timer.update();
 
 	//サブステート開始後2000ms経過したらピッチング開始
-	if (timer.span() > 2000) {
+	if (timer.span() > 1000) {
 		owner.changeSubState(new InPitchingSubState(owner));
 		return;
 	}
@@ -48,7 +48,6 @@ void WaitingPitchingSubState::update(Game & game)
 
 void WaitingPitchingSubState::enter(Game& game)
 {
-	OutputDebugString(L"Entering WaitingPitchingSubState\n");
 	gameObjectManager.getObject<PictureObject>("FIELD").appear();
 	GameObject& batter = gameObjectManager.getObject<PictureObject>("BATTER");
 	InputManager& inputManager = game.getInputManager();
@@ -74,5 +73,4 @@ void WaitingPitchingSubState::enter(Game& game)
 
 void WaitingPitchingSubState::exit(Game& game)
 {
-	OutputDebugString(L"Exitting WaitingPitchingSubState\n");
 }

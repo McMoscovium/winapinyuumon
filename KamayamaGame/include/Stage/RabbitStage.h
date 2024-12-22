@@ -10,7 +10,7 @@ class RabbitStage :
 {
 public:
 	RabbitStage() :
-		Stage(L"RabbitStage", L"Rabbit", 3, 7)
+		Stage(L"RabbitStage", L"Rabbit", 3, 7, 5, 1.7f)
 	{
 	}
 	~RabbitStage() = default;

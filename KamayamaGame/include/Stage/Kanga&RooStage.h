@@ -10,7 +10,7 @@ class KangaRooStage :
 {
 public:
 	KangaRooStage():
-		Stage(L"KangaRooStage", L"Kanga&Roo", 3, 7)
+		Stage(L"KangaRooStage", L"Kanga&Roo", 3, 7, 4, 1.4f)
 	{
 	}
 	~KangaRooStage() = default;

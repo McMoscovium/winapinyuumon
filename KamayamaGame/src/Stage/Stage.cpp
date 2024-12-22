@@ -5,12 +5,14 @@
 #include "GameObject/Stadium/Stadium.h"
 
 Stage::Stage(
-	const std::wstring& name, const std::wstring& pitcherName, int norm, int trials
+	const std::wstring& name, const std::wstring& pitcherName, int norm, int trials, char stageNumber, float scoreFactor
 ):
 	stageName(name),
 	norm(norm),
 	trials(trials),
-	pitcherName(pitcherName)
+	pitcherName(pitcherName),
+	stageNumber(stageNumber),
+	scoreFactor(scoreFactor)
 {
 
 }

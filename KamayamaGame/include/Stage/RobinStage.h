@@ -10,7 +10,7 @@ class RobinStage :
 {
 public:
 	RobinStage():
-		Stage(L"RobinStage",L"Robin", 3, 7){ }
+		Stage(L"RobinStage",L"Robin", 3, 7, 8, 3.3f){ }
 
 	~RobinStage() = default;
 
