@@ -3,3 +3,5 @@
 東京ドームの8.7個分の森
 
 現在、KamayamaGameフォルダのなかが動いています。それ以外のフォルダはいみない
+
+[公式Webページ](https://mcmoscovium.github.io/KamayamaGame.html)がオープン！
